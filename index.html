@@ -3,436 +3,374 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>心屿 · 校园心理健康AI平台</title>
+<title>心屿 MindIsle · 校园心理健康AI平台 v2.0</title>
 <style>
-  :root {
-    --teal: #0e7490;
-    --teal-dark: #134e4a;
-    --mint: #f0fdfa;
-    --mint-border: #99f6e4;
-    --warm: #fff7ed;
-    --warm-border: #fed7aa;
-    --text: #1f2937;
-    --muted: #6b7280;
-    --danger: #b91c1c;
-    --danger-bg: #fef2f2;
-    --card-bg: #ffffff;
-    --shadow: 0 2px 12px rgba(15, 118, 110, .08);
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-    background: #f8fafc;
-    color: var(--text);
-    line-height: 1.7;
-  }
+:root{
+  --teal:#0e7490; --teal-dark:#134e4a; --mint:#f0fdfa; --mint-border:#99f6e4;
+  --warm:#fff7ed; --warm-border:#fed7aa; --text:#1f2937; --muted:#6b7280;
+  --danger:#b91c1c; --danger-bg:#fef2f2; --card:#ffffff; --line:#e2e8f0;
+  --shadow:0 2px 12px rgba(15,118,110,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:#f8fafc;color:var(--text);line-height:1.7;}
+button{font-family:inherit;cursor:pointer;}
+input,textarea,select{font-family:inherit;}
 
-  /* ── 顶栏 ── */
-  .topbar {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(255,255,255,.92);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid #e2e8f0;
-  }
-  .topbar-inner {
-    max-width: 1080px; margin: 0 auto;
-    padding: 12px 20px;
-    display: flex; align-items: center; gap: 24px;
-  }
-  .logo { font-size: 20px; font-weight: 800; color: var(--teal); display: flex; align-items: center; gap: 8px; }
-  .logo .mark {
-    width: 30px; height: 30px; border-radius: 9px;
-    background: linear-gradient(135deg, var(--teal), #14b8a6);
-    color: #fff; display: flex; align-items: center; justify-content: center;
-    font-size: 15px;
-  }
-  .nav { display: flex; gap: 4px; margin-left: auto; flex-wrap: wrap; }
-  .nav button {
-    border: none; background: transparent;
-    padding: 8px 14px; border-radius: 8px;
-    font-size: 14px; color: var(--muted); cursor: pointer;
-    font-family: inherit; transition: all .15s;
-  }
-  .nav button:hover { background: var(--mint); color: var(--teal); }
-  .nav button.active { background: var(--teal); color: #fff; font-weight: 600; }
-  .privacy-badge {
-    font-size: 12px; color: var(--teal);
-    background: var(--mint); border: 1px solid var(--mint-border);
-    padding: 3px 10px; border-radius: 20px; white-space: nowrap;
-  }
+/* ── 顶栏 ── */
+.topbar{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);}
+.topbar-inner{max-width:1100px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+.logo{font-size:19px;font-weight:800;color:var(--teal);display:flex;align-items:center;gap:8px;cursor:pointer;}
+.logo .mark{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--teal),#14b8a6);color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;}
+.nav{display:flex;gap:2px;margin-left:auto;flex-wrap:wrap;}
+.nav button{border:none;background:transparent;padding:8px 13px;border-radius:8px;font-size:14px;color:var(--muted);transition:all .15s;}
+.nav button:hover{background:var(--mint);color:var(--teal);}
+.nav button.active{background:var(--teal);color:#fff;font-weight:600;}
+.user-area{display:flex;align-items:center;gap:10px;}
+.user-area .u-btn{border:1px solid var(--teal);background:#fff;color:var(--teal);padding:7px 16px;border-radius:10px;font-size:13.5px;font-weight:600;transition:all .15s;}
+.user-area .u-btn:hover{background:var(--teal);color:#fff;}
+.user-menu{display:flex;align-items:center;gap:8px;background:var(--mint);border:1px solid var(--mint-border);padding:6px 14px;border-radius:10px;font-size:13.5px;color:var(--teal-dark);cursor:pointer;}
+.user-menu b{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--teal),#14b8a6);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;}
 
-  main { max-width: 1080px; margin: 0 auto; padding: 28px 20px 60px; }
+main{max-width:1100px;margin:0 auto;padding:24px 20px 50px;}
+.page{display:none;}
+.page.active{display:block;animation:fade .25s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
 
-  /* ── 页面切换 ── */
-  .page { display: none; }
-  .page.active { display: block; animation: fade .25s ease; }
-  @keyframes fade { from { opacity: 0; transform: translateY(6px);} to { opacity: 1; transform: none; } }
+/* ── Hero ── */
+.hero{background:linear-gradient(135deg,#134e4a 0%,#0e7490 55%,#1a56db 120%);color:#fff;border-radius:18px;padding:42px 38px;margin-bottom:26px;position:relative;overflow:hidden;}
+.hero::after{content:'';position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.06);}
+.hero h1{font-size:29px;margin-bottom:10px;}
+.hero p{opacity:.92;font-size:15px;max-width:640px;}
+.hero .cta-row{margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;}
+.btn{display:inline-block;border:none;font-size:15px;font-weight:600;padding:12px 26px;border-radius:12px;transition:all .15s;}
+.btn-primary{background:#fff;color:var(--teal);}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.18);}
+.btn-ghost{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.35);}
+.btn-ghost:hover{background:rgba(255,255,255,.24);}
+.btn-teal{background:var(--teal);color:#fff;}
+.btn-teal:hover{background:var(--teal-dark);}
+.btn-soft{background:var(--mint);color:var(--teal);border:1px solid var(--mint-border);}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important;}
 
-  /* ── Hero ── */
-  .hero {
-    background: linear-gradient(135deg, #134e4a 0%, #0e7490 60%, #1a56db 120%);
-    color: #fff; border-radius: 18px;
-    padding: 48px 40px; margin-bottom: 28px;
-    position: relative; overflow: hidden;
-  }
-  .hero::after {
-    content: ''; position: absolute; right: -60px; top: -60px;
-    width: 220px; height: 220px; border-radius: 50%;
-    background: rgba(255,255,255,.06);
-  }
-  .hero h1 { font-size: 30px; margin-bottom: 10px; }
-  .hero p { opacity: .9; font-size: 15px; max-width: 620px; }
-  .hero .cta-row { margin-top: 24px; display: flex; gap: 12px; flex-wrap: wrap; }
-  .btn {
-    display: inline-block; border: none; cursor: pointer;
-    font-family: inherit; font-size: 15px; font-weight: 600;
-    padding: 12px 26px; border-radius: 12px; transition: all .15s;
-  }
-  .btn-primary { background: #fff; color: var(--teal); }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,.18); }
-  .btn-ghost { background: rgba(255,255,255,.14); color: #fff; border: 1px solid rgba(255,255,255,.35); }
-  .btn-ghost:hover { background: rgba(255,255,255,.24); }
-  .btn-teal { background: var(--teal); color: #fff; }
-  .btn-teal:hover { background: var(--teal-dark); }
-  .btn:disabled { opacity: .5; cursor: not-allowed; transform: none !important; }
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:26px;}
+@media(max-width:860px){.grid4{grid-template-columns:repeat(2,1fr);}}
+.feat-card{background:var(--card);border-radius:14px;padding:20px;border:1px solid var(--line);box-shadow:var(--shadow);transition:all .18s;cursor:pointer;}
+.feat-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(15,118,110,.14);}
+.feat-card .ico{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:19px;margin-bottom:10px;}
+.feat-card h3{font-size:15px;margin-bottom:5px;}
+.feat-card p{font-size:12.5px;color:var(--muted);}
+.i-test{background:#dbeafe;}.i-chat{background:#ccfbf1;}.i-train{background:#fef3c7;}.i-comm{background:#ede9fe;}
 
-  /* ── 卡片网格 ── */
-  .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
-  .feat-card {
-    background: var(--card-bg); border-radius: 14px;
-    padding: 22px; border: 1px solid #e2e8f0;
-    box-shadow: var(--shadow); transition: all .18s;
-    cursor: pointer;
-  }
-  .feat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(15,118,110,.14); }
-  .feat-card .ico {
-    width: 42px; height: 42px; border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px; margin-bottom: 12px;
-  }
-  .feat-card h3 { font-size: 15px; margin-bottom: 6px; }
-  .feat-card p { font-size: 13px; color: var(--muted); }
-  .i-test { background: #dbeafe; } .i-chat { background: #ccfbf1; }
-  .i-train { background: #fef3c7; } .i-comm { background: #ede9fe; }
+/* ── 面板 ── */
+.panel{background:var(--card);border-radius:14px;border:1px solid var(--line);box-shadow:var(--shadow);padding:24px;margin-bottom:20px;}
+.panel h2{font-size:19px;margin-bottom:4px;}
+.panel .sub{font-size:13px;color:var(--muted);margin-bottom:16px;}
+.panel-title{font-size:16px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
 
-  /* ── 面板 ── */
-  .panel {
-    background: var(--card-bg); border-radius: 14px;
-    border: 1px solid #e2e8f0; box-shadow: var(--shadow);
-    padding: 26px; margin-bottom: 24px;
-  }
-  .panel h2 { font-size: 19px; margin-bottom: 4px; }
-  .panel .sub { font-size: 13px; color: var(--muted); margin-bottom: 18px; }
-  .panel-title { font-size: 16px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+/* ── 登录/注册 ── */
+.auth-wrap{max-width:420px;margin:40px auto;}
+.auth-card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:30px 32px;}
+.auth-card h2{text-align:center;font-size:21px;margin-bottom:4px;}
+.auth-card .auth-sub{text-align:center;font-size:13px;color:var(--muted);margin-bottom:20px;}
+.tabs{display:flex;background:#f1f5f9;border-radius:10px;padding:4px;margin-bottom:20px;}
+.tabs button{flex:1;border:none;background:transparent;padding:9px;border-radius:8px;font-size:14px;color:var(--muted);font-weight:600;}
+.tabs button.active{background:#fff;color:var(--teal);box-shadow:0 1px 4px rgba(0,0,0,.08);}
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:13px;color:var(--muted);margin-bottom:5px;}
+.field input,.field select,.field textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14px;}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--teal);}
+.auth-tip{font-size:12px;color:var(--muted);text-align:center;margin-top:12px;}
 
-  /* ── 测评 ── */
-  .scale-info {
-    background: var(--mint); border: 1px solid var(--mint-border);
-    border-radius: 10px; padding: 12px 16px;
-    font-size: 13px; margin-bottom: 18px; color: var(--teal-dark);
-  }
-  .q-item {
-    border: 1px solid #e2e8f0; border-radius: 12px;
-    padding: 16px; margin-bottom: 12px;
-  }
-  .q-item .q-text { font-size: 14px; font-weight: 600; margin-bottom: 10px; }
-  .q-options { display: flex; gap: 8px; flex-wrap: wrap; }
-  .q-options label {
-    flex: 1; min-width: 120px;
-    border: 1.5px solid #e2e8f0; border-radius: 10px;
-    padding: 9px 12px; font-size: 13px; cursor: pointer;
-    text-align: center; transition: all .12s;
-  }
-  .q-options label:hover { border-color: var(--teal); }
-  .q-options input { display: none; }
-  .q-options input:checked + span {
-    background: var(--teal); color: #fff; border-radius: 8px;
-    padding: 2px 8px;
-  }
-  .q-options label:has(input:checked) { border-color: var(--teal); background: var(--mint); }
+/* ── 量表中心 ── */
+.scale-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+@media(max-width:720px){.scale-grid{grid-template-columns:1fr;}}
+.scale-card{border:1.5px solid var(--line);border-radius:14px;padding:20px;background:#fff;transition:all .15s;cursor:pointer;}
+.scale-card:hover{border-color:var(--teal);box-shadow:0 6px 18px rgba(15,118,110,.12);transform:translateY(-2px);}
+.scale-card .s-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.scale-card .s-name{font-size:16px;font-weight:700;}
+.scale-card .s-en{font-size:11.5px;color:var(--muted);}
+.scale-card .s-badge{font-size:11px;background:var(--mint);color:var(--teal);border:1px solid var(--mint-border);padding:2px 10px;border-radius:20px;}
+.scale-card p{font-size:13px;color:var(--muted);}
+.scale-card .s-meta{display:flex;gap:12px;margin-top:12px;font-size:12px;color:var(--muted);}
 
-  .result-box { display: none; }
-  .result-box.show { display: block; }
-  .score-hero {
-    display: flex; align-items: center; gap: 28px;
-    padding: 22px; border-radius: 14px; margin-bottom: 18px;
-  }
-  .score-hero.mild { background: var(--mint); border: 1px solid var(--mint-border); }
-  .score-hero.moderate { background: var(--warm); border: 1px solid var(--warm-border); }
-  .score-hero.severe { background: var(--danger-bg); border: 1px solid #fecaca; }
-  .score-num { font-size: 52px; font-weight: 800; line-height: 1; }
-  .score-hero.mild .score-num { color: var(--teal); }
-  .score-hero.moderate .score-num { color: #b45309; }
-  .score-hero.severe .score-num { color: var(--danger); }
-  .score-info { flex: 1; }
-  .score-info .level { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
-  .score-info p { font-size: 13px; color: var(--muted); }
+/* ── 测评 ── */
+.scale-info{background:var(--mint);border:1px solid var(--mint-border);border-radius:10px;padding:12px 16px;font-size:13px;margin-bottom:16px;color:var(--teal-dark);}
+.scale-info.ref{background:#f8fafc;border-color:var(--line);color:var(--muted);font-size:12px;}
+.q-item{border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:12px;background:#fff;}
+.q-item .q-text{font-size:14px;font-weight:600;margin-bottom:10px;}
+.q-options{display:flex;gap:8px;flex-wrap:wrap;}
+.q-options label{flex:1;min-width:110px;border:1.5px solid var(--line);border-radius:10px;padding:9px 12px;font-size:13px;cursor:pointer;text-align:center;transition:all .12s;}
+.q-options label:hover{border-color:var(--teal);}
+.q-options input{display:none;}
+.q-options label:has(input:checked){border-color:var(--teal);background:var(--mint);font-weight:600;}
+.quiz-progress{height:6px;background:#e2e8f0;border-radius:3px;margin-bottom:16px;overflow:hidden;}
+.quiz-progress i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),#14b8a6);transition:width .3s;}
 
-  .bars { margin: 16px 0; }
-  .bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; font-size: 12px; }
-  .bar-row .b-label { width: 90px; color: var(--muted); flex-shrink: 0; }
-  .bar-track { flex: 1; height: 14px; background: #f1f5f9; border-radius: 7px; overflow: hidden; }
-  .bar-fill { height: 100%; border-radius: 7px; width: 0; transition: width .8s ease; }
-  .bar-row .b-val { width: 34px; font-weight: 700; color: var(--teal); }
+/* ── 结果 ── */
+.result-hero{display:flex;align-items:center;gap:26px;padding:22px;border-radius:14px;margin-bottom:16px;}
+.result-hero.mild{background:var(--mint);border:1px solid var(--mint-border);}
+.result-hero.moderate{background:var(--warm);border:1px solid var(--warm-border);}
+.result-hero.severe{background:var(--danger-bg);border:1px solid #fecaca;}
+.score-num{font-size:50px;font-weight:800;line-height:1;}
+.mild .score-num{color:var(--teal);}.moderate .score-num{color:#b45309;}.severe .score-num{color:var(--danger);}
+.score-info{flex:1;}
+.score-info .level{font-size:18px;font-weight:700;margin-bottom:4px;}
+.score-info p{font-size:13px;color:var(--muted);}
+.rec-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px;}
+@media(max-width:560px){.rec-cards{grid-template-columns:1fr;}}
+.rec-card{border:1px solid var(--line);border-radius:10px;padding:13px;font-size:13px;background:#fafafa;}
+.rec-card b{color:var(--teal);}
+.warn-box{background:var(--danger-bg);border:1.5px solid #fca5a5;border-radius:12px;padding:16px;margin-top:14px;font-size:13.5px;color:var(--danger);}
 
-  .rec-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 12px; }
-  .rec-card {
-    border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px;
-    font-size: 13px; background: #fafafa;
-  }
-  .rec-card b { color: var(--teal); }
+/* ── 雷达图/趋势 ── */
+.chart-box{display:flex;justify-content:center;padding:10px 0;}
+.svg-chart{max-width:100%;}
 
-  /* ── AI 疏导 ── */
-  .chat-wrap {
-    border: 1px solid #e2e8f0; border-radius: 14px;
-    display: flex; flex-direction: column;
-    height: 460px; background: #fafbfc;
-  }
-  .chat-head {
-    padding: 14px 18px; border-bottom: 1px solid #e2e8f0;
-    display: flex; align-items: center; gap: 10px;
-    background: #fff; border-radius: 14px 14px 0 0;
-  }
-  .chat-head .ava {
-    width: 36px; height: 36px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--teal), #14b8a6);
-    color: #fff; display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
-  }
-  .chat-head .who b { font-size: 14px; display: block; }
-  .chat-head .who span { font-size: 11px; color: var(--muted); }
-  .chat-head .hint { margin-left: auto; font-size: 12px; color: var(--muted); }
-  .chat-body { flex: 1; overflow-y: auto; padding: 18px; display: flex; flex-direction: column; gap: 12px; }
-  .msg { max-width: 78%; padding: 11px 15px; border-radius: 14px; font-size: 14px; line-height: 1.65; white-space: pre-wrap; }
-  .msg.bot { background: #fff; border: 1px solid #e2e8f0; align-self: flex-start; border-bottom-left-radius: 4px; }
-  .msg.user { background: var(--teal); color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
-  .msg.crisis {
-    background: var(--danger-bg); border: 1.5px solid #fca5a5;
-    color: var(--danger); align-self: flex-start; font-weight: 600;
-  }
-  .chat-input { display: flex; gap: 10px; padding: 12px 14px; border-top: 1px solid #e2e8f0; background: #fff; border-radius: 0 0 14px 14px; }
-  .chat-input textarea {
-    flex: 1; resize: none; border: 1.5px solid #e2e8f0; border-radius: 10px;
-    padding: 10px 12px; font-size: 14px; font-family: inherit;
-    min-height: 44px; max-height: 110px;
-  }
-  .chat-input textarea:focus { outline: none; border-color: var(--teal); }
-  .typing { color: var(--muted); font-size: 13px; padding: 4px 6px; }
+/* ── 聊天 ── */
+.chat-wrap{border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;height:480px;background:#fafbfc;overflow:hidden;}
+.chat-head{padding:13px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;background:#fff;}
+.chat-head .ava{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--teal),#14b8a6);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.chat-head .who b{font-size:14px;display:block;}
+.chat-head .who span{font-size:11px;color:var(--muted);}
+.chat-head .hint{margin-left:auto;font-size:11.5px;color:var(--muted);text-align:right;}
+.chat-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px;}
+.msg{max-width:80%;padding:11px 15px;border-radius:14px;font-size:14px;line-height:1.65;white-space:pre-wrap;}
+.msg.bot{background:#fff;border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:4px;}
+.msg.user{background:var(--teal);color:#fff;align-self:flex-end;border-bottom-right-radius:4px;}
+.msg.crisis{background:var(--danger-bg);border:1.5px solid #fca5a5;color:var(--danger);align-self:flex-start;font-weight:600;}
+.msg.demo{background:#fffbeb;border:1px solid #fde68a;color:#92400e;align-self:flex-start;font-size:12px;}
+.chat-input{display:flex;gap:10px;padding:12px 14px;border-top:1px solid var(--line);background:#fff;}
+.chat-input textarea{flex:1;resize:none;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;font-size:14px;min-height:44px;max-height:110px;}
+.chat-input textarea:focus{outline:none;border-color:var(--teal);}
+.typing{color:var(--muted);font-size:13px;padding:4px 6px;}
+.suggest-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+.suggest{border:1px solid var(--mint-border);background:var(--mint);color:var(--teal-dark);font-size:12.5px;padding:7px 14px;border-radius:20px;cursor:pointer;transition:all .12s;}
+.suggest:hover{background:var(--teal);color:#fff;}
 
-  .suggest-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
-  .suggest {
-    border: 1px solid var(--mint-border); background: var(--mint);
-    color: var(--teal-dark); font-size: 12.5px;
-    padding: 7px 14px; border-radius: 20px; cursor: pointer;
-    transition: all .12s; font-family: inherit;
-  }
-  .suggest:hover { background: var(--teal); color: #fff; }
+/* ── 训练 ── */
+.train-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+@media(max-width:720px){.train-grid{grid-template-columns:1fr;}}
+.train-card{border:1px solid var(--line);border-radius:12px;padding:18px;background:#fff;transition:all .15s;}
+.train-card:hover{box-shadow:var(--shadow);}
+.train-card .t-tag{font-size:11px;font-weight:700;color:var(--teal);background:var(--mint);padding:2px 10px;border-radius:12px;display:inline-block;margin-bottom:8px;}
+.train-card h4{font-size:15px;margin-bottom:6px;}
+.train-card p{font-size:13px;color:var(--muted);margin-bottom:10px;}
+.t-btn{border:1.5px solid var(--teal);color:var(--teal);background:#fff;padding:7px 16px;border-radius:9px;font-size:13px;cursor:pointer;transition:all .12s;}
+.t-btn:hover{background:var(--teal);color:#fff;}
+.train-box{display:none;margin-top:12px;border-top:1px dashed var(--line);padding-top:12px;}
+.train-box.show{display:block;}
+.train-box textarea,.train-box input{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:9px 12px;font-size:13.5px;margin-bottom:8px;}
+.train-box textarea:focus,.train-box input:focus{outline:none;border-color:var(--teal);}
+.breathe-circle{width:140px;height:140px;border-radius:50%;margin:12px auto;background:radial-gradient(circle at 35% 35%,#5eead4,var(--teal));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;transition:transform 4s ease-in-out;}
+.breathe-circle.in{transform:scale(1.25);}.breathe-circle.out{transform:scale(.9);}
+.breathe-status{text-align:center;font-size:14px;color:var(--muted);min-height:22px;}
+.guide-steps .g-step{padding:10px 14px;border-left:3px solid var(--teal);background:#f8fafc;border-radius:0 8px 8px 0;margin-bottom:8px;font-size:13.5px;}
+.diary-list{max-height:260px;overflow-y:auto;}
+.diary-item{border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:10px;font-size:13px;background:#fff;}
+.diary-item .d-head{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:6px;}
+.mood-pick{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;}
+.mood-pick span{border:1.5px solid var(--line);border-radius:8px;padding:5px 10px;font-size:13px;cursor:pointer;}
+.mood-pick span.sel{border-color:var(--teal);background:var(--mint);font-weight:600;}
 
-  /* ── 训练 ── */
-  .train-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-  .train-card {
-    border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px;
-    background: #fff; transition: all .15s;
-  }
-  .train-card:hover { box-shadow: var(--shadow); }
-  .train-card .t-tag { font-size: 11px; font-weight: 700; color: var(--teal); background: var(--mint); padding: 2px 10px; border-radius: 12px; display: inline-block; margin-bottom: 8px; }
-  .train-card h4 { font-size: 15px; margin-bottom: 6px; }
-  .train-card p { font-size: 13px; color: var(--muted); margin-bottom: 10px; }
-  .train-card .t-btn { border: 1.5px solid var(--teal); color: var(--teal); background: #fff; padding: 7px 16px; border-radius: 9px; font-size: 13px; cursor: pointer; font-family: inherit; transition: all .12s; }
-  .train-card .t-btn:hover { background: var(--teal); color: #fff; }
+/* ── 社区 ── */
+.compose{border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:16px;background:#fff;}
+.compose textarea{width:100%;border:none;font-size:14px;padding:4px 2px;min-height:52px;resize:vertical;}
+.compose textarea:focus{outline:none;}
+.compose .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.compose .tag-pick{display:flex;gap:6px;flex-wrap:wrap;}
+.compose .tag-pick span{border:1px solid var(--line);border-radius:16px;padding:3px 12px;font-size:12px;cursor:pointer;color:var(--muted);}
+.compose .tag-pick span.sel{background:var(--teal);color:#fff;border-color:var(--teal);}
+.post{border:1px solid var(--line);border-radius:12px;padding:15px;margin-bottom:12px;background:#fff;}
+.post .p-head{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;}
+.post .p-name{font-size:13px;font-weight:600;}
+.post .p-anon{font-size:11px;color:var(--muted);background:#f1f5f9;padding:1px 8px;border-radius:10px;}
+.post .p-tag{font-size:11px;color:var(--teal);background:var(--mint);padding:1px 8px;border-radius:10px;}
+.post .p-time{font-size:11px;color:#94a3b8;margin-left:auto;}
+.post .p-text{font-size:14px;margin-bottom:10px;white-space:pre-wrap;}
+.post .p-actions{display:flex;gap:14px;}
+.post .p-act{border:none;background:none;color:var(--muted);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:4px;}
+.post .p-act:hover{color:var(--teal);}
+.post .p-act.liked{color:var(--teal);font-weight:600;}
+.post .p-act.report{color:#94a3b8;}
+.post .p-act.report:hover{color:var(--danger);}
+.post .p-replies{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);}
+.post .reply{font-size:13px;color:var(--muted);margin-bottom:6px;}
+.post .reply b{color:var(--teal-dark);}
+.post .r-input{display:flex;gap:8px;margin-top:8px;}
+.post .r-input input{flex:1;border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:13px;}
+.post .r-input input:focus{outline:none;border-color:var(--teal);}
+.post .r-input button{border:none;background:var(--teal);color:#fff;border-radius:8px;padding:7px 14px;font-size:13px;}
 
-  /* 呼吸练习 */
-  .breathe-box { text-align: center; padding: 10px 0; }
-  .breathe-circle {
-    width: 150px; height: 150px; border-radius: 50%;
-    margin: 14px auto;
-    background: radial-gradient(circle at 35% 35%, #5eead4, var(--teal));
-    display: flex; align-items: center; justify-content: center;
-    color: #fff; font-weight: 700; font-size: 17px;
-    transition: transform 4s ease-in-out, background 4s ease-in-out;
-  }
-  .breathe-circle.in { transform: scale(1.25); }
-  .breathe-circle.out { transform: scale(.9); }
-  .breathe-status { font-size: 14px; color: var(--muted); min-height: 22px; }
+/* ── 个人中心 ── */
+.profile-grid{display:grid;grid-template-columns:300px 1fr;gap:16px;}
+@media(max-width:760px){.profile-grid{grid-template-columns:1fr;}}
+.profile-side{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;text-align:center;align-self:start;}
+.profile-side .avatar{width:64px;height:64px;font-size:26px;margin:0 auto 10px;border-radius:50%;}
+.profile-side h3{margin-bottom:4px;}
+.profile-side .p-uid{font-size:12px;color:var(--muted);margin-bottom:14px;}
+.profile-side .p-stat{display:flex;justify-content:space-around;border-top:1px dashed var(--line);padding-top:12px;}
+.profile-side .p-stat b{display:block;font-size:18px;color:var(--teal);}
+.profile-side .p-stat span{font-size:11.5px;color:var(--muted);}
+.history-item{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line);border-radius:10px;padding:11px 14px;margin-bottom:9px;font-size:13.5px;background:#fff;}
+.history-item .h-score{font-weight:700;}
+.history-item .h-score.good{color:var(--teal);}.history-item .h-score.mid{color:#b45309;}.history-item .h-score.bad{color:var(--danger);}
+.history-item button{border:1px solid var(--line);background:#fff;border-radius:8px;padding:4px 12px;font-size:12px;color:var(--muted);}
+.history-item button:hover{color:var(--teal);border-color:var(--teal);}
+.api-form{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:18px;margin-top:14px;}
+.api-form .api-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;}
+.api-form select{width:160px;border:1.5px solid var(--line);border-radius:10px;padding:9px 12px;font-size:13.5px;}
+.api-form input{flex:1;min-width:220px;border:1.5px solid var(--line);border-radius:10px;padding:9px 12px;font-size:13.5px;}
+.api-form input:focus{outline:none;border-color:var(--teal);}
+.api-status{font-size:12.5px;margin-top:6px;}
 
-  /* 认知重构 */
-  .reframe-box { display: none; }
-  .reframe-box.show { display: block; }
-  .reframe-box input, .reframe-box textarea {
-    width: 100%; border: 1.5px solid #e2e8f0; border-radius: 10px;
-    padding: 10px 12px; font-size: 14px; font-family: inherit; margin-bottom: 10px;
-  }
-  .reframe-box input:focus, .reframe-box textarea:focus { outline: none; border-color: var(--teal); }
-
-  /* ── 社区 ── */
-  .compose {
-    border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px; margin-bottom: 18px;
-  }
-  .compose textarea {
-    width: 100%; border: none; resize: none; font-size: 14px; font-family: inherit;
-    padding: 4px 2px; min-height: 52px;
-  }
-  .compose textarea:focus { outline: none; }
-  .compose .row { display: flex; align-items: center; gap: 10px; }
-  .compose .anon-tag { font-size: 12px; color: var(--muted); }
-  .post {
-    border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; margin-bottom: 12px; background: #fff;
-  }
-  .post .p-head { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-  .post .p-name { font-size: 13px; font-weight: 600; }
-  .post .p-anon { font-size: 11px; color: var(--muted); background: #f1f5f9; padding: 1px 8px; border-radius: 10px; }
-  .post .p-time { font-size: 11px; color: #94a3b8; margin-left: auto; }
-  .post .p-text { font-size: 14px; margin-bottom: 10px; }
-  .post .p-actions { display: flex; gap: 14px; }
-  .post .p-act { border: none; background: none; color: var(--muted); font-size: 13px; cursor: pointer; font-family: inherit; display: flex; align-items: center; gap: 4px; }
-  .post .p-act:hover { color: var(--teal); }
-  .post .p-act.liked { color: var(--teal); font-weight: 600; }
-  .post .p-replies { margin-top: 10px; padding-top: 10px; border-top: 1px dashed #e2e8f0; }
-  .post .reply { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
-  .post .reply b { color: var(--teal-dark); }
-  .post .r-input { display: flex; gap: 8px; margin-top: 8px; }
-  .post .r-input input { flex: 1; border: 1px solid #e2e8f0; border-radius: 8px; padding: 7px 10px; font-size: 13px; font-family: inherit; }
-  .post .r-input input:focus { outline: none; border-color: var(--teal); }
-  .post .r-input button { border: none; background: var(--teal); color: #fff; border-radius: 8px; padding: 7px 14px; font-size: 13px; cursor: pointer; font-family: inherit; }
-
-  /* ── 隐私 ── */
-  .privacy-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-  .privacy-item { background: #fafafa; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px; }
-  .privacy-item h4 { font-size: 14px; margin-bottom: 6px; color: var(--teal); }
-  .privacy-item p { font-size: 13px; color: var(--muted); }
-
-  footer {
-    max-width: 1080px; margin: 0 auto; padding: 24px 20px 40px;
-    text-align: center; color: #94a3b8; font-size: 12px;
-    border-top: 1px solid #e2e8f0;
-  }
-  footer .hotline { color: var(--danger); font-weight: 600; }
-
-  /* 空态/加载态 */
-  .empty { text-align: center; padding: 40px 20px; color: var(--muted); font-size: 14px; }
-  .loading-dots::after {
-    content: '···'; animation: dots 1.2s steps(4, end) infinite;
-  }
-  @keyframes dots { 0% { content: ''; } 25% { content: '.'; } 50% { content: '..'; } 75% { content: '...'; } }
-
-  /* toast */
-  .toast {
-    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px);
-    background: var(--teal-dark); color: #fff; padding: 12px 24px;
-    border-radius: 12px; font-size: 14px; z-index: 999;
-    transition: transform .3s ease; opacity: 0; pointer-events: none;
-  }
-  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-
-  @media (max-width: 860px) {
-    .grid4 { grid-template-columns: repeat(2, 1fr); }
-    .train-grid, .rec-cards, .privacy-grid { grid-template-columns: 1fr; }
-    .hero { padding: 32px 24px; }
-    .hero h1 { font-size: 24px; }
-    .privacy-badge { display: none; }
-  }
-  @media (max-width: 520px) {
-    .q-options label { min-width: 100%; }
-    .score-hero { flex-direction: column; text-align: center; }
-  }
+/* ── 其他 ── */
+.empty{text-align:center;padding:36px 16px;color:var(--muted);font-size:14px;}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(90px);background:var(--teal-dark);color:#fff;padding:12px 24px;border-radius:12px;font-size:14px;z-index:999;transition:transform .3s ease;opacity:0;pointer-events:none;max-width:90vw;}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+.modal-mask{position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-mask.show{display:flex;}
+.modal{background:#fff;border-radius:16px;max-width:640px;width:100%;max-height:80vh;overflow-y:auto;padding:26px 28px;}
+.modal h3{font-size:17px;margin-bottom:12px;}
+.modal p{font-size:13.5px;color:#374151;margin-bottom:10px;}
+.modal .modal-foot{display:flex;justify-content:flex-end;gap:10px;margin-top:16px;}
+.loading-dots::after{content:'···';animation:dots 1.2s steps(4,end) infinite;}
+@keyframes dots{0%{content:'';}25%{content:'.';}50%{content:'..';}75%{content:'...';}}
+footer{max-width:1100px;margin:0 auto;padding:20px 20px 36px;text-align:center;color:#94a3b8;font-size:12px;border-top:1px solid var(--line);}
+footer .hotline{color:var(--danger);font-weight:600;}
+@media(max-width:520px){
+  .hero{padding:30px 22px;}
+  .hero h1{font-size:23px;}
+  .q-options label{min-width:100%;}
+  .result-hero{flex-direction:column;text-align:center;}
+  .grid4{grid-template-columns:1fr 1fr;}
+}
 </style>
 </head>
 <body>
 
-<!-- ═══ 顶栏 ═══ -->
 <header class="topbar">
   <div class="topbar-inner">
-    <div class="logo"><span class="mark">屿</span>心屿 MindIsle</div>
-    <nav class="nav">
-      <button class="active" data-page="home">首页</button>
-      <button data-page="test">心理测评</button>
+    <div class="logo" onclick="go('home')"><span class="mark">屿</span>心屿 MindIsle</div>
+    <nav class="nav" id="main-nav">
+      <button data-page="home">首页</button>
+      <button data-page="scales">测评中心</button>
       <button data-page="chat">AI 疏导</button>
       <button data-page="train">自助训练</button>
       <button data-page="community">朋辈社区</button>
+      <button data-page="profile">个人中心</button>
     </nav>
-    <span class="privacy-badge">🔒 匿名 · 加密 · 最小化采集</span>
+    <div class="user-area" id="user-area"></div>
   </div>
 </header>
 
 <main>
 
+<!-- ═══ 登录/注册 ═══ -->
+<div class="page" id="page-login">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <h2>心屿 MindIsle</h2>
+      <div class="auth-sub">登录后开始你的心理状态测评</div>
+      <div class="tabs">
+        <button id="tab-login" class="active" onclick="switchAuthTab('login')">登录</button>
+        <button id="tab-register" onclick="switchAuthTab('register')">注册</button>
+      </div>
+      <div id="auth-form"></div>
+      <div class="auth-tip">🔒 数据仅保存在你的浏览器本地，不上传任何服务器</div>
+    </div>
+  </div>
+</div>
+
 <!-- ═══ 首页 ═══ -->
-<div class="page active" id="page-home">
+<div class="page" id="page-home">
   <div class="hero">
-    <h1>你的情绪，值得被认真对待</h1>
-    <p>心屿是一个面向高校学生的 AI 心理健康分级干预平台。测一测你的心理状态 → 让 AI 陪你聊聊 → 领取专属自助训练 → 在匿名社区找到同行的伙伴。</p>
+    <h1 id="home-greet">你好，欢迎来到心屿</h1>
+    <p>面向高校学生的 AI 心理健康分级干预平台。用国际标准量表测一测 → 让 AI 陪你聊聊 → 领取专属自助训练 → 在匿名社区找到同行的伙伴。</p>
     <div class="cta-row">
-      <button class="btn btn-primary" onclick="go('test')">开始心理测评</button>
+      <button class="btn btn-primary" onclick="go('scales')">开始心理测评</button>
       <button class="btn btn-ghost" onclick="go('chat')">找 AI 聊聊</button>
     </div>
   </div>
-
   <div class="grid4">
-    <div class="feat-card" onclick="go('test')">
-      <div class="ico i-test">📋</div>
-      <h3>心理测评</h3>
-      <p>基于 PHQ-9 标准化量表，5 分钟了解自己的心理状态，生成可视化报告。</p>
+    <div class="feat-card" onclick="go('scales')">
+      <div class="ico i-test">📋</div><h3>测评中心</h3>
+      <p>5 套国际标准量表：抑郁、焦虑、压力、睡眠、自尊。</p>
     </div>
     <div class="feat-card" onclick="go('chat')">
-      <div class="ico i-chat">💬</div>
-      <h3>AI 疏导</h3>
-      <p>结合测评结果的个性化对话，倾听、共情、引导，发现危机立即预警转介。</p>
+      <div class="ico i-chat">💬</div><h3>AI 疏导</h3>
+      <p>接入大模型的倾听与引导，可配置你的专属 API。</p>
     </div>
     <div class="feat-card" onclick="go('train')">
-      <div class="ico i-train">🧠</div>
-      <h3>自助训练</h3>
-      <p>CBT 认知重构、正念呼吸、情绪日记——AI 为你生成千人千面的训练计划。</p>
+      <div class="ico i-train">🧠</div><h3>自助训练</h3>
+      <p>认知重构、呼吸练习、情绪日记、睡前引导等 6 个模块。</p>
     </div>
     <div class="feat-card" onclick="go('community')">
-      <div class="ico i-comm">🤝</div>
-      <h3>朋辈社区</h3>
-      <p>匿名互助社区，把"求助的羞耻"变成"同行的温暖"。</p>
+      <div class="ico i-comm">🤝</div><h3>朋辈社区</h3>
+      <p>匿名互助社区，你的帖子会一直保存在本地。</p>
     </div>
   </div>
-
+  <div class="panel" id="home-status" style="display:none;">
+    <div class="panel-title">📈 最近测评概览</div>
+    <div id="home-status-body"></div>
+  </div>
   <div class="panel">
     <div class="panel-title">🛡️ 为什么是「分级干预」而不是「又一个聊天机器人」</div>
-    <p style="font-size:14px; color:var(--muted);">
-      心屿遵循国际主流的分级干预模式（Stepped Care）：<b style="color:var(--teal);">测评 + AI 对话 → 分层</b>。轻度问题交给 AI 疏导与自助训练；中重度问题<b style="color:var(--teal);">强制转介</b>学校心理咨询中心的人工服务。AI 不替代专业咨询师，而是让有限的心理健康资源，用在最需要的人身上。
+    <p style="font-size:14px;color:var(--muted);">
+      心屿遵循国际主流的分级干预模式（Stepped Care）：<b style="color:var(--teal);">测评 + AI 对话 → 分层</b>。轻度问题交给 AI 疏导与自助训练；中重度问题<b style="color:var(--teal);">建议转介</b>学校心理咨询中心或专业机构。AI 不替代专业咨询师，而是让有限的心理健康资源用在最需要的人身上。所有量表均采用国际通用的标准化工具，带参考文献与使用说明。
     </p>
   </div>
 </div>
 
-<!-- ═══ 心理测评 ═══ -->
+<!-- ═══ 测评中心 ═══ -->
+<div class="page" id="page-scales">
+  <div class="panel">
+    <h2>📋 测评中心</h2>
+    <div class="sub">5 套国际通用标准化量表（Standardized Instruments），均标注出处与分界标准。测评结果自动保存到你的账号。</div>
+    <div class="scale-grid" id="scale-grid"></div>
+  </div>
+</div>
+
+<!-- ═══ 量表作答 ═══ -->
 <div class="page" id="page-test">
   <div class="panel">
-    <h2>📋 心理测评</h2>
-    <div class="sub">PHQ-9 抑郁症筛查量表（患者健康问卷）· 9 题 · 约 3 分钟 · 结果仅保存在你的浏览器本地</div>
-
-    <div class="scale-info">
-      <b>指导语：</b>过去两周内，以下问题困扰你的频率是？请根据真实感受作答，没有对错之分。本测评不能替代专业诊断，如有需要请前往学校心理咨询中心。
-    </div>
-
+    <div class="panel-title" id="test-title"></div>
+    <div class="scale-info" id="test-info"></div>
+    <div class="quiz-progress"><i id="quiz-progress-bar" style="width:0%"></i></div>
     <div id="quiz-area"></div>
-
-    <div style="margin-top: 14px;">
-      <button class="btn btn-teal" id="quiz-submit" onclick="submitQuiz()" disabled>查看测评结果</button>
-      <button class="btn" style="background:#f1f5f9;color:var(--muted);" onclick="resetQuiz()">重新作答</button>
+    <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="btn btn-teal" id="quiz-submit" onclick="submitQuiz()" disabled>查看结果</button>
+      <button class="btn btn-soft" onclick="resetQuiz()">重新作答</button>
+      <button class="btn" style="background:#f1f5f9;color:var(--muted);" onclick="go('scales')">返回量表列表</button>
     </div>
+  </div>
+</div>
 
-    <div class="result-box" id="result-box">
-      <div class="score-hero" id="score-hero">
-        <div class="score-num" id="score-num">0</div>
-        <div class="score-info">
-          <div class="level" id="score-level">—</div>
-          <p id="score-desc">—</p>
-        </div>
-      </div>
-
-      <div class="bars" id="bars"></div>
-
-      <div class="rec-cards" id="rec-cards"></div>
-
-      <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
-        <button class="btn btn-teal" onclick="go('chat')">带着结果去找 AI 聊聊 →</button>
-        <button class="btn" style="background:var(--mint); color:var(--teal); border:1px solid var(--mint-border);" onclick="go('train')">查看个性化训练计划 →</button>
+<!-- ═══ 测评结果 ═══ -->
+<div class="page" id="page-result">
+  <div class="panel">
+    <div class="panel-title" id="result-title"></div>
+    <div class="result-hero" id="result-hero">
+      <div class="score-num" id="result-score">0</div>
+      <div class="score-info">
+        <div class="level" id="result-level">—</div>
+        <p id="result-desc">—</p>
       </div>
     </div>
+    <div class="scale-info ref" id="result-ref"></div>
+    <div class="rec-cards" id="result-recs"></div>
+    <div class="warn-box" id="result-warn" style="display:none;"></div>
+    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="btn btn-teal" onclick="go('chat')">带着结果去找 AI 聊聊 →</button>
+      <button class="btn btn-soft" onclick="go('train')">去做匹配的自助训练 →</button>
+      <button class="btn" style="background:#f1f5f9;color:var(--muted);" onclick="go('scales')">再测一个量表</button>
+    </div>
+  </div>
+  <div class="panel" id="report-panel" style="display:none;">
+    <div class="panel-title">🧭 综合心理健康报告</div>
+    <p class="sub">基于你已完成的所有量表，五维雷达展示当前心理状态画像。分数越高表示该维度困扰越明显。</p>
+    <div class="chart-box"><svg class="svg-chart" id="radar-chart" width="480" height="400" viewBox="0 0 480 400"></svg></div>
+    <div id="report-summary"></div>
   </div>
 </div>
 
@@ -440,13 +378,12 @@
 <div class="page" id="page-chat">
   <div class="panel">
     <h2>💬 AI 疏导</h2>
-    <div class="sub">心屿 AI 基于测评结果与心理学沟通技巧进行倾听与疏导。你的对话内容匿名化处理，仅用于生成个性化建议。</div>
-
+    <div class="sub" id="chat-mode-tip">未配置 AI 接口：当前为内置演示对话模式。前往<a href="javascript:go('profile')" style="color:var(--teal);">个人中心</a>填入你的大模型 API Key，即可解锁真实 AI 对话。</div>
     <div class="chat-wrap">
       <div class="chat-head">
         <div class="ava">屿</div>
-        <div class="who"><b>心屿 AI</b><span>倾听者 · 非专业诊断工具</span></div>
-        <span class="hint">遇到危机信号会自动转介</span>
+        <div class="who"><b>心屿 AI</b><span id="chat-mode-label">倾听者 · 演示模式</span></div>
+        <span class="hint">遇到危机信号会自动转介<br>⚠️ AI 不能替代专业咨询</span>
       </div>
       <div class="chat-body" id="chat-body"></div>
       <div class="chat-input">
@@ -454,12 +391,12 @@
         <button class="btn btn-teal" onclick="sendChat()" style="padding:0 22px;">发送</button>
       </div>
     </div>
-
     <div class="suggest-row">
       <button class="suggest" onclick="quickChat('最近总是失眠，脑子停不下来')">最近总是失眠</button>
       <button class="suggest" onclick="quickChat('考试压力好大，感觉要撑不住了')">考试压力大</button>
       <button class="suggest" onclick="quickChat('觉得自己很孤独，没有人理解我')">感到孤独</button>
       <button class="suggest" onclick="quickChat('对未来很迷茫，不知道怎么办')">对未来迷茫</button>
+      <button class="suggest" onclick="quickChat('和室友闹矛盾了，心情很差')">人际关系烦恼</button>
     </div>
   </div>
 </div>
@@ -468,48 +405,8 @@
 <div class="page" id="page-train">
   <div class="panel">
     <h2>🧠 自助训练</h2>
-    <div class="sub">AI 根据你的测评结果与对话内容生成个性化训练计划。以下为示例模块，正式版将千人千面。</div>
-
-    <div class="train-grid">
-      <div class="train-card">
-        <span class="t-tag">CBT 认知行为</span>
-        <h4>认知重构练习</h4>
-        <p>识别自动化的消极想法，用证据检验它，重构为更平衡的思维。抑郁/焦虑的核心训练。</p>
-        <button class="t-btn" onclick="toggleReframe()">开始练习</button>
-        <div class="reframe-box" id="reframe-box">
-          <input id="reframe-thought" placeholder="1. 刚才让我感到难受的想法是？">
-          <textarea id="reframe-evidence" rows="2" placeholder="2. 支持/反对这个想法的证据有哪些？"></textarea>
-          <input id="reframe-new" placeholder="3. 一个更客观、平衡的想法是？">
-          <button class="t-btn" onclick="doReframe()">完成重构</button>
-        </div>
-      </div>
-
-      <div class="train-card">
-        <span class="t-tag">正念 · 放松</span>
-        <h4>4-7-8 呼吸练习</h4>
-        <p>吸气 4 秒 → 屏息 7 秒 → 呼气 8 秒。适合考前焦虑、入睡困难时使用。</p>
-        <button class="t-btn" onclick="startBreathe()">开始呼吸练习</button>
-        <div class="breathe-box" id="breathe-box" style="display:none;">
-          <div class="breathe-circle" id="breathe-circle">准备</div>
-          <div class="breathe-status" id="breathe-status">点击开始，跟随圆圈的节奏呼吸</div>
-          <button class="t-btn" onclick="stopBreathe()" style="margin-top:8px;">结束练习</button>
-        </div>
-      </div>
-
-      <div class="train-card">
-        <span class="t-tag">情绪管理</span>
-        <h4>情绪日记</h4>
-        <p>记录每天的情绪波动、触发事件与应对方式。坚持两周，AI 会为你生成情绪规律报告。</p>
-        <button class="t-btn" onclick="toast('情绪日记模块开发中，先试试其他训练吧')">记录今天</button>
-      </div>
-
-      <div class="train-card">
-        <span class="t-tag">睡眠改善</span>
-        <h4>睡前放松引导</h4>
-        <p>渐进式肌肉放松 + 正念身体扫描，帮你从"思维反刍"中抽离，进入睡眠状态。</p>
-        <button class="t-btn" onclick="toast('睡前引导模块开发中，先试试呼吸练习吧')">开始引导</button>
-      </div>
-    </div>
+    <div class="sub">基于积极心理学与 CBT/正念等循证方法设计的练习，训练记录保存在你的账号下。</div>
+    <div class="train-grid" id="train-grid"></div>
   </div>
 </div>
 
@@ -517,341 +414,903 @@
 <div class="page" id="page-community">
   <div class="panel">
     <h2>🤝 朋辈社区</h2>
-    <div class="sub">匿名 · 友善 · 不评判。这里没有专家，只有和你一样在成长的同龄人。</div>
-
+    <div class="sub">匿名 · 友善 · 不评判。帖子保存在你的本地，刷新不丢失；系统会自动过滤不当内容。</div>
     <div class="compose">
       <textarea id="post-input" placeholder="分享你的心情、困惑，或者给陌生人一句鼓励……（匿名发布）"></textarea>
       <div class="row">
-        <span class="anon-tag">🕶️ 将以「匿名同学」身份发布</span>
-        <button class="btn btn-teal" style="margin-left:auto; padding:9px 20px; font-size:14px;" onclick="addPost()">发布</button>
+        <div class="tag-pick" id="post-tag-pick">
+          <span data-tag="心情分享" class="sel">心情分享</span>
+          <span data-tag="求助">求助</span>
+          <span data-tag="经验分享">经验分享</span>
+          <span data-tag="鼓励">鼓励</span>
+        </div>
+        <span class="anon-tag" style="font-size:12px;color:var(--muted);">🕶️ 匿名发布</span>
+        <button class="btn btn-teal" style="margin-left:auto;padding:9px 20px;font-size:14px;" onclick="addPost()">发布</button>
       </div>
     </div>
-
     <div id="post-list"></div>
   </div>
 </div>
 
+<!-- ═══ 个人中心 ═══ -->
+<div class="page" id="page-profile">
+  <div class="panel">
+    <h2>👤 个人中心</h2>
+    <div class="sub">账号信息、测评历史与 AI 配置</div>
+    <div class="profile-grid">
+      <div class="profile-side">
+        <div class="avatar" id="pf-avatar">屿</div>
+        <h3 id="pf-name">—</h3>
+        <div class="p-uid" id="pf-uid">—</div>
+        <div class="p-stat">
+          <div><b id="pf-count">0</b><span>测评次数</span></div>
+          <div><b id="pf-days">0</b><span>使用天数</span></div>
+        </div>
+        <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px;">
+          <button class="btn btn-soft" onclick="exportData()" style="font-size:13px;padding:9px;">导出我的数据</button>
+          <button class="btn" style="background:var(--danger-bg);color:var(--danger);border:1px solid #fecaca;font-size:13px;padding:9px;" onclick="clearAllData()">清除全部本地数据</button>
+        </div>
+      </div>
+      <div>
+        <div class="panel-title">📊 测评历史与趋势</div>
+        <div class="chart-box" id="trend-chart-box"></div>
+        <div id="history-list"></div>
+
+        <div class="panel-title" style="margin-top:20px;">🔧 AI 模型配置</div>
+        <div class="api-form">
+          <p style="font-size:13px;color:var(--muted);margin-bottom:10px;">
+            填入任意一个国内大模型的 API Key，AI 疏导即可从"演示模式"切换为"真实大模型对话"。Key 只保存在你的浏览器本地，不会上传。<br>
+            <b>推荐：</b>智谱开放平台（open.bigmodel.cn）的 GLM-4.7-Flash 完全免费，注册后到「API Keys」页面创建即可。
+          </p>
+          <div class="api-row">
+            <select id="api-provider">
+              <option value="zhipu">智谱 GLM（免费）</option>
+              <option value="deepseek">DeepSeek</option>
+              <option value="qwen">通义千问</option>
+              <option value="kimi">Kimi Moonshot</option>
+            </select>
+            <input id="api-key" type="password" placeholder="粘贴你的 API Key（sk-…）">
+            <button class="btn btn-teal" style="padding:9px 18px;font-size:13.5px;" onclick="saveApiKey()">保存</button>
+            <button class="btn" style="background:#f1f5f9;color:var(--muted);padding:9px 14px;font-size:13.5px;" onclick="clearApiKey()">清除</button>
+          </div>
+          <div class="api-status" id="api-status"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
 <footer>
   <p>⚠️ 如果你正处于危机中，请立即拨打 <span class="hotline">全国心理援助热线 12356</span> 或联系学校心理咨询中心，或前往最近的精神卫生机构。</p>
-  <p style="margin-top:6px;">心屿 MindIsle · 校园心理健康 AI 分级干预平台 · 中国国际大学生创新大赛参赛项目 · 原型演示版 v0.9</p>
+  <p style="margin-top:6px;">心屿 MindIsle · 校园心理健康 AI 分级干预平台 v2.0 · 中国国际大学生创新大赛参赛项目</p>
+  <p style="margin-top:4px;">量表版权：PHQ-9（Spitzer et al., JAMA 1999）、GAD-7（Spitzer et al., 2006）、PSS-10（Cohen et al., 1983）、ISI（Morin, 1993）、RSES（Rosenberg, 1965）均允许免费用于研究与教育用途，使用时需注明出处。本平台测评结果仅供自我筛查参考，不能替代专业诊断。</p>
 </footer>
 
+<div class="modal-mask" id="modal-mask" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modal-body"></div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script>
-/* ═══════════════ 工具 ═══════════════ */
-function $(id) { return document.getElementById(id); }
-function go(page) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  $('page-' + page).classList.add('active');
-  document.querySelectorAll('.nav button').forEach(b => b.classList.toggle('active', b.dataset.page === page));
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+/* ═══════════════ 工具函数 ═══════════════ */
+function $(id){return document.getElementById(id);}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function fmtDate(ts){const d=new Date(ts);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');}
+function fmtDay(ts){const d=new Date(ts);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 let toastTimer;
-function toast(msg) {
-  const t = $('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2800);}
+function go(page){
+  if(!DB.currentUser() && page!=='login'){showAuth();return;}
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  $('page-'+page).classList.add('active');
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(page==='chat')maybeInjectScaleContext();
 }
+function openModal(html){$('modal-body').innerHTML=html;$('modal-mask').classList.add('show');}
+function closeModal(){$('modal-mask').classList.remove('show');}
 
-/* ═══════════════ 心理测评（PHQ-9） ═══════════════ */
-const QUESTIONS = [
-  '做事时提不起劲或没有兴趣',
-  '感到心情低落、沮丧或绝望',
-  '入睡困难、睡不安稳或睡眠过多',
-  '感觉疲倦或没有活力',
-  '食欲不振或吃太多',
-  '觉得自己很糟、觉得自己很失败、或让自己或家人失望',
-  '对事物专注有困难（例如阅读报纸或看电视时）',
-  '行动或说话速度缓慢到别人已经察觉，或刚好相反——变得比平日更烦躁或坐立不安',
-  '有不如死掉或用某种方式伤害自己的念头'
-];
-const OPTIONS = [
-  ['完全没有', 0], ['有几天', 1], ['一半以上天数', 2], ['几乎每天', 3]
-];
-let answers = new Array(9).fill(null);
-
-function renderQuiz() {
-  const area = $('quiz-area');
-  area.innerHTML = QUESTIONS.map((q, i) => `
-    <div class="q-item">
-      <div class="q-text">${i + 1}. ${q}</div>
-      <div class="q-options">
-        ${OPTIONS.map(([label, val]) => `
-          <label>
-            <input type="radio" name="q${i}" value="${val}" onchange="pick(${i}, ${val})">
-            <span>${label}</span>
-          </label>
-        `).join('')}
-      </div>
-    </div>`).join('');
-}
-function pick(i, val) {
-  answers[i] = val;
-  $('quiz-submit').disabled = answers.some(a => a === null);
-}
-function submitQuiz() {
-  const total = answers.reduce((a, b) => a + b, 0);
-  showResult(total);
-}
-function resetQuiz() {
-  answers = new Array(9).fill(null);
-  renderQuiz();
-  $('quiz-submit').disabled = true;
-  $('result-box').classList.remove('show');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function showResult(total) {
-  let level, desc, cls;
-  if (total <= 4) {
-    level = '心理状态良好'; cls = 'mild';
-    desc = '整体状态平稳，继续保持规律作息与运动。建议每周做一次正念练习巩固心理韧性。';
-  } else if (total <= 9) {
-    level = '轻度情绪困扰'; cls = 'mild';
-    desc = '存在轻度情绪波动，属于正常范围，但值得关注。推荐 AI 疏导 + 认知重构训练。';
-  } else if (total <= 14) {
-    level = '中度情绪困扰'; cls = 'moderate';
-    desc = '情绪困扰较明显，建议坚持使用自助训练，并预约学校心理咨询中心进行一次专业评估。';
-  } else {
-    level = '中重度困扰 · 建议转介'; cls = 'severe';
-    desc = '你的感受值得被专业支持。请尽快预约学校心理咨询中心或拨打心理援助热线 12356，AI 将协助你完成转介。';
+/* ═══════════════ 密码哈希 & 本地数据库 ═══════════════ */
+async function sha256(str){
+  try{
+    const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  }catch(e){ // 极老浏览器兜底（演示用）
+    let h=0;for(let i=0;i<str.length;i++){h=(Math.imul(31,h)+str.charCodeAt(i))|0;}
+    return 'x'+Math.abs(h).toString(36);
   }
-  $('result-box').classList.add('show');
-  const hero = $('score-hero');
-  hero.className = 'score-hero ' + cls;
-  $('score-num').textContent = total;
-  $('score-level').textContent = level;
-  $('score-desc').textContent = desc;
-
-  // 可视化条形图（维度占比）
-  const dims = [
-    ['情绪低落', answers[1] + answers[0]],
-    ['睡眠问题', answers[2]],
-    ['精力下降', answers[3] + answers[4]],
-    ['自我评价', answers[5]],
-    ['专注困难', answers[6]],
-    ['异常状态', answers[7]]
-  ];
-  const max = Math.max(...dims.map(d => d[1]), 3);
-  $('bars').innerHTML = dims.map(([label, v]) => `
-    <div class="bar-row">
-      <span class="b-label">${label}</span>
-      <div class="bar-track"><div class="bar-fill" data-w="${(v / max) * 100}" style="background:${v >= 3 ? '#dc2626' : v >= 2 ? '#d97706' : '#0e7490'};"></div></div>
-      <span class="b-val">${v}/6</span>
-    </div>`).join('');
-  setTimeout(() => {
-    document.querySelectorAll('.bar-fill').forEach(b => b.style.width = b.dataset.w + '%');
-  }, 60);
-
-  const recs = [
-    { t: 'AI 疏导', d: '跟心屿 AI 聊聊你的感受，它会用心理学方法陪你梳理。' },
-    { t: '认知重构', d: '识别消极自动化思维，用证据检验它，重建平衡视角。' },
-    { t: '4-7-8 呼吸', d: total >= 10 ? '高压力状态下的快速镇定工具，睡前效果更佳。' : '日常放松训练，提升心理韧性。' },
-    { t: '转介建议', d: total >= 15 ? '强烈建议尽快联系学校心理咨询中心。' : '保持现状，每周复测一次跟踪变化。' }
-  ];
-  $('rec-cards').innerHTML = recs.map(r => `<div class="rec-card"><b>${r.t}</b><br>${r.d}</div>`).join('');
-  window.scrollTo({ top: $('result-box').offsetTop - 120, behavior: 'smooth' });
 }
-
-/* ═══════════════ AI 疏导（演示模式） ═══════════════ */
-const CHAT_HINTS = {
-  '失眠': '睡眠问题常常和"睡前思维反刍"有关。可以试试：睡前一小时放下手机，把脑子里转的事写下来，然后做一组 4-7-8 呼吸（吸气4秒-屏息7秒-呼气8秒，循环4轮）。你最近是不是有什么事情一直放不下？',
-  '睡': '睡眠问题常常和"睡前思维反刍"有关。可以试试：睡前一小时放下手机，把脑子里转的事写下来，然后做一组 4-7-8 呼吸（吸气4秒-屏息7秒-呼气8秒，循环4轮）。你最近是不是有什么事情一直放不下？',
-  '考试': '面对重要考试感到压力，是非常正常的反应，说明你在乎它。试试把"我必须考好"换成"我只需要做到当下能做的"。如果焦虑已经影响到睡眠和饮食，记得预约学校的心理咨询中心，他们有专业的减压辅导。',
-  '压力': '压力大的时候，人容易把目标定得太高、把自己逼得太紧。可以试着把任务拆小，完成一项就肯定自己一次。你愿意跟我具体说说，是哪件事让你压力最大吗？',
-  '孤独': '孤独感是一种信号，它在告诉你：你需要连接。其实很多同学都有同样的感受，只是没人先开口。要不要去朋辈社区看看？那里有很多匿名的同龄人在分享相似的感受，也可以试着加入一个社团。',
-  '迷茫': '迷茫是成长的一部分，说明你正在探索"我想成为什么样的人"。可以试着列三个问题：我擅长什么？我享受什么？什么对我重要？不用急着找到答案，带着问题生活，答案会慢慢浮现。',
-  '难过': '难过的时候，不需要立刻"好起来"。允许自己拥有这种感受，本身就是一种照顾。如果愿意，可以试试情绪日记：写下今天发生了什么、你的感受、你做了什么应对——这会帮你更了解自己。',
-  '焦虑': '焦虑常常是对"未来不确定"的过度预警。一个有用的方法：把"我担心的事"分成两类——能控制的，和不能控制的。把精力放在能控制的那部分上。要不要现在试试做个认知重构练习？'
+const DB={
+  get users(){try{return JSON.parse(localStorage.getItem('xinyu-users')||'{}');}catch(e){return {};}},
+  saveUsers(u){localStorage.setItem('xinyu-users',JSON.stringify(u));},
+  get session(){try{return JSON.parse(localStorage.getItem('xinyu-session')||'null');}catch(e){return null;}},
+  setSession(s){localStorage.setItem('xinyu-session',JSON.stringify(s));},
+  clearSession(){localStorage.removeItem('xinyu-session');},
+  currentUser(){const s=this.session;if(!s)return null;return this.users[s.username]||null;},
+  saveUser(u){const users=this.users;users[u.username]=u;this.saveUsers(users);},
+  dataKey(k){const u=this.session;return 'xinyu-'+k+'-'+(u?u.username:'anon');},
+  getData(k,def){try{return JSON.parse(localStorage.getItem(this.dataKey(k))||'null')??def;}catch(e){return def;}},
+  setData(k,v){localStorage.setItem(this.dataKey(k),JSON.stringify(v));}
 };
-const CRISIS_WORDS = ['自杀', '不想活', '轻生', '结束生命', '伤害自己', '自残', '活着没意思', '消失'];
-const FALLBACKS = [
+
+/* ═══════════════ 用户系统 ═══════════════ */
+function switchAuthTab(tab){
+  $('tab-login').classList.toggle('active',tab==='login');
+  $('tab-register').classList.toggle('active',tab==='register');
+  if(tab==='login'){
+    $('auth-form').innerHTML=`
+      <div class="field"><label>用户名 / 昵称</label><input id="au-name" placeholder="输入你的用户名"></div>
+      <div class="field"><label>密码</label><input id="au-pass" type="password" placeholder="输入密码"></div>
+      <button class="btn btn-teal" style="width:100%;" onclick="doLogin()">登 录</button>`;
+  }else{
+    $('auth-form').innerHTML=`
+      <div class="field"><label>昵称（展示用）</label><input id="ru-nick" placeholder="例如：小屿同学"></div>
+      <div class="field"><label>用户名（登录用，3-20位）</label><input id="ru-name" placeholder="例如：xinyu2026"></div>
+      <div class="field"><label>密码（至少6位）</label><input id="ru-pass" type="password" placeholder="设置密码"></div>
+      <div class="field"><label>确认密码</label><input id="ru-pass2" type="password" placeholder="再次输入密码"></div>
+      <button class="btn btn-teal" style="width:100%;" onclick="doRegister()">注 册</button>`;
+  }
+}
+async function doLogin(){
+  const name=$('au-name').value.trim(),pass=$('au-pass').value;
+  if(!name||!pass){toast('请填写用户名和密码');return;}
+  const users=DB.users;
+  if(!users[name]){toast('该用户名不存在，请先注册');return;}
+  const hash=await sha256(pass);
+  if(users[name].password!==hash){toast('密码错误，请重试');return;}
+  DB.setSession({username:name,loginAt:Date.now()});
+  toast('欢迎回来，'+users[name].nickname+' 👋');
+  afterLogin();
+}
+async function doRegister(){
+  const nick=$('ru-nick').value.trim(),name=$('ru-name').value.trim(),pass=$('ru-pass').value,pass2=$('ru-pass2').value;
+  if(!nick){toast('请填写昵称');return;}
+  if(!/^[A-Za-z0-9_\u4e00-\u9fa5]{3,20}$/.test(name)){toast('用户名需 3-20 位（字母/数字/下划线/中文）');return;}
+  if(pass.length<6){toast('密码至少 6 位');return;}
+  if(pass!==pass2){toast('两次密码不一致');return;}
+  const users=DB.users;
+  if(users[name]){toast('该用户名已被注册');return;}
+  users[name]={nickname:nick,password:await sha256(pass),createdAt:Date.now(),records:[],trainings:[],chatCount:0};
+  DB.saveUsers(users);
+  DB.setSession({username:name,loginAt:Date.now()});
+  toast('注册成功，欢迎加入心屿 🎉');
+  afterLogin();
+}
+function showAuth(){
+  switchAuthTab('login');
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  $('page-login').classList.add('active');
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+}
+function logout(){
+  DB.clearSession();
+  toast('已退出登录');
+  showAuth();
+}
+function afterLogin(){
+  renderUserArea();
+  renderHome();
+  go('home');
+}
+function renderUserArea(){
+  const u=DB.currentUser();
+  const area=$('user-area');
+  if(!u){area.innerHTML='<button class="u-btn" onclick="showAuth()">登录 / 注册</button>';return;}
+  area.innerHTML=`<div class="user-menu" onclick="go('profile')"><span class="avatar">${esc(u.nickname[0]||'屿')}</span><b>${esc(u.nickname)}</b></div>
+  <button class="u-btn" onclick="logout()">退出</button>`;
+}
+/* ═══════════════ 量表数据（国际标准） ═══════════════ */
+const SCALES=[
+  {id:'phq9',name:'抑郁自评量表',en:'PHQ-9 · Patient Health Questionnaire-9',time:'约3分钟',items:9,
+   intro:'过去两周内，以下问题困扰你的频率是？本量表为国际通用的抑郁症筛查工具（PHQ-9），总分 0-27 分。',
+   options:[['完全没有',0],['有几天',1],['一半以上天数',2],['几乎每天',3]],
+   questions:['做事时提不起劲或没有兴趣','感到心情低落、沮丧或绝望','入睡困难、睡不安稳或睡眠过多','感觉疲倦或没有活力','食欲不振或吃太多','觉得自己很糟、觉得自己很失败、或让自己或家人失望','对事物专注有困难（例如阅读报纸或看电视时）','行动或说话速度缓慢到别人已经察觉，或刚好相反——变得比平日更烦躁或坐立不安','有不如死掉或用某种方式伤害自己的念头'],
+   max:27,
+   levels:[{min:0,max:4,label:'心理状态良好',cls:'mild',desc:'整体状态平稳。继续保持规律作息、运动与社交，建议每周做一次正念练习巩固心理韧性。',recs:[['巩固练习','每周做 1-2 次呼吸或正念练习，保持好状态'],['规律生活','坚持固定作息与运动，维持支持性社交']]},
+     {min:5,max:9,label:'轻度情绪困扰',cls:'mild',desc:'存在轻度情绪波动，属于正常范围但值得关注。多数同学经过自我调节可以缓解。',recs:[['AI 疏导','和心屿聊聊你的感受，梳理近期压力源'],['认知重构','练习识别消极自动化思维'],['4-7-8 呼吸','每天睡前做一组，帮助放松']]},
+     {min:10,max:14,label:'中度情绪困扰',cls:'moderate',desc:'情绪困扰较明显，可能已影响学习与生活。建议坚持使用自助训练，并预约学校心理咨询中心进行一次专业评估。',recs:[['坚持训练','每天完成至少一项自助训练（情绪日记/认知重构）'],['预约咨询','建议预约学校心理咨询中心做专业评估'],['减少压力源','适当降低近期任务强度，保证睡眠']]},
+     {min:15,max:19,label:'中重度困扰 · 建议寻求专业帮助',cls:'severe',desc:'你的感受值得被专业支持。请尽快预约学校心理咨询中心或专业机构进行评估，AI 只能提供辅助支持。',recs:[['立即转介','尽快联系学校心理咨询中心或拨打 12356'],['告知信任的人','把情况告诉辅导员或信任的亲友'],['安全第一','暂时远离高危环境，保持与他人的联系']]},
+     {min:20,max:27,label:'重度困扰 · 请尽快就医评估',cls:'severe',desc:'你的感受非常需要专业支持。请尽快联系学校心理咨询中心、拨打心理援助热线 12356，或前往精神卫生专业机构。请一定不要独自承受。',recs:[['紧急转介','立即联系专业机构：热线 12356 或学校心理中心'],['告知他人','务必告知辅导员/室友/家人，请他们陪同'],['停止独处','近期不要单独行动，保持与信任的人联系']]}],
+   ref:'PHQ-9: Spitzer RL, Kroenke K, Williams JBW. JAMA. 1999;282(18):1737-1744. 分界标准：0-4 无/轻度，5-9 轻度，10-14 中度，15-19 中重度，20-27 重度。'},
+  {id:'gad7',name:'焦虑自评量表',en:'GAD-7 · Generalized Anxiety Disorder-7',time:'约2分钟',items:7,
+   intro:'过去两周内，你有多频繁地被以下问题困扰？GAD-7 是国际通用的广泛性焦虑筛查工具，总分 0-21 分。',
+   options:[['完全没有',0],['有几天',1],['一半以上天数',2],['几乎每天',3]],
+   questions:['感到紧张、焦虑或急切','不能停止或控制担忧','对各种各样的事情担忧过多','很难放松下来','由于不安而无法静坐','变得容易烦恼或被激怒','感到似乎有可怕的事情会发生'],
+   max:21,
+   levels:[{min:0,max:4,label:'焦虑水平正常',cls:'mild',desc:'焦虑水平在正常范围。',recs:[['4-7-8 呼吸','感到紧张时随时可用'],['保持规律','维持规律作息与运动']]},
+     {min:5,max:9,label:'轻度焦虑',cls:'mild',desc:'存在轻度焦虑，常见于考试季或压力期，多数可自行调节。',recs:[['呼吸练习','每天做 2 组 4-7-8 呼吸'],['认知重构','练习识别「灾难化」想法'],['接地练习','焦虑来袭时用 5-4-3-2-1 接地法']]},
+     {min:10,max:14,label:'中度焦虑',cls:'moderate',desc:'焦虑程度较明显，可能影响睡眠与专注力，建议积极干预。',recs:[['坚持训练','每天完成接地练习或呼吸训练'],['情绪日记','记录焦虑的触发事件与强度'],['建议咨询','考虑预约学校心理咨询中心']]},
+     {min:15,max:21,label:'重度焦虑 · 建议专业评估',cls:'severe',desc:'焦虑水平较高，请尽快寻求专业帮助，不要独自硬扛。',recs:[['立即转介','联系学校心理咨询中心或拨打 12356'],['告知信任的人','把情况告诉辅导员或亲友'],['安全第一','保持与他人的联系']]}],
+   ref:'GAD-7: Spitzer RL, Kroenke K, Williams JBW, Löwe B. Arch Intern Med. 2006;166(10):1092-1097. 分界：0-4 无/轻微，5-9 轻度，10-14 中度，15-21 重度。'},
+  {id:'pss10',name:'压力知觉量表',en:'PSS-10 · Perceived Stress Scale',time:'约3分钟',items:10,
+   intro:'过去一个月内，以下情况多久发生一次？PSS-10（Cohen 编制）是国际最常用的压力感知测量工具，总分 0-40 分。',
+   options:[['从不',0],['几乎没有',1],['有时',2],['经常',3],['总是',4]],
+   questions:['因为发生意外的事情而感到心烦意乱','感到无法控制生活中重要的事情','感到紧张和压力','能够成功地处理恼人的生活麻烦（反向）','感到自己能有效地处理生活中发生的重大变化（反向）','发现自己无法处理所有自己必须做的事情','能够控制生活中的恼怒情绪（反向）','感到事情顺心如意（反向）','被一些超出自己控制范围的事情激怒','感到困难的事情堆积如山，自己无法克服'],
+   reverse:[3,4,6,7],
+   max:40,
+   levels:[{min:0,max:13,label:'压力水平较低',cls:'mild',desc:'当前感知压力处于较低水平，心理状态较轻松。',recs:[['保持习惯','维持现有的良好调节方式'],['三件好事','可以尝试积极心理练习巩固状态']]},
+     {min:14,max:26,label:'中等压力',cls:'moderate',desc:'感知压力处于中等水平，常见于学业与生活过渡期，需要主动调节。',recs:[['压力管理','每天做呼吸练习 + 情绪日记'],['合理规划','把大任务拆小，减少「堆积感」'],['运动调节','每周 3 次 30 分钟运动']]},
+     {min:27,max:40,label:'高压力水平',cls:'severe',desc:'感知压力较高，长期处于此状态可能影响身心健康，建议积极调整并寻求支持。',recs:[['立即行动','减少任务负荷，优先保证睡眠'],['求助支持','与辅导员/朋友/心理咨询中心沟通'],['每天训练','坚持接地练习与正念呼吸']]}],
+   ref:'PSS-10: Cohen S, Kamarck T, Mermelstein R. J Health Soc Behav. 1983;24(4):385-396. 常用解读：0-13 低压力，14-26 中等，27-40 高压力。第 4、5、7、8 题反向计分。'},
+  {id:'isi7',name:'失眠严重程度指数',en:'ISI · Insomnia Severity Index',time:'约2分钟',items:7,
+   intro:'请评估你最近两周的睡眠状况。ISI（Morin 编制）是国际通用的失眠严重程度评估工具，总分 0-28 分。',
+   options:[['完全没有',0],['轻度',1],['中度',2],['重度',3],['极重度',4]],
+   questions:['入睡困难','维持睡眠困难（夜间易醒）','早醒问题（醒后难以再入睡）','你对当前睡眠模式的满意程度（0=非常满意 → 4=非常不满意）','你的睡眠问题在多大程度上干扰了你的日常功能（0=无干扰 → 4=非常严重干扰）','你的睡眠问题在多大程度上降低了你的生活质量（0=无 → 4=非常多）','你对自己当前的睡眠问题有多担心/苦恼（0=完全不 → 4=非常）'],
+   max:28,
+   levels:[{min:0,max:7,label:'无明显失眠',cls:'mild',desc:'睡眠状况良好，未达到临床失眠标准。',recs:[['保持作息','维持规律睡眠时间'],['睡前放松','可用 4-7-8 呼吸助眠']]},
+     {min:8,max:14,label:'阈下失眠（轻度）',cls:'mild',desc:'存在轻度睡眠困扰，尚未达到临床失眠标准，但值得关注。',recs:[['睡眠卫生','睡前一小时远离屏幕'],['4-7-8 呼吸','睡前练习帮助放松'],['刺激控制','睡不着就离开床，困了再回来']]},
+     {min:15,max:21,label:'中度失眠（临床水平）',cls:'moderate',desc:'达到临床失眠标准，建议接受专业评估与干预（如 CBT-I 失眠认知行为治疗）。',recs:[['寻求帮助','建议咨询学校心理中心，CBT-I 对失眠有效'],['固定起床时间','无论睡多久，每天固定时间起床'],['睡前引导','使用「睡前放松引导」训练模块']]},
+     {min:22,max:28,label:'重度失眠',cls:'severe',desc:'失眠程度较严重，强烈建议尽快寻求专业医疗帮助。',recs:[['尽快就医','前往睡眠门诊或精神科评估'],['告知家人','寻求家人陪伴与支持'],['避免自行用药','不要自行服用安眠药']]}],
+   ref:'ISI: Morin CM. Insomnia: Psychological Assessment and Management. Guilford Press, 1993. 分界：0-7 无临床显著失眠，8-14 阈下，15-21 中度（临床失眠），22-28 重度。'},
+  {id:'rses',name:'自尊量表',en:'RSES · Rosenberg Self-Esteem Scale',time:'约2分钟',items:10,
+   intro:'请根据你平时对自己的看法，选择最符合的选项。RSES（Rosenberg 编制，季益富、于欣 1993 中文修订版）是国际应用最广泛的自尊测量工具。',
+   options:[['非常不同意',1],['不同意',2],['同意',3],['非常同意',4]],
+   questions:['我觉得自己是个有价值的人，至少与别人不相上下','我觉得我有许多好的品质','归根到底，我倾向于觉得自己是一个失败者','我能像大多数人一样把事情做好','我觉得自己值得自豪的地方不多','我对自己持肯定态度','总的说来，我对自己是满意的','我希望我能为自己赢得更多尊重','有时我确实感到自己很没用','有时我觉得自己一无是处'],
+   reverse:[2,4,7,8,9],
+   max:40,
+   levels:[{min:10,max:24,label:'自尊水平偏低',cls:'moderate',desc:'你对自己的评价偏低，可能伴随自我怀疑，但这是可以通过练习逐步改善的。',recs:[['认知重构','识别「我不够好」等自动化想法并检验证据'],['三件好事','每天记录 3 件让你感觉不错的小事'],['和 AI 聊聊','梳理你的自我评价来源']]},
+     {min:25,max:35,label:'自尊水平正常',cls:'mild',desc:'你总体上能够客观地看待自己，自尊水平在正常范围。',recs:[['巩固练习','定期做三件好事练习'],['自我肯定','写下自己的优点清单']]},
+     {min:36,max:40,label:'自尊水平较高',cls:'mild',desc:'你对自己有积极的整体评价，这是很好的心理资源。',recs:[['保持谦逊','高自尊与良好的人际边界结合更健康'],['帮助他人','在朋辈社区分享你的经验']]}],
+   ref:'RSES: Rosenberg M. Society and the Adolescent Self-Image. Princeton University Press, 1965. 中文版：季益富、于欣 1993 年翻译修订。计分：每题 1-4 分（非常不同意=1 到 非常同意=4），第 3、5、8、9、10 题反向计分，总分 10-40（≤24 偏低，25-35 正常，≥36 较高）。'}
+];
+/* ═══════════════ 页面渲染 ═══════════════ */
+function renderScaleGrid(){
+  const g=$('scale-grid');
+  g.innerHTML=SCALES.map(s=>`
+    <div class="scale-card" onclick="startTest('${s.id}')">
+      <div class="s-top"><div><div class="s-name">${s.name}</div><div class="s-en">${s.en}</div></div><span class="s-badge">国际标准</span></div>
+      <p>${s.intro}</p>
+      <div class="s-meta"><span>🕐 ${s.time}</span><span>📝 ${s.items} 题</span><span>🧮 总分 ${s.max} 分</span></div>
+    </div>`).join('');
+}
+let currentScale=null, answers=[];
+function startTest(id){
+  const s=SCALES.find(x=>x.id===id);if(!s)return;
+  currentScale=s;answers=new Array(s.questions.length).fill(null);
+  $('test-title').textContent=s.name+'（'+s.en+'）';
+  $('test-info').innerHTML=`<b>指导语：</b>${esc(s.intro)} 测评结果仅用于自我筛查参考，不能替代专业诊断。`;
+  renderQuiz();go('test');
+}
+function renderQuiz(){
+  const area=$('quiz-area');
+  area.innerHTML=currentScale.questions.map((q,i)=>`
+    <div class="q-item"><div class="q-text">${i+1}. ${esc(q)}</div>
+    <div class="q-options">${currentScale.options.map(([label,val])=>`
+      <label><input type="radio" name="q${i}" value="${val}" onchange="pick(${i},${val})"><span>${label}</span></label>`).join('')}
+    </div></div>`).join('');
+  updateProgress();
+}
+function pick(i,val){answers[i]=val;$('quiz-submit').disabled=answers.some(a=>a===null);updateProgress();}
+function updateProgress(){
+  const done=answers.filter(a=>a!==null).length;
+  $('quiz-progress-bar').style.width=(done/currentScale.questions.length*100)+'%';
+}
+function resetQuiz(){
+  answers=new Array(currentScale.questions.length).fill(null);
+  renderQuiz();$('quiz-submit').disabled=true;
+  $('quiz-progress-bar').style.width='0%';
+}
+function submitQuiz(){
+  const opts=currentScale.options;
+  const minV=opts[0][1],maxV=opts[opts.length-1][1];
+  const total=answers.reduce((a,b,i)=>a+(currentScale.reverse&&currentScale.reverse.includes(i)?(minV+maxV-b):b),0);
+  saveRecord(currentScale.id,total);
+  showResult(currentScale,total);
+  renderReport();
+}
+function saveRecord(scaleId,total){
+  const u=DB.currentUser();if(!u)return;
+  u.records=u.records||[];
+  u.records.push({scaleId,total,date:Date.now()});
+  DB.saveUser(u);
+}
+function getLevel(scale,total){
+  return scale.levels.find(l=>total>=l.min&&total<=l.max)||scale.levels[scale.levels.length-1];
+}
+function showResult(scale,total){
+  const lv=getLevel(scale,total);
+  window._lastScaleInfo={scaleId:scale.id,name:scale.name,total,max:scale.max,level:lv.label,date:Date.now()};
+  $('result-title').textContent=scale.name+' · 测评结果';
+  $('result-score').textContent=total;
+  const hero=$('result-hero');hero.className='result-hero '+lv.cls;
+  $('result-level').textContent=lv.label+'（'+total+'/'+scale.max+'）';
+  $('result-desc').textContent=lv.desc;
+  $('result-ref').innerHTML='📚 <b>量表出处：</b>'+scale.ref;
+  $('result-recs').innerHTML=lv.recs.map(r=>`<div class="rec-card"><b>${r[0]}</b><br>${r[1]}</div>`).join('');
+  const warn=$('result-warn');
+  const sevLevel=scale.levels.find(l=>l.cls==='severe');
+  if(sevLevel&&total>=sevLevel.min){
+    warn.style.display='block';
+    warn.innerHTML='⚠️ <b>重要提示：</b>你的分数已达到需要专业帮助的范围。请尽快联系学校心理咨询中心，或拨打全国心理援助热线 <b>12356</b>（24小时）。如果你此刻有伤害自己的想法，请立即告诉身边信任的人，或前往最近的精神卫生机构。<br>📌 <b>建议操作：</b>点击下方"带着结果去找 AI 聊聊"，让心屿陪你梳理下一步。';
+  }else{warn.style.display='none';}
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+/* ═══════════════ 综合报告 & 雷达图 ═══════════════ */
+function renderReport(){
+  const u=DB.currentUser();if(!u)return;
+  const latest={};
+  (u.records||[]).forEach(r=>{latest[r.scaleId]=r;});
+  const ids=Object.keys(latest);
+  if(ids.length<2){$('report-panel').style.display='none';return;}
+  $('report-panel').style.display='block';
+  const dims=ids.map(id=>{const s=SCALES.find(x=>x.id===id);return {id,name:s.name,val:latest[id].total/s.max*100,raw:latest[id].total,max:s.max,lv:getLevel(s,latest[id].total)};});
+  // 画雷达图
+  const W=480,H=400,cx=240,cy=185,R=118,rings=4;
+  let svg='';
+  const ang=i=>(-Math.PI/2)+(2*Math.PI*i/dims.length);
+  // 网格环
+  for(let r=1;r<=rings;r++){
+    const pts=dims.map((d,i)=>{const a=ang(i);return (cx+R*r/rings*Math.cos(a)).toFixed(1)+','+(cy+R*r/rings*Math.sin(a)).toFixed(1);}).join(' ');
+    svg+=`<polygon points="${pts}" fill="none" stroke="#e2e8f0" stroke-width="1"/>`;
+  }
+  // 轴线与标签
+  dims.forEach((d,i)=>{
+    const a=ang(i);
+    const x1=cx+R*Math.cos(a),y1=cy+R*Math.sin(a);
+    svg+=`<line x1="${cx}" y1="${cy}" x2="${x1.toFixed(1)}" y2="${y1.toFixed(1)}" stroke="#e2e8f0"/>`;
+    const lx=cx+(R+34)*Math.cos(a),ly=cy+(R+34)*Math.sin(a);
+    svg+=`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-size="12" fill="#334155" font-weight="600">${esc(d.name)}</text>`;
+    svg+=`<text x="${lx.toFixed(1)}" y="${(ly+15).toFixed(1)}" text-anchor="middle" font-size="11" fill="${d.val>66?'#dc2626':d.val>33?'#d97706':'#16a34a'}">${d.raw}/${d.max}</text>`;
+  });
+  // 数据多边形
+  const dataPts=dims.map((d,i)=>{const a=ang(i),r=R*d.val/100;return (cx+r*Math.cos(a)).toFixed(1)+','+(cy+r*Math.sin(a)).toFixed(1);}).join(' ');
+  const dots=dims.map((d,i)=>{const a=ang(i),r=R*d.val/100;return `<circle cx="${(cx+r*Math.cos(a)).toFixed(1)}" cy="${(cy+r*Math.sin(a)).toFixed(1)}" r="4" fill="${d.val>66?'#dc2626':d.val>33?'#d97706':'#0e7490'}"/>`;}).join('');
+  svg+=`<polygon points="${dataPts}" fill="rgba(14,116,144,.25)" stroke="#0e7490" stroke-width="2"/>${dots}`;
+  $('radar-chart').innerHTML=svg;
+  // 汇总文字
+  const red=dims.filter(d=>d.val>66).length, yellow=dims.filter(d=>d.val>33&&d.val<=66).length;
+  let sum='';
+  if(red===0&&yellow===0){sum='<div class="panel" style="background:var(--mint);border-color:var(--mint-border);">✅ <b>整体状态良好：</b>各维度均在较理想范围。继续保持规律作息与运动，定期（如每 2-4 周）复测追踪变化。</div>';}
+  else if(red===0){sum='<div class="panel" style="background:var(--warm);border-color:var(--warm-border);">🟡 <b>有 '+yellow+' 个维度需要关注：</b>'+dims.filter(d=>d.val>33&&d.val<=66).map(d=>d.name).join('、')+'。建议坚持对应自助训练并 2 周后复测。</div>';}
+  else{sum='<div class="panel" style="background:var(--danger-bg);border-color:#fecaca;">🔴 <b>有 '+red+' 个维度达到较高水平：</b>'+dims.filter(d=>d.val>66).map(d=>d.name).join('、')+'。强烈建议尽快预约学校心理咨询中心或拨打 12356 获得专业支持，同时可先用 AI 疏导梳理感受。</div>';}
+  $('report-summary').innerHTML=sum+'<p style="font-size:12.5px;color:var(--muted);margin-top:8px;">说明：雷达图展示各量表最近一次测评的相对严重度（分数/满分），仅供参考，不能替代专业评估。</p>';
+}
+/* __AI_PART__ */
+/* ═══════════════ AI 疏导 ═══════════════ */
+const AI_PROVIDERS={
+  zhipu:{name:'智谱 GLM',url:'https://open.bigmodel.cn/api/paas/v4/chat/completions',model:'glm-4.7-flash'},
+  deepseek:{name:'DeepSeek',url:'https://api.deepseek.com/chat/completions',model:'deepseek-chat'},
+  qwen:{name:'通义千问',url:'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',model:'qwen-turbo'},
+  kimi:{name:'Kimi',url:'https://api.moonshot.cn/v1/chat/completions',model:'moonshot-v1-8k'}
+};
+const SYSTEM_PROMPT='你叫心屿，是面向高校学生的 AI 心理倾听者。核心原则：1.共情优先：先接纳和确认感受，不急着给建议、不评判。2.安全第一：用户出现自伤/自杀/伤人等危机信号时，立即建议联系专业帮助（全国心理援助热线12356、学校心理咨询中心），不继续深入危险话题。3.不替代专业：不诊断、不开药、不做心理治疗，只做倾听、疏导与轻量 CBT/正念引导。4.保护隐私：不主动询问也不存储姓名学号等身份信息。5.回应要具体、温暖、简洁（一般不超过150字），多用开放式提问引导用户表达。';
+function getApiSettings(){const u=DB.currentUser();return (u&&u.settings&&u.settings.apiKey)?u.settings:null;}
+function chatMode(){return getApiSettings()?'ai':'demo';}
+function updateChatModeUI(){
+  const ai=chatMode()==='ai';
+  $('chat-mode-label').textContent=ai?'倾听者 · 大模型对话':'倾听者 · 演示模式（本地）';
+  $('chat-mode-tip').innerHTML=ai?'✅ 已连接 <b>'+AI_PROVIDERS[getApiSettings().provider].name+'</b>，现在是真实大模型对话。':'未配置 AI 接口：当前为内置演示对话模式。前往<a href="javascript:go(\'profile\')" style="color:var(--teal);">个人中心</a>填入你的大模型 API Key（智谱 GLM 有免费额度），即可解锁真实 AI 对话。';
+}
+let chatHistory=[];
+function initChat(){
+  chatHistory=DB.getData('chat',[]);
+  const body=$('chat-body');
+  if(chatHistory.length===0){
+    chatHistory=[{role:'assistant',content:'你好呀，我是心屿 AI。这里很安全，你可以放心说任何想说的。我会认真听，也会在你需要的时候给你一些方法。💙 想从哪里聊起？'}];
+  }
+  body.innerHTML=chatHistory.map(m=>{
+    if(m.role==='user')return `<div class="msg user">${esc(m.content)}</div>`;
+    return `<div class="msg bot">${esc(m.content)}</div>`;
+  }).join('');
+  body.scrollTop=body.scrollHeight;
+  updateChatModeUI();
+}
+function saveChat(){DB.setData('chat',chatHistory.slice(-30));}
+/* 测评结果 → AI 联动 */
+function buildAIContext(){
+  const u=DB.currentUser();
+  if(!u||!u.records||!u.records.length)return null;
+  const rec=u.records[u.records.length-1];
+  const s=SCALES.find(x=>x.id===rec.scaleId);
+  if(!s)return null;
+  const lv=getLevel(s,rec.total);
+  return '【参考背景】用户最近一次测评：'+s.name+' 得分 '+rec.total+'/'+s.max+'，等级：'+lv.label+'（测评时间 '+fmtDay(rec.date)+'）。仅在对话内容相关时自然参考，不主动炫耀、不评判。';
+}
+function maybeInjectScaleContext(){
+  if(!window._lastScaleInfo)return;
+  const info=window._lastScaleInfo;
+  const key=info.scaleId+'_'+info.date;
+  if(DB.getData('aiCtxKey','')===key)return;
+  const msg='我注意到你刚刚完成了【'+info.name+'】测评（得分 '+info.total+'/'+info.max+'，等级：'+info.level+'）。如果你愿意，我们可以聊聊测评里让你最有感触的地方，或者你最近的真实感受。当然，想聊别的也可以。';
+  chatHistory.push({role:'assistant',content:msg});
+  DB.setData('aiCtxKey',key);
+  addMsg('bot',msg);
+  saveChat();
+}
+function addMsg(role,text,cls){
+  const body=$('chat-body');
+  const div=document.createElement('div');
+  div.className='msg '+(cls||role);
+  div.textContent=text;
+  body.appendChild(div);
+  body.scrollTop=body.scrollHeight;
+  return div;
+}
+function quickChat(text){$('chat-input').value=text;sendChat();}
+const CRISIS_WORDS=['自杀','不想活','轻生','结束生命','伤害自己','自残','活着没意思','想死','不想活了','太痛苦了','撑不下去','熬不下去','离开这个世界','一了百了','割腕','吞药','跳楼','安眠药','遗书','解脱','消失','了结','放弃生命','活不下去','没意思了','想走极端','伤害我'];
+const FILTER_WORDS=['自杀','不想活','轻生','结束生命','伤害自己','自残','割腕','吞药','跳楼','遗书','了结','活不下去','去死','杀了','打死','揍死','贱人','废物','滚'];
+function crisisCheck(text){
+  for(const w of CRISIS_WORDS){if(text.includes(w))return w;}
+  return null;
+}
+async function sendChat(){
+  const input=$('chat-input');
+  const text=input.value.trim();
+  if(!text)return;
+  input.value='';
+  addMsg('user',text);
+  chatHistory.push({role:'user',content:text});
+  const typing=document.createElement('div');
+  typing.className='msg bot typing loading-dots';
+  typing.textContent='正在思考';
+  $('chat-body').appendChild(typing);
+  $('chat-body').scrollTop=$('chat-body').scrollHeight;
+  // 危机检测优先（本地秒级）
+  if(crisisCheck(text)){
+    typing.remove();
+    const msg='⚠️ 我听到了你正在经历的痛苦，这非常重要。请先停下来——你不是一个人。\n\n请立即拨打全国心理援助热线 12356（24小时），或联系学校心理咨询中心，或告诉身边信任的人。你的安全是最重要的。\n\n我无法替代专业帮助，但如果你愿意，我们可以一起先做一次 4-7-8 呼吸练习，让身体稍微平静下来。';
+    addMsg('bot',msg,'crisis');
+    chatHistory.push({role:'assistant',content:msg});
+    saveChat();
+    return;
+  }
+  const settings=getApiSettings();
+  let reply='';
+  if(settings){
+    try{
+      const p=AI_PROVIDERS[settings.provider]||AI_PROVIDERS.zhipu;
+      const history=chatHistory.slice(-12).map(m=>({role:m.role,content:m.content}));
+      history.unshift({role:'system',content:SYSTEM_PROMPT});
+      const aiCtx=buildAIContext();
+      if(aiCtx)history.unshift({role:'system',content:aiCtx});
+      const resp=await fetch(p.url,{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':'Bearer '+settings.apiKey},
+        body:JSON.stringify({model:p.model,messages:history,temperature:0.7,max_tokens:800})
+      });
+      if(!resp.ok)throw new Error('HTTP '+resp.status);
+      const data=await resp.json();
+      reply=data.choices&&data.choices[0]&&data.choices[0].message?data.choices[0].message.content:'';
+      if(!reply)throw new Error('empty');
+    }catch(e){
+      typing.remove();
+      addMsg('demo','⚠️ 大模型调用失败（'+e.message+'）。已自动切换为本地演示回复。请检查个人中心里的 API Key 是否正确、额度是否充足。');
+      reply=demoReply(text);
+      addMsg('bot',reply);
+      chatHistory.push({role:'assistant',content:reply});
+      saveChat();
+      return;
+    }
+  }else{
+    reply=demoReply(text);
+  }
+  typing.remove();
+  addMsg('bot',reply);
+  chatHistory.push({role:'assistant',content:reply});
+  saveChat();
+  const u=DB.currentUser();if(u){u.chatCount=(u.chatCount||0)+1;DB.saveUser(u);}
+}
+/* 本地演示模式：30+ 场景关键词回复（真实 AI 未配置时的降级方案） */
+const DEMO_HINTS=[
+  ['失眠','睡眠问题常常和「睡前思维反刍」有关——脑子里的事停不下来。可以试试：睡前一小时放下手机，把脑子里转的事写下来；然后做一组 4-7-8 呼吸（吸气4秒-屏息7秒-呼气8秒，循环4轮）。你最近是不是有什么事情一直放不下？'],
+  ['睡','睡眠问题常常和「睡前思维反刍」有关。试试：睡前一小时远离屏幕，把心事写下来，再做一组 4-7-8 呼吸。你最近压力是不是比较大？'],
+  ['考试','面对重要考试感到压力很正常，说明你在乎它。试试把「我必须考好」换成「我只需要做到当下能做的」。如果焦虑已经影响睡眠和饮食，记得预约学校心理咨询中心，他们有专业的减压辅导。你愿意说说最担心的是哪一科吗？'],
+  ['压力','压力大的时候，人容易把目标定得太高。可以试着把任务拆小，完成一项就肯定自己一次。你愿意跟我具体说说，是哪件事让你压力最大吗？'],
+  ['孤独','孤独感是一种信号，它在告诉你：你需要连接。其实很多同学都有同样的感受，只是没人先开口。要不要去朋辈社区看看？那里有很多匿名的同龄人在分享相似的感受，也可以试着加入一个社团。'],
+  ['迷茫','迷茫是成长的一部分，说明你正在探索「我想成为什么样的人」。可以试着列三个问题：我擅长什么？我享受什么？什么对我重要？不用急着找到答案，带着问题生活，答案会慢慢浮现。'],
+  ['难过','难过的时候，不需要立刻「好起来」。允许自己拥有这种感受，本身就是一种照顾。如果愿意，可以试试情绪日记：写下今天发生了什么、你的感受、你做了什么应对——这会帮你更了解自己。'],
+  ['想哭','想哭就哭出来吧，眼泪是身体在释放压力，不需要觉得丢脸。哭完可以喝点温水，做几次深呼吸。你愿意跟我说说发生了什么吗？'],
+  ['焦虑','焦虑常常是对「未来不确定」的过度预警。一个有用的方法：把「我担心的事」分成两类——能控制的，和不能控制的。把精力放在能控制的那部分上。要不要现在试试做个认知重构练习？'],
+  ['抑郁','听到你这样说，我有些担心你，也很感谢你愿意说出来。「心情低落」本身不是你的错，它像感冒一样需要被照顾。如果这种状态持续超过两周，建议预约学校心理咨询中心做一次专业评估。现在，愿意和我聊聊最近发生了什么吗？'],
+  ['情绪低落','情绪低落的时候，先别急着「振作起来」。可以试试：把要做的事缩减到最小，完成一件就够；出门晒 10 分钟太阳；给朋友发条消息。你最近是有什么具体的事情让你低落吗？'],
+  ['室友','室友关系是大学里最常见的烦恼之一。可以试试「我信息」表达：描述事实+说出感受+提出请求，比如「最近晚上熄灯后还有声音，我睡得比较浅，能麻烦你戴耳机吗？」。沟通前先想清楚自己想要什么结果。需要我陪你模拟一下怎么说吗？'],
+  ['人际关系','人际关系的烦恼往往来自「猜测」——我猜他不喜欢我、我猜他们在议论我。试着把猜测变成确认：直接问，或者观察事实。你愿意说说具体是什么情况吗？'],
+  ['恋爱','恋爱中的情绪起伏是很正常的。好的关系需要「表达需求」而不是「猜心思」。如果这段关系让你长期难受，也值得重新审视它是否健康。你愿意多说一点吗？'],
+  ['失恋','失恋带来的难过是真实的，不要急着「放下」。给自己设定一个「允许难过的期限」，比如两周；期间保持作息、运动、和朋友见面。时间会帮你慢慢消化。现在感觉怎么样？'],
+  ['分手','分手后的空虚感需要时间修复。可以试试：删掉反复看的聊天记录、把回忆写下来封存、每天安排一件让自己期待的小事。你愿意说说你们在一起多久了吗？'],
+  ['家庭','家庭带来的压力有时最难以言说。你可以先分清：哪些是你能改变的，哪些不是。改变不了的，学着设定边界；能改变的，从一次坦诚沟通开始。你想聊聊具体是哪方面吗？'],
+  ['父母','和父母观念冲突很正常，说明你在成长。可以试试「先倾听再表达」：先听完他们的担心，再平静说出你的想法和计划。你愿意说说你们在什么事情上有分歧吗？'],
+  ['学业','学业压力大的时候，先把「我要学好」拆成「今天完成哪一步」。挂科、成绩波动都不是终点，大学里调整方向的机会很多。你最近是哪门课最困扰？'],
+  ['挂科','挂科确实让人难受，但它不是对「你这个人」的评价，只是对「这门课这次考试」的评价。重要的是复盘：是没时间学、方法不对还是状态不好？需要的话可以聊聊怎么重新规划。'],
+  ['拖延','拖延往往不是懒，而是「害怕做不好」或「任务太模糊」。试试 5 分钟启动法：告诉自己只做 5 分钟，通常开始后就停不下来了。你最近在拖什么任务？'],
+  ['内卷','内卷的环境让人疲惫。可以试试给自己定义「足够好」的标准，而不是永远追着别人的进度跑。你的节奏是你自己的。你觉得什么对你来说「足够好」？'],
+  ['自卑','自卑常常来自「和想象中的别人比较」。试着记录每天 3 件「我做得还不错」的小事，两周后你会看到不一样的自己。你觉得你最容易在哪方面否定自己？'],
+  ['自我怀疑','自我怀疑是成长中的正常噪音。可以试试「证据检验」：把「我不行」写下来，列出支持它的证据和反对它的证据，通常你会发现反对的证据更多。你怀疑自己什么？'],
+  ['未来','对未来的焦虑说明你在认真思考人生。把「未来」切成「下个学期」「下个月」「这周」，只处理眼前这一段。你目前最不确定的是哪方面？'],
+  ['就业','就业焦虑是大四常见的课题。可以先做「信息收集」而不是「担心」：看看目标岗位的要求、学长学姐的经验。把焦虑变成行动清单，你会踏实很多。你学的专业方向是什么？'],
+  ['毕业','毕业是人生阶段转换，迷茫和不舍都很正常。可以把「想做的事」「想成为的人」写下来，毕业不是终点，是下一个开始。你现在最舍不得的是什么？'],
+  ['容貌','容貌焦虑背后，是对「被接纳」的渴望。可以试着把注意力从「看起来怎样」移到「我做了什么、我喜欢什么」上。你觉得自己身上最有魅力的特质是什么？'],
+  ['身材','身材焦虑和容貌焦虑一样，常常是社会标准压在身上。健康比标准重要得多：规律运动、好好吃饭、睡够觉。你是因为什么开始在意身材的？'],
+  ['社恐','社交焦虑很常见，你不是一个人。可以试试「小步子」：先从和一个人打招呼开始，再慢慢加到小组。紧张时做几次深呼吸，把注意力放在对方身上而不是自己身上。你想改善哪种社交场合？'],
+  ['社交','社交累的话，允许自己「电量低」——独处充电也是合理的需求。不需要强迫自己成为「很会社交」的人，舒服的关系自然会长久。你最近参加什么让你累的场合了吗？'],
+  ['愤怒','愤怒是正常的情绪，它在告诉你「边界被侵犯了」。可以试试：先离开现场、做几个深呼吸、等平静下来再用「我信息」表达。你现在是因为什么生气？'],
+  ['烦躁','烦躁的时候，身体需要先动起来：出去走一圈、洗把脸、听一首歌。烦躁也是一种信号，它可能说明你太久没照顾自己了。你最近休息得怎么样？'],
+  ['累','累的时候要允许自己休息，这不是偷懒，是必要的恢复。可以试试「什么都不做」10 分钟：不刷手机、不思考，只是坐着或躺下。你是身体累还是心累？'],
+  ['疲惫','疲惫分两种：身体疲惫靠睡眠恢复，心理疲惫靠「放下」恢复。如果是心累，可能需要减少一点任务或期待。你最近在忙什么？'],
+  ['emo','emo 的时候，先别评价自己「矫情」。情绪没有对错，它只是需要被看见。可以试试把此刻的感受写下来，或者去社区看看——很多同龄人也在经历类似的时刻。'],
+  ['谢谢','不用谢呀，能陪着你我也很开心。💙 记得照顾好自己，需要的时候我都在。'],
+  ['你好','你好呀！很高兴见到你。今天感觉怎么样？想聊点什么都可以。'],
+  ['加油','加油！我知道你在努力。不过也要记得：努力的同时，允许自己休息，允许自己有情绪。你最近在为什么努力呀？']
+];
+const DEMO_FALLBACKS=[
   '谢谢你愿意跟我说这些。听起来你现在承受着一些情绪的重量，这很不容易。你能具体说说，是从什么时候开始的吗？',
   '我在听。你描述的这些感受，很多同学都经历过。如果给现在的情绪打个分（1-10分），大概是几分？',
   '嗯，我理解你的感受。有时候把话说出来本身，就已经是一种缓解。你希望我陪你聊这件事，还是想聊聊怎么应对它？',
-  '感谢你的信任。你刚才说的这些，如果让一个好朋友听到，他会怎么回应你？试试用那个声音对自己说一遍。'
+  '感谢你的信任。你刚才说的这些，如果让一个好朋友听到，他会怎么回应你？试试用那个声音对自己说一遍。',
+  '我听到你在说一件对你很重要的事。如果用一个词形容你现在的感受，会是哪个词？',
+  '这件事听起来确实不容易。你希望从哪个部分开始聊：事情本身、你的感受，还是你想怎么做？',
+  '我在认真听。很多人遇到类似情况时，第一反应是「自己是不是太脆弱了」，但其实这说明你很敏感、很在乎。你愿意再展开说说吗？',
+  '谢谢你告诉我这些。如果现在什么都不用做、不用想，你最想做什么？'
 ];
-
-function chatInit() {
-  const body = $('chat-body');
-  body.innerHTML = `
-    <div class="msg bot">你好呀，我是心屿 AI。这里很安全，你可以放心说任何想说的。我会认真听，也会在你需要的时候给你一些方法。💙 想从哪里聊起？</div>`;
+function demoReply(text){
+  for(const [kw,resp] of DEMO_HINTS){if(text.includes(kw))return resp;}
+  return DEMO_FALLBACKS[Math.floor(Math.random()*DEMO_FALLBACKS.length)];
 }
-function addMsg(role, text, cls) {
-  const body = $('chat-body');
-  const div = document.createElement('div');
-  div.className = 'msg ' + (cls || role);
-  div.textContent = text;
-  body.appendChild(div);
-  body.scrollTop = body.scrollHeight;
-  return div;
-}
-function quickChat(text) {
-  $('chat-input').value = text;
-  sendChat();
-}
-function sendChat() {
-  const input = $('chat-input');
-  const text = input.value.trim();
-  if (!text) return;
-  input.value = '';
-  addMsg('user', text);
-
-  const typing = document.createElement('div');
-  typing.className = 'msg bot typing loading-dots';
-  typing.textContent = '正在思考';
-  $('chat-body').appendChild(typing);
-
-  setTimeout(() => {
-    typing.remove();
-
-    // 危机检测
-    if (CRISIS_WORDS.some(w => text.includes(w))) {
-      addMsg('crisis', '⚠️ 我听到了你正在经历的痛苦，这非常重要。请先停下来，你不是一个人——请立即拨打全国心理援助热线 12356（24小时），或联系学校心理咨询中心，或直接告诉身边信任的人。你的安全是最重要的。');
-      return;
-    }
-
-    // 关键词匹配
-    let reply = null;
-    for (const [kw, resp] of Object.entries(CHAT_HINTS)) {
-      if (text.includes(kw)) { reply = resp; break; }
-    }
-    if (!reply) reply = FALLBACKS[Math.floor(Math.random() * FALLBACKS.length)];
-    addMsg('bot', reply);
-  }, 900);
-}
-
+/* __TRAIN_PART__ */
 /* ═══════════════ 自助训练 ═══════════════ */
-function toggleReframe() {
-  const box = $('reframe-box');
-  box.classList.toggle('show');
-}
-function doReframe() {
-  const thought = $('reframe-thought').value.trim();
-  const ev = $('reframe-evidence').value.trim();
-  const neu = $('reframe-new').value.trim();
-  if (!thought || !neu) { toast('请至少填写"消极想法"和"新想法"两栏'); return; }
-  toast(ev ? '✅ 重构完成！证据检验是 CBT 的核心技能' : '✅ 已记录！建议下次补上证据分析，效果更好');
-  $('reframe-thought').value = ''; $('reframe-evidence').value = ''; $('reframe-new').value = '';
-  $('reframe-box').classList.remove('show');
-}
-
-let breatheTimer = null;
-function startBreathe() {
-  $('breathe-box').style.display = 'block';
-  const circle = $('breathe-circle');
-  const status = $('breathe-status');
-  let phase = 0; // 0吸 1屏 2呼
-  circle.className = 'breathe-circle';
-  circle.textContent = '准备';
-  status.textContent = '3 秒后开始…';
-  clearInterval(breatheTimer);
-  setTimeout(() => {
-    status.textContent = '🫁 吸气 4 秒';
-    circle.classList.add('in');
-    circle.textContent = '吸气';
-    let step = 0;
-    breatheTimer = setInterval(() => {
-      step++;
-      if (step === 4) { status.textContent = '😌 屏息 7 秒'; circle.textContent = '屏息'; circle.classList.remove('in'); }
-      else if (step === 11) { status.textContent = '🌬️ 呼气 8 秒'; circle.textContent = '呼气'; circle.classList.add('out'); }
-      else if (step === 19) { status.textContent = '🫁 吸气 4 秒'; circle.textContent = '吸气'; circle.classList.remove('out'); circle.classList.add('in'); step = 0; }
-    }, 1000);
-  }, 3000);
-}
-function stopBreathe() {
-  clearInterval(breatheTimer);
-  const circle = $('breathe-circle');
-  circle.className = 'breathe-circle';
-  circle.textContent = '准备';
-  $('breathe-status').textContent = '已结束，记得循序渐进（建议从 3 轮开始）';
-}
-
-/* ═══════════════ 朋辈社区 ═══════════════ */
-const SEED_POSTS = [
-  {
-    name: '匿名同学', time: '10 分钟前', text: '第一次在这里说话。最近总觉得自己不够好，做什么都比别人慢半拍，室友都找到方向了，我还在迷茫。',
-    likes: 23, liked: false, replies: [
-      { from: '匿名同学', text: '抱抱你，我也在迷茫期。其实"找到方向"这件事没有标准时间表，你已经在路上了。' },
-      { from: '匿名同学', text: '同款状态+1。最近在读《被讨厌的勇气》，里面说"人生是连续的刹那"，不用急着到达终点。' }
-    ]
-  },
-  {
-    name: '匿名同学', time: '1 小时前', text: '期末考试周连续失眠第四天了，一到晚上脑子就开始放电影，白天又昏昏沉沉。有人试过褪黑素吗？',
-    likes: 15, liked: false, replies: [
-      { from: '匿名同学', text: '建议先别依赖褪黑素！我之前失眠试过学校的心理咨询，老师教了"刺激控制法"：睡不着就起床离开床，效果还不错。' }
-    ]
-  },
-  {
-    name: '匿名同学', time: '3 小时前', text: '今天鼓起勇气去心理咨询中心了，老师很温柔，聊完出来感觉心里那块石头轻了一点。想告诉还在犹豫的大家：去求助不是软弱，是勇敢。',
-    likes: 58, liked: false, replies: [
-      { from: '匿名同学', text: '为你鼓掌👏 我去了三次了，真的有用，希望更多人迈出这一步。' },
-      { from: '匿名同学', text: '谢谢分享！看完这条突然有了勇气，这周就去预约。' }
-    ]
-  }
-];
-
-function renderPosts() {
-  const list = $('post-list');
-  list.innerHTML = SEED_POSTS.map((p, i) => postHTML(p, i)).join('');
-}
-function postHTML(p, i) {
-  return `
-  <div class="post">
-    <div class="p-head">
-      <span class="p-name">🕶️ ${p.name}</span>
-      <span class="p-anon">匿名</span>
-      <span class="p-time">${p.time}</span>
+function renderTrainGrid(){
+  const grid=$('train-grid');
+  grid.innerHTML=`
+  <div class="train-card"><span class="t-tag">CBT 认知行为</span><h4>认知重构练习</h4><p>识别自动化的消极想法，用证据检验它，重构为更平衡的思维。抑郁/焦虑的核心训练。</p><button class="t-btn" onclick="toggleBox('reframe-box')">开始练习</button>
+    <div class="train-box" id="reframe-box">
+      <input id="reframe-thought" placeholder="1. 刚才让我感到难受的想法是？">
+      <textarea id="reframe-evidence" rows="2" placeholder="2. 支持这个想法的证据有哪些？"></textarea>
+      <textarea id="reframe-against" rows="2" placeholder="3. 反对这个想法的证据有哪些？（比如：有没有其他解释？最坏情况真的会发生吗？）"></textarea>
+      <input id="reframe-new" placeholder="4. 一个更客观、平衡的想法是？">
+      <input id="reframe-proof" placeholder="5. 明天可以做的验证行动（小实验）：">
+      <button class="t-btn" onclick="doReframe()">完成重构并保存</button>
+    </div></div>
+  <div class="train-card"><span class="t-tag">正念 · 放松</span><h4>4-7-8 呼吸练习</h4><p>吸气 4 秒 → 屏息 7 秒 → 呼气 8 秒。适合考前焦虑、入睡困难时使用。</p><button class="t-btn" onclick="startBreathe()">开始呼吸练习</button>
+    <div class="train-box show" id="breathe-box">
+      <div class="breathe-circle" id="breathe-circle">准备</div>
+      <div class="breathe-status" id="breathe-status">点击开始，跟随圆圈的节奏呼吸（建议 3-4 轮）</div>
+      <div style="text-align:center;margin-top:8px;"><button class="t-btn" onclick="startBreathe()">开始</button> <button class="t-btn" style="border-color:var(--muted);color:var(--muted);" onclick="stopBreathe()">结束</button></div>
+    </div></div>
+  <div class="train-card"><span class="t-tag">情绪管理</span><h4>情绪日记</h4><p>记录每天的情绪波动、触发事件与应对方式。坚持两周，你会更了解自己的情绪规律。</p><button class="t-btn" onclick="toggleBox('diary-box')">写一篇日记</button>
+    <div class="train-box" id="diary-box">
+      <div class="mood-pick" id="mood-pick"></div>
+      <textarea id="diary-event" rows="2" placeholder="今天发生了什么？（触发事件）"></textarea>
+      <textarea id="diary-thought" rows="2" placeholder="当时脑海里闪过了什么想法？"></textarea>
+      <textarea id="diary-cope" rows="2" placeholder="我做了什么应对？（哪怕很小）"></textarea>
+      <button class="t-btn" onclick="saveDiary()">保存日记</button>
     </div>
-    <div class="p-text">${p.text}</div>
+    <div class="diary-list" id="diary-list" style="margin-top:10px;"></div></div>
+  <div class="train-card"><span class="t-tag">睡眠改善</span><h4>睡前放松引导</h4><p>渐进式肌肉放松 + 正念身体扫描，帮你从「思维反刍」中抽离，进入睡眠状态。</p><button class="t-btn" onclick="toggleBox('sleep-box')">开始引导</button>
+    <div class="train-box" id="sleep-box">
+      <div class="guide-steps" id="sleep-steps"></div>
+      <div style="text-align:center;margin-top:10px;"><button class="t-btn" onclick="nextSleepStep()" id="sleep-next">下一步</button></div>
+    </div></div>
+  <div class="train-card"><span class="t-tag">积极心理</span><h4>三件好事练习</h4><p>每天睡前写下今天发生的 3 件好事（哪怕很小），训练大脑关注积极信息，提升幸福感。</p><button class="t-btn" onclick="toggleBox('gratitude-box')">记录今天的好事</button>
+    <div class="train-box" id="gratitude-box">
+      <input id="g1" placeholder="好事 1：例如「今天食堂阿姨多给了我一块肉」">
+      <input id="g2" placeholder="好事 2：例如「跑步时看到了很美的晚霞」">
+      <input id="g3" placeholder="好事 3：例如「完成了一个拖延很久的任务」">
+      <button class="t-btn" onclick="saveGratitude()">保存</button>
+    </div></div>
+  <div class="train-card"><span class="t-tag">焦虑急救</span><h4>5-4-3-2-1 接地练习</h4><p>焦虑或恐慌来袭时的急救法：用五种感官把注意力拉回当下。</p><button class="t-btn" onclick="toggleBox('ground-box')">开始练习</button>
+    <div class="train-box" id="ground-box">
+      <div class="guide-steps" id="ground-steps"></div>
+      <div style="text-align:center;margin-top:10px;"><button class="t-btn" onclick="nextGroundStep()" id="ground-next">下一步</button></div>
+    </div></div>`;
+  renderMoodPick();
+  renderDiaryList();
+  sleepStep=0;groundStep=0;
+}
+function toggleBox(id){const b=$(id);if(b)b.classList.toggle('show');}
+function doReframe(){
+  const thought=$('reframe-thought').value.trim();
+  const ev=$('reframe-evidence').value.trim();
+  const ag=$('reframe-against').value.trim();
+  const neu=$('reframe-new').value.trim();
+  if(!thought||!neu){toast('请至少填写「消极想法」和「新想法」两栏');return;}
+  saveTraining('认知重构',{thought,ev,ag,neu,date:Date.now()});
+  toast('✅ 重构完成并已保存！证据检验是 CBT 的核心技能');
+  ['reframe-thought','reframe-evidence','reframe-against','reframe-new','reframe-proof'].forEach(id=>$(id).value='');
+  $(reframeBox()).classList.remove('show');
+}
+function reframeBox(){return 'reframe-box';}
+/* 呼吸练习（Date.now 驱动，修复原版定时器偏差） */
+let breatheTimer=null,breatheRunning=false;
+const BREATH_PHASES=[{name:'吸气',sec:4},{name:'屏息',sec:7},{name:'呼气',sec:8}];
+function startBreathe(){
+  if(breatheRunning)return;
+  breatheRunning=true;
+  $('breathe-box').style.display='block';
+  const circle=$('breathe-circle'),status=$('breathe-status');
+  let round=0,phaseIdx=0,startTs=Date.now();
+  circle.classList.remove('in','out');
+  circle.textContent='准备';status.textContent='3 秒后开始…';
+  clearInterval(breatheTimer);
+  setTimeout(()=>{startTs=Date.now();tick();breatheTimer=setInterval(tick,200);},3000);
+  function tick(){
+    const ph=BREATH_PHASES[phaseIdx];
+    const elapsed=(Date.now()-startTs)/1000;
+    const remain=Math.max(0,Math.ceil(ph.sec-elapsed));
+    if(remain<=0){
+      phaseIdx++;
+      if(phaseIdx>=3){phaseIdx=0;round++;
+        if(round>=4){stopBreathe(true);return;}}
+      startTs=Date.now();
+    }
+    const cur=BREATH_PHASES[phaseIdx];
+    circle.textContent=cur.name;
+    circle.classList.toggle('in',cur.name==='吸气');
+    circle.classList.toggle('out',cur.name==='呼气');
+    status.textContent='第 '+(round+1)+' 轮 · '+cur.name+' '+Math.max(0,Math.ceil((cur.sec-(Date.now()-startTs)/1000)))+' 秒';
+  }
+}
+function stopBreathe(done){
+  clearInterval(breatheTimer);breatheRunning=false;
+  const c=$('breathe-circle');c.classList.remove('in','out');c.textContent='准备';
+  $('breathe-status').textContent=done?'✅ 完成 4 轮，感觉怎么样？':'已结束，记得循序渐进（建议从 3 轮开始）';
+  if(done)saveTraining('4-7-8呼吸',{rounds:4,date:Date.now()});
+}
+/* 情绪日记 */
+const MOODS=[['😄',9],['🙂',7],['😐',5],['😔',3],['😢',1]];
+let diaryMood=5;
+function renderMoodPick(){
+  $('mood-pick').innerHTML=MOODS.map(m=>`<span data-v="${m[1]}" class="${m[1]===diaryMood?'sel':''}" onclick="pickMood(${m[1]})">${m[0]}</span>`).join('')+'<span style="font-size:12px;color:var(--muted);align-self:center;">当前情绪：'+diaryMood+'/10</span>';
+}
+function pickMood(v){diaryMood=v;renderMoodPick();}
+function saveDiary(){
+  const ev=$('diary-event').value.trim(),th=$('diary-thought').value.trim(),co=$('diary-cope').value.trim();
+  if(!ev&&!th){toast('至少写一项内容再保存吧');return;}
+  saveTraining('情绪日记',{mood:diaryMood,event:ev,thought:th,cope:co,date:Date.now()});
+  ['diary-event','diary-thought','diary-cope'].forEach(id=>$(id).value='');
+  toast('✅ 日记已保存，坚持记录两周你会看到规律');
+  renderDiaryList();
+}
+function renderDiaryList(){
+  const u=DB.currentUser();if(!u)return;
+  const list=((u.trainings||[]).filter(t=>t.type==='情绪日记')).slice(-5).reverse();
+  $('diary-list').innerHTML=list.length?
+    list.map(t=>`<div class="diary-item"><div class="d-head"><span>情绪 ${t.mood}/10</span><span>${fmtDay(t.date)}</span></div><div>${esc(t.event||'—')}</div></div>`).join('')
+    :'<div class="empty">还没有日记，写下第一篇吧</div>';
+}
+function saveTraining(type,data){
+  const u=DB.currentUser();if(!u)return;
+  u.trainings=u.trainings||[];
+  u.trainings.push(Object.assign({type},data));
+  DB.saveUser(u);
+}
+/* 睡前引导（渐进式放松） */
+const SLEEP_STEPS=[
+  '找个舒服的姿势躺好，轻轻闭上眼睛。先做 3 次深呼吸：吸气…呼气…把注意力放在呼吸上。',
+  '现在把注意力移到双脚。感受脚底贴着床的感觉，让双脚放松、再放松。',
+  '注意力来到小腿和大腿，感觉它们渐渐变沉、放松，像陷进床垫里一样。',
+  '放松腹部和背部，让呼吸自然地带动它们起伏，不需要控制。',
+  '放松肩膀和手臂，把一天的紧绷都卸下来，放在床上。',
+  '放松脖子、下巴、脸颊，松开紧咬的牙齿，眉头舒展开来。',
+  '最后做一次全身扫描：从头顶到脚尖，哪里还有紧绷，就让哪里放松。',
+  '想象自己躺在一片宁静的海面上，随着呼吸轻轻起伏。如果思绪飘走，就轻轻把它带回来。晚安。🌙'
+];
+let sleepStep=0,groundStep=0;
+function nextSleepStep(){
+  if(sleepStep>=SLEEP_STEPS.length){sleepStep=0;$('sleep-next').textContent='下一步';return;}
+  $('sleep-steps').innerHTML=`<div class="g-step">${SLEEP_STEPS[sleepStep]}</div>`;
+  sleepStep++;
+  if(sleepStep>=SLEEP_STEPS.length){
+    $('sleep-next').textContent='完成 ✅';
+    saveTraining('睡前引导',{date:Date.now()});
+    setTimeout(()=>{toast('✅ 完成睡前引导，愿你有个好梦');sleepStep=0;$('sleep-next').textContent='下一步';},100);
+  }
+}
+/* 三件好事 */
+function saveGratitude(){
+  const g=[$('g1').value.trim(),$('g2').value.trim(),$('g3').value.trim()].filter(Boolean);
+  if(!g.length){toast('至少写一件好事吧');return;}
+  saveTraining('三件好事',{items:g,date:Date.now()});
+  ['g1','g2','g3'].forEach(id=>$(id).value='');
+  toast('✅ 已保存！坚持 21 天效果最佳');
+}
+/* 5-4-3-2-1 接地 */
+const GROUND_STEPS=[
+  '环顾四周，说出你看到的 <b>5</b> 样东西（比如：灯、杯子、窗帘…）',
+  '仔细听，说出你听到的 <b>4</b> 种声音（空调声、键盘声、呼吸声…）',
+  '感受你的身体，说出 <b>3</b> 种触觉（脚踩地板、衣服贴着皮肤、手放在腿上…）',
+  '说出 <b>2</b> 种气味（咖啡味、空气的味道…）',
+  '说出 <b>1</b> 种味道（喝口水感受它的味道）',
+  '很好，你已经回到当下。做一次深呼吸：吸气 4 秒，呼气 8 秒。感觉怎么样？'
+];
+function nextGroundStep(){
+  if(groundStep>=GROUND_STEPS.length){groundStep=0;return;}
+  $('ground-steps').innerHTML=`<div class="g-step">${GROUND_STEPS[groundStep]}</div>`;
+  groundStep++;
+  if(groundStep>=GROUND_STEPS.length){saveTraining('接地练习',{date:Date.now()});setTimeout(()=>toast('✅ 完成接地练习，焦虑感会慢慢降下来'),100);}
+}
+/* __COMMUNITY_PART__ */
+/* ═══════════════ 朋辈社区 ═══════════════ */
+function getPosts(){return DB.getData('posts',[]);}
+function savePosts(p){DB.setData('posts',p);}
+function renderPosts(){
+  const list=getPosts();
+  const el=$('post-list');
+  if(!list.length){el.innerHTML='<div class="empty">还没有帖子，来发第一条吧 🌱</div>';return;}
+  el.innerHTML=list.map((p,i)=>postHTML(p,i)).join('');
+}
+function postHTML(p,i){
+  return `<div class="post">
+    <div class="p-head">
+      <span class="p-name">🕶️ ${esc(p.name||'匿名同学')}</span>
+      <span class="p-anon">匿名</span>
+      ${p.tag?`<span class="p-tag">${esc(p.tag)}</span>`:''}
+      <span class="p-time">${fmtDay(p.date)}</span>
+    </div>
+    <div class="p-text">${esc(p.text)}</div>
     <div class="p-actions">
-      <button class="p-act ${p.liked ? 'liked' : ''}" onclick="likePost(${i})">👍 ${p.likes}</button>
-      <button class="p-act" onclick="focusReply(${i})">💬 ${p.replies.length} 回复</button>
+      <button class="p-act ${p.liked?'liked':''}" onclick="likePost(${i})">👍 ${p.likes||0}</button>
+      <button class="p-act" onclick="focusReply(${i})">💬 ${(p.replies||[]).length} 回复</button>
+      <button class="p-act report" onclick="reportPost(${i})">🚩 举报</button>
     </div>
     <div class="p-replies">
-      ${p.replies.map(r => `<div class="reply"><b>${r.from}</b>：${r.text}</div>`).join('')}
-      <div class="r-input">
-        <input id="reply-${i}" placeholder="友善地回应 Ta…">
-        <button onclick="addReply(${i})">回复</button>
-      </div>
+      ${(p.replies||[]).map(r=>`<div class="reply"><b>${esc(r.from)}</b>：${esc(r.text)}</div>`).join('')}
+      <div class="r-input"><input id="reply-${i}" placeholder="友善地回应 Ta…"><button onclick="addReply(${i})">回复</button></div>
     </div>
   </div>`;
 }
-function addPost() {
-  const input = $('post-input');
-  const text = input.value.trim();
-  if (!text) { toast('写点什么再发布吧'); return; }
-  SEED_POSTS.unshift({ name: '匿名同学', time: '刚刚', text, likes: 0, liked: false, replies: [] });
-  input.value = '';
+let postTag='心情分享';
+document.addEventListener('click',e=>{
+  const t=e.target.closest('#post-tag-pick span');
+  if(t){postTag=t.dataset.tag;document.querySelectorAll('#post-tag-pick span').forEach(s=>s.classList.toggle('sel',s===t));}
+});
+function addPost(){
+  const text=$('post-input').value.trim();
+  if(!text){toast('写点什么再发布吧');return;}
+  const bad=FILTER_WORDS.find(w=>text.includes(w));
+  if(bad){toast('⚠️ 内容包含敏感词「'+bad+'」，社区不允许发布此类内容。如果你正在经历困难，建议到「AI 疏导」聊聊，或拨打 12356。');return;}
+  const posts=getPosts();
+  posts.unshift({name:'匿名同学',text,tag:postTag,date:Date.now(),likes:0,liked:false,replies:[],reported:0});
+  savePosts(posts);
+  $('post-input').value='';
   renderPosts();
   toast('✅ 已匿名发布，谢谢你的分享');
 }
-function likePost(i) {
-  SEED_POSTS[i].liked = !SEED_POSTS[i].liked;
-  SEED_POSTS[i].likes += SEED_POSTS[i].liked ? 1 : -1;
-  renderPosts();
+function likePost(i){const p=getPosts();p[i].liked=!p[i].liked;p[i].likes+=p[i].liked?1:-1;savePosts(p);renderPosts();}
+function addReply(i){
+  const input=$('reply-'+i),text=input.value.trim();
+  if(!text)return;
+  const p=getPosts();
+  const bad=FILTER_WORDS.find(w=>text.includes(w));
+  if(bad){toast('⚠️ 回复包含不当内容，请友善发言');return;}
+  p[i].replies=p[i].replies||[];
+  p[i].replies.push({from:'匿名同学',text});
+  savePosts(p);input.value='';renderPosts();toast('✅ 已回复');
 }
-function addReply(i) {
-  const input = $('reply-' + i);
-  const text = input.value.trim();
-  if (!text) return;
-  SEED_POSTS[i].replies.push({ from: '匿名同学', text });
-  input.value = '';
-  renderPosts();
-  toast('✅ 已回复');
+function focusReply(i){const el=$('reply-'+i);if(el)el.focus();}
+function reportPost(i){
+  const p=getPosts();
+  p[i].reported=(p[i].reported||0)+1;
+  savePosts(p);
+  toast('🚩 已举报，管理员会尽快处理（演示版仅记录）');
 }
-function focusReply(i) {
-  const el = $('reply-' + i);
-  if (el) el.focus();
+/* __PROFILE_PART__ */
+/* ═══════════════ 个人中心 ═══════════════ */
+function renderProfile(){
+  const u=DB.currentUser();if(!u)return;
+  const records=u.records||[],trainings=u.trainings||[];
+  $('pf-avatar').textContent=u.nickname[0]||'屿';
+  $('pf-name').textContent=u.nickname;
+  $('pf-uid').textContent='@'+esc(u.username)+' · 注册于 '+fmtDay(u.createdAt);
+  $('pf-count').textContent=records.length;
+  const days=Math.max(1,Math.ceil((Date.now()-u.createdAt)/86400000));
+  $('pf-days').textContent=days;
+  // 历史列表
+  const list=$('history-list');
+  if(!records.length){list.innerHTML='<div class="empty">还没有测评记录，去测评中心测一次吧</div>';}
+  else{
+    list.innerHTML='<div class="panel-title">全部测评记录</div>'+records.slice().reverse().map((r,i)=>{
+      const s=SCALES.find(x=>x.id===r.scaleId);if(!s)return'';
+      const lv=getLevel(s,r.total);
+      const cls=lv.cls==='mild'?'good':lv.cls==='moderate'?'mid':'bad';
+      return `<div class="history-item"><span>${s.name} · ${fmtDay(r.date)}</span><span class="h-score ${cls}">${r.total}/${s.max} · ${lv.label}</span><button onclick="viewHistory(${records.length-1-i})">查看</button></div>`;
+    }).join('');
+  }
+  // 趋势图（PHQ-9 分数折线）
+  const phq=records.filter(r=>r.scaleId==='phq9');
+  const box=$('trend-chart-box');
+  if(phq.length>=2){
+    const W=460,H=180,pad=30;
+    const vals=phq.map(r=>r.total);
+    const maxV=Math.max(27,...vals),minV=Math.min(...vals);
+    const x=i=>pad+(W-2*pad)*(phq.length===1?0.5:i/(phq.length-1));
+    const y=v=>H-pad-((v-minV)/(maxV-minV||1))*(H-2*pad);
+    let pts=vals.map((v,i)=>x(i).toFixed(1)+','+y(v).toFixed(1)).join(' ');
+    let dots=vals.map((v,i)=>`<circle cx="${x(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="4" fill="${v>=15?'#dc2626':v>=10?'#d97706':'#0e7490'}"/>`).join('');
+    box.innerHTML=`<svg class="svg-chart" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="max-width:100%;">
+      <line x1="${pad}" y1="${y(15)}" x2="${W-pad}" y2="${y(15)}" stroke="#fca5a5" stroke-dasharray="4 4"/>
+      <text x="${W-pad}" y="${y(15)-6}" font-size="11" fill="#dc2626">转介线 15</text>
+      <polyline points="${pts}" fill="none" stroke="#0e7490" stroke-width="2"/>
+      ${dots}
+      ${vals.map((v,i)=>`<text x="${x(i)}" y="${y(v)-10}" text-anchor="middle" font-size="11" fill="#475569">${v}</text>`).join('')}
+      ${vals.map((v,i)=>`<text x="${x(i)}" y="${H-8}" text-anchor="middle" font-size="10" fill="#94a3b8">${fmtDay(phq[i].date).slice(5)}</text>`).join('')}
+    </svg><p style="font-size:12px;color:var(--muted);text-align:center;">PHQ-9 抑郁自评分数趋势（超过红线建议寻求专业帮助）</p>`;
+  }else{box.innerHTML='';}
+  // API 状态
+  renderApiStatus();
 }
-
+function viewHistory(idx){
+  const u=DB.currentUser();if(!u)return;
+  const r=u.records[idx];if(!r)return;
+  const s=SCALES.find(x=>x.id===r.scaleId);if(!s)return;
+  showResult(s,r.total);go('result');
+}
+function renderApiStatus(){
+  const s=getApiSettings();
+  $('api-status').innerHTML=s
+    ?'<span style="color:var(--green);">✅ 已配置：'+AI_PROVIDERS[s.provider].name+'（Key 仅保存在本浏览器）</span>'
+    :'<span style="color:var(--muted);">未配置。获取免费 Key：<a href="https://open.bigmodel.cn/" target="_blank" style="color:var(--teal);">智谱开放平台 open.bigmodel.cn</a> → 注册 → API Keys → 创建（推荐设置额度上限）。</span>';
+}
+function saveApiKey(){
+  const key=$('api-key').value.trim();
+  const provider=$('api-provider').value;
+  if(!key){toast('请先粘贴 API Key');return;}
+  const u=DB.currentUser();if(!u)return;
+  u.settings={provider,apiKey:key};
+  DB.saveUser(u);
+  $('api-key').value='';
+  toast('✅ API Key 已保存，AI 疏导已切换为真实大模型对话');
+  renderApiStatus();updateChatModeUI();
+}
+function clearApiKey(){
+  const u=DB.currentUser();if(!u)return;
+  if(u.settings)delete u.settings;
+  DB.saveUser(u);
+  toast('已清除 API Key，AI 疏导回到演示模式');
+  renderApiStatus();updateChatModeUI();
+}
+function exportData(){
+  const u=DB.currentUser();if(!u)return;
+  const blob=new Blob([JSON.stringify({user:u.username,nickname:u.nickname,records:u.records,trainings:u.trainings,posts:getPosts(),exportAt:new Date().toISOString()},null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='xinyu-data-'+u.username+'.json';
+  a.click();
+  toast('✅ 数据已导出为 JSON 文件');
+}
+function clearAllData(){
+  openModal(`<h3>⚠️ 清除全部本地数据</h3><p>将删除本浏览器中你的账号、测评记录、训练记录、聊天记录与社区帖子。<b>此操作不可恢复</b>，建议先导出数据。</p><div class="modal-foot"><button class="btn" style="background:#f1f5f9;color:var(--muted);" onclick="closeModal()">取消</button><button class="btn" style="background:var(--danger);color:#fff;" onclick="doClearAll()">确认清除</button></div>`);
+}
+function doClearAll(){
+  const u=DB.currentUser();
+  const users=DB.users;
+  if(u)delete users[u.username];
+  DB.saveUsers(users);
+  localStorage.removeItem('xinyu-session');
+  closeModal();
+  toast('已清除全部本地数据');
+  showAuth();
+}
 /* ═══════════════ 初始化 ═══════════════ */
-renderQuiz();
-chatInit();
-renderPosts();
+function renderHome(){
+  const u=DB.currentUser();if(!u)return;
+  $('home-greet').textContent='你好，'+u.nickname+'，欢迎回到心屿';
+  const recs=(u.records||[]).slice(-3).reverse();
+  if(recs.length){
+    $('home-status').style.display='block';
+    $('home-status-body').innerHTML=recs.map(r=>{
+      const s=SCALES.find(x=>x.id===r.scaleId);
+      if(!s)return'';
+      const lv=getLevel(s,r.total);
+      return `<div class="history-item"><span>${s.name} · ${fmtDay(r.date)}</span><span class="h-score ${lv.cls==='mild'?'good':lv.cls==='moderate'?'mid':'bad'}">${r.total}/${s.max} · ${lv.label}</span></div>`;
+    }).join('');
+  }
+}
+function init(){
+  const u=DB.currentUser();
+  if(u){
+    renderUserArea();renderHome();go('home');
+  }else{
+    showAuth();
+  }
+  renderScaleGrid();
+  renderTrainGrid();
+  initChat();
+  renderPosts();
+  if(u)renderProfile();
+}
+init();
 </script>
 </body>
 </html>
