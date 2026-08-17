@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>心屿 MindIsle v3.0 焕彩主题版 · 交付总览与验收报告</title>
+<style>
+  :root{--teal:#0e7490;--teal-dark:#134e4a;--mint:#f0fdfa;--mint-border:#99f6e4;--text:#1f2937;--muted:#6b7280;--line:#e2e8f0;--card:#fff;--bg:#f8fafc;--ok:#059669;--ok-bg:#ecfdf5;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.7;}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 20px 60px;}
+  .hero{background:linear-gradient(135deg,#134e4a,#0e7490 60%,#155e75);border-radius:22px;color:#fff;padding:36px 32px;box-shadow:0 14px 40px rgba(15,118,110,.25);}
+  .hero h1{font-size:26px;margin-bottom:8px;}
+  .hero p{opacity:.92;font-size:14.5px;max-width:760px;}
+  .hero .ver{display:inline-block;margin-top:14px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);padding:4px 12px;border-radius:999px;font-size:12.5px;}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:22px 0;}
+  .metric{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 2px 12px rgba(15,118,110,.06);}
+  .metric b{font-size:26px;color:var(--teal);display:block;}
+  .metric span{font-size:13px;color:var(--muted);}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;margin-bottom:18px;box-shadow:0 2px 12px rgba(15,118,110,.05);}
+  .panel h2{font-size:18px;color:var(--teal-dark);margin-bottom:14px;}
+  .themes{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;}
+  .theme-card{border:1.5px solid var(--line);border-radius:14px;padding:12px;background:linear-gradient(135deg,#fff,#fafdff);}
+  .theme-card b{display:block;font-size:14px;}
+  .theme-card small{color:var(--muted);font-size:11.5px;line-height:1.5;display:block;margin-top:2px;}
+  .swatch{display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:6px;vertical-align:-2px;border:1px solid rgba(0,0,0,.08);}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  th,td{border-bottom:1px solid var(--line);padding:9px 10px;text-align:left;vertical-align:top;}
+  th{background:var(--mint);color:var(--teal-dark);font-size:13px;}
+  .ok{color:var(--ok);font-weight:700;}
+  .badge{display:inline-block;background:var(--ok-bg);color:var(--ok);border:1px solid #a7f3d0;border-radius:999px;padding:1px 10px;font-size:12px;font-weight:600;}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;position:relative;}
+  .step b{color:var(--teal-dark);font-size:14px;}
+  .step p{font-size:12.5px;color:var(--muted);margin-top:4px;}
+  .step::before{content:attr(data-n);position:absolute;top:-9px;left:12px;background:var(--teal);color:#fff;font-size:11px;font-weight:700;border-radius:8px;padding:2px 9px;}
+  code{background:#f1f5f9;border-radius:6px;padding:1px 6px;font-size:12.5px;}
+  .warn{background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:14px 16px;font-size:13px;color:#92400e;}
+  a{color:var(--teal);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <h1>心屿 MindIsle v3.0「焕彩主题版」· 交付总览</h1>
+    <p>面向心理资源不足地区青少年的 AI 心理陪伴与支持平台。本次迭代:小学阶段零改动的前提下,为初中/高中端交付 12 套全局可切换主题 + 视觉升级 + 缓存修复 + 演示账号同步,并深化后端(Supabase 迁移 + 零依赖 API + AI 记忆/情绪/风险),不覆盖任何旧版本。</p>
+    <span class="ver">版本 v3.0.0 · 2026-08-16 交付 · 旧版 v2.3 完整保留可回滚</span>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><b>12 套</b><span>全局主题风格(甜美/甜酷/简约清新/科技/治愈校园/萌趣卡通/元气校园/静谧蓝调/轻复古胶片/轻量赛博/马卡龙/极简黑白)</span></div>
+    <div class="metric"><b>+61 行</b><span>app.js 纯加法改造(4091 行原样,0 删除 0 修改);styles.css 字节级未动</span></div>
+    <div class="metric"><b>31 / 31</b><span>后端端到端冒烟测试通过(含四角色权限边界 403 实测)</span></div>
+    <div class="metric"><b>24 张</b><span>浏览器实跑截图证据(12 风格逐套 + 跨页面 + 小学原版对照 + 交互回归)</span></div>
+    <div class="metric"><b>9 表 + 15 策略</b><span>Supabase 迁移脚本(users/schools/ai_personality/chat_records/assessments/emotion_records/family_bindings/tree_hole/user_behavior + RLS)</span></div>
+    <div class="metric"><b>0 改动</b><span>小学阶段界面/文案/流程/宠物/树洞/心情日记逐字未动(截图对照)</span></div>
+  </div>
+
+  <div class="panel">
+    <h2>🎨 12 套全局主题(登录后右上角 🎨 按钮即点即换,保存到账号)</h2>
+    <div class="themes">
+      <div class="theme-card"><span class="swatch" style="background:#3e8e7e"></span><b>治愈校园(默认)</b><small>奶油底 + 鼠尾草绿,像午后的校园草地</small></div>
+      <div class="theme-card"><span class="swatch" style="background:#e268a0"></span><b>甜美风</b><small>粉彩糖霜质感,柔软不腻</small></div>
+      <div class="theme-card"><span class="swatch" style="background:#26222e"></span><b>甜酷风</b><small>粉 × 黑,甜里带一点飒</small></div>
+      <div class="theme-card"><span class="swatch" style="background:#2f8f6b"></span><b>简约清新</b><small>白与浅绿,清爽呼吸感</small></div>
+      <div class="theme-card"><span class="swatch" style="background:#2f6fed"></span><b>科技风</b><small>冷静蓝灰,理性又轻快</small></div>
+      <div class="theme-card"><span class="swatch" style="background:#f2a33c"></span><b>萌趣卡通</b><small>明黄暖橙,大圆角萌系</small></div>
+      <div class="theme-card"><span class="swatch" style="background:#f2704d"></span><b>元气校园</b><small>珊瑚橙活力满满</small></div>
+      <div class="theme-card"><span class="swatch" style="background:#4a6fa5"></span><b>静谧蓝调</b><small>雾蓝灰调,安静专注</small></div>
+      <div class="theme-card"><span class="swatch" style="background:#a97a45"></span><b>轻复古胶片</b><small>米棕胶片质感,怀旧温度</small></div>
+      <div class="theme-card"><span class="swatch" style="background:#0d93b5"></span><b>轻量赛博</b><small>浅色网格 + 青品点缀,轻科幻</small></div>
+      <div class="theme-card"><span class="swatch" style="background:#a084d9"></span><b>马卡龙柔和</b><small>淡紫淡粉淡绿,软糯马卡龙</small></div>
+      <div class="theme-card"><span class="swatch" style="background:#1a1c22"></span><b>极简黑白</b><small>黑白灰,利落克制</small></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>🧭 本次迭代做了什么(四路 Agent 协作 + 主线实施)</h2>
+    <div class="steps">
+      <div class="step" data-n="1"><b>代码结构测绘</b><p>定位 24 个页面、角色/学段分流、演示账号、localStorage 键与全部主题挂钩点,精确到行号。</p></div>
+      <div class="step" data-n="2"><b>样式审计</b><p>13 个既有 CSS 变量 + 60 处硬编码色建档;小学端专属类保护区清单;28+7 主题变量提案。</p></div>
+      <div class="step" data-n="3"><b>12 套主题开发</b><p>新增 themes.css(12 主题块,仅 body[data-theme] 作用域);7 处 JS 挂钩点;风格设置面板。</p></div>
+      <div class="step" data-n="4"><b>缓存与演示账号</b><p>资源 ?v=3.0.0 + no-cache 三件套 + 版本徽标;演示账号幂等回填默认主题。</p></div>
+      <div class="step" data-n="5"><b>后端深化</b><p>Supabase 迁移 SQL(9 表+15 RLS+种子)+ 零依赖 Node API + AI 记忆/情绪/风险(mock 降级)。</p></div>
+      <div class="step" data-n="6"><b>复核与实测</b><p>代码复核(纯加法 61 行、字节级 diff);31/31 冒烟;浏览器实跑 24 张截图;交互回归 + 刷新持久化。</p></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>✅ 验收标准逐条对照(全部通过)</h2>
+    <table>
+      <tr><th>完成标准</th><th>结论</th><th>可检查证据</th></tr>
+      <tr><td>小学阶段零改动</td><td class="ok">✔ 通过</td><td>app.js 纯加法 61 行/0 删除;styles.css SHA-256 字节级相同;小学生登录截图 = 原版心灵小岛界面</td></tr>
+      <tr><td>初中至高中出现风格设置入口</td><td class="ok">✔ 通过</td><td>右上角 🎨 按钮(isThemeEligible 限定初中/高中 + 演示账号);登录页有提示文案</td></tr>
+      <tr><td>12 种风格齐备可切换</td><td class="ok">✔ 通过</td><td>themes.css 12 主题块 + THEMES 常量 12 条 + 12 张逐套截图(目检配色差异明显)</td></tr>
+      <tr><td>多页面同一风格无割裂</td><td class="ok">✔ 通过</td><td>主题层覆盖 8 大页面共享组件;测评中心/AI疏导/个人中心跨页截图同风格</td></tr>
+      <tr><td>视觉优化贴合初高中生</td><td class="ok">✔ 通过</td><td>每套风格独立圆角/柔影/渐变 hero/图标色块;白框按钮与生硬描边已替换(基底 17 Takram 柔和科技)</td></tr>
+      <tr><td>核心功能与既有模块不被破坏</td><td class="ok">✔ 通过</td><td>复核确认 7 个挂钩点不改变业务分支;node --check 通过;交互回归实测(测评提交/树洞发布)</td></tr>
+      <tr><td>修改无需手动刷新即生效</td><td class="ok">✔ 通过</td><td>?v=3.0.0 + no-cache 三件套 + 版本徽标;主题切换即时渲染;刷新后主题/记录持久(i-runA/B)</td></tr>
+      <tr><td>演示账户已同步新风格</td><td class="ok">✔ 通过</td><td>ensureDemoAccounts 幂等回填 isDemo + 默认主题(只补缺不覆盖);demo-stu1 截图</td></tr>
+      <tr><td>生成新版本不覆盖旧版本</td><td class="ok">✔ 通过</td><td>新版本独立目录 DELIVERY/心屿v3焕彩主题版/;旧版原封保留;回滚手册含步骤</td></tr>
+      <tr><td>注册登录与用户信息接口可用</td><td class="ok">✔ 通过</td><td>冒烟实测:注册 200/重复 409、登录返回 token、profile 200、未登录 401</td></tr>
+      <tr><td>四类角色权限边界成立</td><td class="ok">✔ 通过</td><td>冒烟逐条:学生看不了他人/学校统计 403;家长只见孩子趋势(聊天/历史 403);学校仅匿名聚合;社区仅区域汇总</td></tr>
+      <tr><td>核心数据表已建立并可迁移</td><td class="ok">✔ 通过</td><td>001_init.sql 9 表 + 9 处 RLS + 15 策略 + 演示种子;mock 模式读写实测通过</td></tr>
+    </table>
+  </div>
+
+  <div class="panel">
+    <h2>🖥️ 如何运行与部署</h2>
+    <p style="font-size:13.5px;">
+      <b>本机预览(前端):</b>双击 <code>index.html</code>,或打开 <code>http://127.0.0.1:3017/</code>(验证服务器)。登录任一演示账号(密码 <code>demo123456</code>)→ 右上角 🎨 切换 12 套风格。<br><br>
+      <b>后端(mock 模式,零依赖):</b><code>cd server</code> → <code>node index.js</code> → 另开终端 <code>node scripts/smoke.js</code>(预期 31 通过/0 失败)。<br><br>
+      <b>Supabase(可选):</b>SQL Editor 执行 <code>supabase/migrations/001_init.sql</code> → 配 <code>SUPABASE_URL</code>/<code>SUPABASE_SERVICE_KEY</code> 重启服务即切换真实数据库;真实大模型配 <code>AI_API_KEY</code>(OpenAI 兼容),不配自动用内置规则回复。<br><br>
+      <b>GitHub Pages 上线(新旧并存):</b>仓库内新建 <code>v3/</code> 目录上传本目录 7 个文件(旧文件一个不动)→ 访问 <code>https://&lt;用户名&gt;.github.io/xinyu-ai/v3/</code>。回滚 = 删除 v3/ 目录即可。
+    </p>
+  </div>
+
+  <div class="panel">
+    <h2>📂 交付物清单</h2>
+    <table>
+      <tr><th>文件</th><th>用途</th></tr>
+      <tr><td><code>index.html</code> · <code>styles.css</code> · <code>app.js</code> · <code>themes.css</code></td><td>新版前端四件套(入口带缓存版本号,双击可开、上传即部署)</td></tr>
+      <tr><td><code>favicon.svg</code></td><td>网站图标</td></tr>
+      <tr><td><code>server/</code>(24 文件)</td><td>零依赖 Node API:注册/登录/profile/AI 创建/聊天(记忆+情绪+风险)/测评/树洞/家庭/统计/行为台账 + 冒烟脚本</td></tr>
+      <tr><td><code>supabase/migrations/001_init.sql</code></td><td>数据库迁移:9 表 + RLS 四角色策略 + 演示种子数据</td></tr>
+      <tr><td><code>docs/部署与回滚手册.md</code></td><td>上线步骤、环境变量、回滚操作</td></tr>
+      <tr><td><code>docs/api文档.md</code></td><td>全部接口 curl 示例与响应格式</td></tr>
+      <tr><td><code>docs/README-server.md</code></td><td>后端架构、环境变量表、迁移命令</td></tr>
+      <tr><td><code>docs/权限隔离验证记录.md</code></td><td>四角色 × 可见/不可见矩阵 + RLS/守卫对照 + 实测证据</td></tr>
+      <tr><td><code>docs/截图证据/</code>(24 张 PNG)</td><td>12 风格逐套 + 跨页面 + 小学原版对照 + 交互回归/持久化证据</td></tr>
+    </table>
+  </div>
+
+  <div class="warn">⚠️ 说明与缺口:① Supabase 真实迁移与大模型调用需你的外部凭据(项目 URL/密钥),当前以 SQL 文件 + mock 模式实测覆盖,步骤见手册;② 旧仓库 <code>assets/</code> 装饰图片文件夹部署时复制进 v3/ 即可(缺图不影响核心功能);③ AI 输出不构成医学诊断,高风险只提示建议寻求专业帮助并附 12356。</div>
+
+</div>
+</body>
+</html>

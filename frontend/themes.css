@@ -1,0 +1,391 @@
+/* ════════════════════════════════════════════════════════════════
+   心屿 MindIsle v3.0 · 焕彩主题系统(themes.css)
+   ────────────────────────────────────────────────────────────────
+   红线(违反任一条即返工):
+   1. 主题只作用于 body[data-theme="xxx"] 作用域;无 data-theme 的页面
+      (登录页、小学端、本科及以上、其他角色)与旧版完全一致。
+   2. 禁止泛化选择器([data-theme] button / .panel 等不加限定);
+      全部使用显式类名清单。
+   3. 小学端专属类(primary-*、kid-*、pp-*、ph-*、mood-diary*、pet-*、
+      tree-*、primary-tree-scene、primary-community-intro、
+      primary-mood-quick 等)永不写入本文件覆盖清单。
+   4. 主题只换视觉,不改变任何业务行为;变量语义与 styles.css 对齐。
+   基底:17 Takram「柔和科技」DNA —— 圆角、柔影、图形化、谦逊精致;
+   禁紫蓝霓虹渐变、禁堆砌阴影。
+   ════════════════════════════════════════════════════════════════ */
+
+/* ───────────── 通用主题层:仅 data-theme 存在时生效 ───────────── */
+body[data-theme]{
+  background-color:var(--page-bg);
+  color:var(--text);
+  transition:background-color .3s ease,color .3s ease;
+}
+
+/* 顶栏 / 导航 */
+body[data-theme] .topbar{
+  background:var(--card);
+  border-bottom:1px solid var(--line);
+  box-shadow:var(--t-shadow);
+}
+body[data-theme] .logo{color:var(--teal);}
+body[data-theme] .logo .mark{background:var(--grad-brand);}
+body[data-theme] .nav button{border-radius:calc(var(--t-radius) - 4px);}
+body[data-theme] .nav button:hover{background:var(--mint);color:var(--teal);}
+body[data-theme] .nav button.active{background:var(--teal);color:#fff;}
+
+/* 卡片 / 面板 */
+body[data-theme] .panel{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--t-radius);
+  box-shadow:var(--t-shadow);
+}
+body[data-theme] :is(.feat-card,.scale-card,.role-card,.train-card,.know-card,.edu-card,.res-card,.ref-item,.ledger-item,.q-item,.diary-item,.history-item,.compose,.post,.mg-scale-card,.mg-detail-head,.child-card,.fam-item,.vp-item,.course-card,.assist-reply,.rec-card,.auth-card,.profile-side,.mg-metric,.api-form,.risk-timeline .rt-body){
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--t-radius);
+}
+body[data-theme] :is(.feat-card,.scale-card,.role-card,.train-card,.know-card,.edu-card,.res-card,.ref-item,.ledger-item,.mg-scale-card,.mg-metric,.course-card){
+  box-shadow:var(--t-shadow);
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+body[data-theme] :is(.feat-card,.scale-card,.role-card,.train-card,.know-card,.edu-card,.res-card,.ref-item,.ledger-item,.mg-scale-card,.mg-metric,.course-card):hover{
+  box-shadow:var(--t-shadow-float);
+}
+body[data-theme] .rec-card{background:var(--surface-soft);}
+
+/* 按钮体系:主按钮 / 次按钮 / 灰底按钮 */
+body[data-theme] .btn{border-radius:calc(var(--t-radius) - 4px);}
+body[data-theme] .btn-teal{background:var(--teal);color:#fff;box-shadow:var(--t-shadow);}
+body[data-theme] .btn-teal:hover{background:var(--teal-dark);}
+body[data-theme] .btn-soft{background:var(--mint);color:var(--teal-dark);border:1px solid var(--mint-border);}
+body[data-theme] .btn-neutral{background:var(--surface)!important;color:var(--muted)!important;}
+body[data-theme] .modal-foot .btn:not(.btn-teal){background:var(--surface)!important;color:var(--muted)!important;}
+body[data-theme] :is(.u-btn,.t-btn,.vb-btn,.back-btn,.history-item button,.res-card .r-actions button,.vp-item .vp-act button,.fn-ctrl button,.course-filter button){
+  background:var(--mint);
+  border:1px solid var(--mint-border);
+  color:var(--teal-dark);
+  border-radius:calc(var(--t-radius) - 4px);
+}
+body[data-theme] :is(.u-btn,.t-btn,.vb-btn):hover{background:var(--teal);color:#fff;}
+
+/* 表单输入:软描边 + 聚焦光晕 */
+body[data-theme] :is(.field input,.field select,.field textarea,.chat-input textarea,.api-form select,.api-form input,.mg-toolbar input,.mg-toolbar select,.train-box textarea,.train-box input,.compose textarea,.post .r-input input){
+  border:1.5px solid var(--line);
+  border-radius:calc(var(--t-radius) - 6px);
+  background:var(--card);
+  color:var(--text);
+}
+body[data-theme] :is(.field input,.field select,.field textarea,.chat-input textarea,.api-form select,.api-form input,.mg-toolbar input,.mg-toolbar select):focus{
+  border-color:var(--teal);
+  box-shadow:0 0 0 3px var(--mint);
+  outline:none;
+}
+body[data-theme] .tabs{background:var(--surface);border-radius:calc(var(--t-radius) - 4px);}
+body[data-theme] .tabs button.active{background:var(--teal);color:#fff;}
+body[data-theme] :is(.mood-pick span,.mood-pick2 span,.tag-pick span,.mode-switch span,.persona-chip,.q-options label){
+  background:var(--card);
+  border:1.5px solid var(--line);
+  border-radius:calc(var(--t-radius) - 4px);
+  color:var(--text);
+}
+body[data-theme] .q-options label:has(input:checked){border-color:var(--teal);background:var(--mint);}
+
+/* 首页 hero(每主题独立构图感) */
+body[data-theme] .hero{
+  background:var(--grad-hero);
+  border-radius:var(--t-radius);
+  box-shadow:var(--t-shadow-float);
+}
+body[data-theme] .hero h1{color:var(--hero-text);}
+body[data-theme] .hero p{color:var(--hero-sub);}
+body[data-theme] .hero .btn-primary{background:var(--card);color:var(--teal);box-shadow:var(--t-shadow);}
+body[data-theme] .btn-ghost{background:transparent;border:1px solid var(--hero-text);color:var(--hero-text);}
+
+/* 首页功能卡图标色块 */
+body[data-theme] .i-test{background:var(--tile-1);}
+body[data-theme] .i-chat{background:var(--tile-2);}
+body[data-theme] .i-train{background:var(--tile-3);}
+body[data-theme] .i-comm{background:var(--tile-4);}
+
+/* 今日状态卡 / 翻转卡 / 建议卡(接管 v4 渐变变量后自动跟随,这里补内部文字) */
+body[data-theme] .status-card{background:var(--v4-grad-warm);border:1px solid var(--warm-border);}
+body[data-theme] .status-card :is(h3,b,span,.m-num){color:var(--text);}
+body[data-theme] .status-card .m-label{color:var(--muted);}
+body[data-theme] .sc-item{background:var(--card);}
+body[data-theme] .flip-face.front{background:var(--v4-grad-soft);border:1px solid var(--mint-border);}
+body[data-theme] .flip-face.back{background:var(--v4-grad-teal);}
+body[data-theme] .advice-box{background:var(--v4-grad-soft);color:var(--teal-dark);}
+body[data-theme] .suggest-long{background:var(--v4-grad-soft);}
+
+/* 聊天 */
+body[data-theme] .chat-wrap{background:var(--page-bg);border:1px solid var(--line);border-radius:var(--t-radius);}
+body[data-theme] .chat-head{background:var(--card);}
+body[data-theme] .chat-head .ava{background:var(--grad-brand);}
+body[data-theme] .msg.bot{background:var(--card);border:1px solid var(--line);}
+body[data-theme] .msg.user{background:var(--teal);color:#fff;}
+body[data-theme] .msg.demo{background:var(--warm);border:1px solid var(--warm-border);color:var(--text);}
+body[data-theme] .chat-input{background:var(--card);}
+body[data-theme] .suggest{background:var(--mint);border:1px solid var(--mint-border);color:var(--teal-dark);}
+body[data-theme] .suggest:hover{background:var(--teal);color:#fff;}
+
+/* 语义条:青系 → 主题浅底;暖黄系 → 主题暖色 */
+body[data-theme] :is(.empathy-bar,.voice-vent,.persona-tag){
+  background:linear-gradient(135deg,var(--mint),var(--surface-soft));
+  border:1px solid var(--mint-border);
+  color:var(--teal-dark);
+}
+body[data-theme] .invite-hero{background:linear-gradient(135deg,var(--mint),var(--surface-soft));border:1px solid var(--mint-border);}
+body[data-theme] :is(.vent-box,.rule-bar){background:var(--surface-soft);border:1.5px dashed var(--line);}
+body[data-theme] .vent-item{border:1px solid var(--warm-border);background:var(--card);}
+body[data-theme] .g-step{background:var(--surface-soft);}
+body[data-theme] .scale-info.ref{background:var(--surface-soft);}
+body[data-theme] .quiz-progress{background:var(--surface);}
+body[data-theme] .quiz-progress i{background:var(--grad-brand);}
+body[data-theme] .course-card::before{background:var(--grad-brand);}
+body[data-theme] :is(.sr-bar,.mg-bar-row .bar){background:var(--surface);}
+body[data-theme] .sr-bar i{background:var(--grad-brand);}
+
+/* 弹窗 / 欢迎卡 / toast / 底部导航 / 页脚 */
+body[data-theme] .modal{background:var(--card);border-radius:var(--t-radius);box-shadow:var(--t-shadow-float);}
+body[data-theme] .welcome-card{background:var(--v4-grad-warm);}
+body[data-theme] .welcome-card :is(h3,.w-quote){color:var(--text);}
+body[data-theme] .welcome-card .w-tip{color:var(--muted);border:1px solid var(--warm-border);}
+body[data-theme] .welcome-card .w-orb{background:var(--v4-grad-teal);}
+body[data-theme] .toast{background:var(--teal-dark);color:#fff;}
+body[data-theme] .bottom-nav{background:var(--card);border:1px solid var(--line);}
+body[data-theme] .bottom-nav button.on{background:var(--teal);color:#fff;}
+body[data-theme] footer{color:var(--muted);border-top:1px solid var(--line);}
+
+/* 主题切换面板(挂 modal,随主题变量自动着色) */
+.theme-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:14px;max-height:52vh;overflow:auto;}
+.theme-card{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:12px;border:1.5px solid var(--line);border-radius:14px;background:var(--card);cursor:pointer;text-align:left;transition:transform .15s ease,border-color .15s ease;}
+.theme-card:hover{transform:translateY(-2px);border-color:var(--teal);}
+.theme-card.sel{border-color:var(--teal);background:var(--mint);box-shadow:0 0 0 3px var(--mint);}
+.theme-card .t-ico{font-size:22px;line-height:1;}
+.theme-card b{font-size:14px;color:var(--text);}
+.theme-card small{font-size:11.5px;color:var(--muted);line-height:1.5;}
+body[data-theme] .theme-btn{padding:0 11px;font-size:15px;}
+
+/* ════════════════════ 12 套主题定义 ════════════════════ */
+
+/* ① 治愈校园(默认主题):奶油底 + 鼠尾草绿 */
+body[data-theme="zhiyu"]{
+  --page-bg:#faf6ee; --card:#fffdf8; --text:#3f382c; --muted:#8b8070;
+  --teal:#3e8e7e; --teal-dark:#2e6d5f; --mint:#eaf4ee; --mint-border:#c6e0d2;
+  --line:#ece3d0; --surface:#f4ecdd; --surface-soft:#f8f3e8;
+  --warm:#fdf6e9; --warm-border:#e9d9b8;
+  --t-radius:18px;
+  --t-shadow:0 6px 24px rgba(62,142,126,.12); --t-shadow-float:0 14px 40px rgba(62,142,126,.20);
+  --grad-brand:linear-gradient(135deg,#3e8e7e,#7bb8a4);
+  --grad-hero:linear-gradient(135deg,#4c8f7d 0%,#8fc0ab 100%);
+  --hero-text:#ffffff; --hero-sub:rgba(255,255,255,.94);
+  --tile-1:#dff0e8; --tile-2:#f7e8c9; --tile-3:#f4dfe4; --tile-4:#dce9f7;
+  --v4-grad-warm:linear-gradient(135deg,#fdf6e9 0%,#f3e9d2 100%);
+  --v4-grad-teal:var(--grad-hero);
+  --v4-grad-soft:linear-gradient(135deg,#eef6f1 0%,#f6f1e4 100%);
+  --v4-shadow-soft:var(--t-shadow); --v4-shadow-float:var(--t-shadow-float); --v4-radius:var(--t-radius);
+}
+
+/* ② 甜美风:粉彩糖霜 */
+body[data-theme="tianmei"]{
+  --page-bg:#fff4f8; --card:#ffffff; --text:#5a3a49; --muted:#a98a97;
+  --teal:#e268a0; --teal-dark:#c74f85; --mint:#fdecf3; --mint-border:#f9c9dd;
+  --line:#f5dce7; --surface:#fbe3ec; --surface-soft:#fdf1f6;
+  --warm:#fff1f5; --warm-border:#f9d0de;
+  --t-radius:20px;
+  --t-shadow:0 6px 24px rgba(226,104,160,.13); --t-shadow-float:0 14px 40px rgba(226,104,160,.22);
+  --grad-brand:linear-gradient(135deg,#f08ab5,#e268a0);
+  --grad-hero:linear-gradient(135deg,#e268a0 0%,#c45488 100%);
+  --hero-text:#ffffff; --hero-sub:rgba(255,255,255,.94);
+  --tile-1:#fde3ec; --tile-2:#f9ecf4; --tile-3:#e9f6f0; --tile-4:#fdf3d9;
+  --v4-grad-warm:linear-gradient(135deg,#fff1f5 0%,#ffe4ec 100%);
+  --v4-grad-teal:var(--grad-hero);
+  --v4-grad-soft:linear-gradient(135deg,#fdf0f5 0%,#fff4f8 100%);
+  --v4-shadow-soft:var(--t-shadow); --v4-shadow-float:var(--t-shadow-float); --v4-radius:var(--t-radius);
+}
+
+/* ③ 甜酷风:粉 × 黑 */
+body[data-theme="tianku"]{
+  --page-bg:#f7f3f6; --card:#ffffff; --text:#2b2530; --muted:#857b8d;
+  --teal:#26222e; --teal-dark:#131017; --mint:#fbe9f2; --mint-border:#f2c2d9;
+  --line:#e9e2e8; --surface:#f0ebef; --surface-soft:#f5f1f4;
+  --warm:#fdf1f6; --warm-border:#f3cbdc;
+  --t-radius:14px;
+  --t-shadow:0 6px 24px rgba(38,34,46,.12); --t-shadow-float:0 14px 40px rgba(38,34,46,.20);
+  --grad-brand:linear-gradient(135deg,#26222e,#ec4899);
+  --grad-hero:linear-gradient(135deg,#2a2333 0%,#4a2a4d 60%,#c0266a 130%);
+  --hero-text:#ffffff; --hero-sub:rgba(255,255,255,.92);
+  --tile-1:#fbe3ef; --tile-2:#e8e4ee; --tile-3:#f6f0ea; --tile-4:#e3eef4;
+  --v4-grad-warm:linear-gradient(135deg,#fdf1f6 0%,#f7e7f0 100%);
+  --v4-grad-teal:var(--grad-hero);
+  --v4-grad-soft:linear-gradient(135deg,#f6f1f5 0%,#fbf0f6 100%);
+  --v4-shadow-soft:var(--t-shadow); --v4-shadow-float:var(--t-shadow-float); --v4-radius:var(--t-radius);
+}
+
+/* ④ 简约清新:白与浅绿 */
+body[data-theme="jianyue"]{
+  --page-bg:#f5faf7; --card:#ffffff; --text:#27352c; --muted:#75867b;
+  --teal:#2f8f6b; --teal-dark:#256e55; --mint:#e9f6ef; --mint-border:#bfe3d1;
+  --line:#e0ebe4; --surface:#edf4f0; --surface-soft:#f2f8f5;
+  --warm:#fbfaf0; --warm-border:#e4e8cf;
+  --t-radius:12px;
+  --t-shadow:0 4px 16px rgba(47,143,107,.10); --t-shadow-float:0 12px 32px rgba(47,143,107,.18);
+  --grad-brand:linear-gradient(135deg,#2f8f6b,#6db99a);
+  --grad-hero:linear-gradient(135deg,#d9ede2 0%,#b7dcc9 100%);
+  --hero-text:#1f3a2c; --hero-sub:rgba(31,58,44,.85);
+  --tile-1:#dff0e7; --tile-2:#eef6d9; --tile-3:#dcecf5; --tile-4:#f3e9d8;
+  --v4-grad-warm:linear-gradient(135deg,#fbfaf0 0%,#eef3e3 100%);
+  --v4-grad-teal:var(--grad-hero);
+  --v4-grad-soft:linear-gradient(135deg,#eef7f2 0%,#f4f9f6 100%);
+  --v4-shadow-soft:var(--t-shadow); --v4-shadow-float:var(--t-shadow-float); --v4-radius:var(--t-radius);
+}
+
+/* ⑤ 科技风:冷静蓝灰 */
+body[data-theme="keji"]{
+  --page-bg:#f3f6fb; --card:#ffffff; --text:#24303f; --muted:#6b7a90;
+  --teal:#2f6fed; --teal-dark:#2456c4; --mint:#e9f0fd; --mint-border:#c4d6fa;
+  --line:#e0e7f1; --surface:#e9eef6; --surface-soft:#f0f4fa;
+  --warm:#f6f8fc; --warm-border:#dce3ee;
+  --t-radius:10px;
+  --t-shadow:0 4px 16px rgba(47,111,237,.12); --t-shadow-float:0 12px 32px rgba(47,111,237,.20);
+  --grad-brand:linear-gradient(135deg,#2f6fed,#5b8bf2);
+  --grad-hero:linear-gradient(135deg,#e0eafb 0%,#c3d5f6 100%);
+  --hero-text:#1d2a41; --hero-sub:rgba(29,42,65,.82);
+  --tile-1:#dfe9fb; --tile-2:#e2f2f0; --tile-3:#eef2f8; --tile-4:#f3ecd9;
+  --v4-grad-warm:linear-gradient(135deg,#f6f8fc 0%,#e8eef8 100%);
+  --v4-grad-teal:var(--grad-hero);
+  --v4-grad-soft:linear-gradient(135deg,#edf2fa 0%,#f3f6fb 100%);
+  --v4-shadow-soft:var(--t-shadow); --v4-shadow-float:var(--t-shadow-float); --v4-radius:var(--t-radius);
+}
+
+/* ⑥ 萌趣卡通:明黄暖橙 + 大圆角 */
+body[data-theme="mengqu"]{
+  --page-bg:#fffbe9; --card:#ffffff; --text:#4d3f28; --muted:#9d8f74;
+  --teal:#f2a33c; --teal-dark:#dd8a1e; --mint:#fff2d3; --mint-border:#fedd97;
+  --line:#f6e7c6; --surface:#fdf0d0; --surface-soft:#fef6e0;
+  --warm:#fff8e6; --warm-border:#f6dcab;
+  --t-radius:22px;
+  --t-shadow:0 8px 24px rgba(242,163,60,.16); --t-shadow-float:0 16px 40px rgba(242,163,60,.26);
+  --grad-brand:linear-gradient(135deg,#f6b04f,#f2a33c);
+  --grad-hero:linear-gradient(135deg,#ffd489 0%,#ffb94f 100%);
+  --hero-text:#5a3d14; --hero-sub:rgba(90,61,20,.88);
+  --tile-1:#fdeec6; --tile-2:#dff3e3; --tile-3:#fbe1e7; --tile-4:#ddecfb;
+  --v4-grad-warm:linear-gradient(135deg,#fff8e6 0%,#fdeec6 100%);
+  --v4-grad-teal:var(--grad-hero);
+  --v4-grad-soft:linear-gradient(135deg,#fef6e0 0%,#fffbe9 100%);
+  --v4-shadow-soft:var(--t-shadow); --v4-shadow-float:var(--t-shadow-float); --v4-radius:var(--t-radius);
+}
+
+/* ⑦ 元气校园:珊瑚橙活力 */
+body[data-theme="yuanqi"]{
+  --page-bg:#fff6f0; --card:#ffffff; --text:#49352b; --muted:#9d8478;
+  --teal:#f2704d; --teal-dark:#dd5734; --mint:#ffece2; --mint-border:#ffcdb4;
+  --line:#f8e3d7; --surface:#fdeade; --surface-soft:#fef2ea;
+  --warm:#fff3ea; --warm-border:#fad9c6;
+  --t-radius:16px;
+  --t-shadow:0 6px 24px rgba(242,112,77,.14); --t-shadow-float:0 14px 40px rgba(242,112,77,.24);
+  --grad-brand:linear-gradient(135deg,#f58260,#f2704d);
+  --grad-hero:linear-gradient(135deg,#ffb086 0%,#ff8c5f 100%);
+  --hero-text:#ffffff; --hero-sub:rgba(255,255,255,.94);
+  --tile-1:#fee5d9; --tile-2:#fdf0cf; --tile-3:#e0f2e8; --tile-4:#e5e9fa;
+  --v4-grad-warm:linear-gradient(135deg,#fff3ea 0%,#ffe4d6 100%);
+  --v4-grad-teal:var(--grad-hero);
+  --v4-grad-soft:linear-gradient(135deg,#fdf0e8 0%,#fff6f0 100%);
+  --v4-shadow-soft:var(--t-shadow); --v4-shadow-float:var(--t-shadow-float); --v4-radius:var(--t-radius);
+}
+
+/* ⑧ 静谧蓝调:雾蓝灰 */
+body[data-theme="jingmi"]{
+  --page-bg:#f2f6fb; --card:#ffffff; --text:#28334a; --muted:#71809b;
+  --teal:#4a6fa5; --teal-dark:#395784; --mint:#e9eff8; --mint-border:#c7d5ea;
+  --line:#e2e8f2; --surface:#e9eef6; --surface-soft:#f0f4fa;
+  --warm:#f4f6fa; --warm-border:#dfe5ef;
+  --t-radius:14px;
+  --t-shadow:0 6px 24px rgba(74,111,165,.13); --t-shadow-float:0 14px 40px rgba(74,111,165,.22);
+  --grad-brand:linear-gradient(135deg,#5b82b8,#4a6fa5);
+  --grad-hero:linear-gradient(135deg,#c9dbf2 0%,#a5bfe2 100%);
+  --hero-text:#21304d; --hero-sub:rgba(33,48,77,.85);
+  --tile-1:#dde7f5; --tile-2:#e4efe9; --tile-3:#efeff7; --tile-4:#f6ecd9;
+  --v4-grad-warm:linear-gradient(135deg,#f4f6fa 0%,#e6ecf5 100%);
+  --v4-grad-teal:var(--grad-hero);
+  --v4-grad-soft:linear-gradient(135deg,#eaf0f8 0%,#f2f6fb 100%);
+  --v4-shadow-soft:var(--t-shadow); --v4-shadow-float:var(--t-shadow-float); --v4-radius:var(--t-radius);
+}
+
+/* ⑨ 轻复古胶片:米棕胶片质感 */
+body[data-theme="fugu"]{
+  --page-bg:#f6f1e7; --card:#fdfaf3; --text:#463a2c; --muted:#8f8068;
+  --teal:#a97a45; --teal-dark:#8a6133; --mint:#f3e9d7; --mint-border:#e2cfa9;
+  --line:#e8dcc4; --surface:#efe6d3; --surface-soft:#f4eddd;
+  --warm:#faf3e5; --warm-border:#e8d7b5;
+  --t-radius:8px;
+  --t-shadow:0 4px 14px rgba(138,97,51,.13); --t-shadow-float:0 12px 28px rgba(138,97,51,.20);
+  --grad-brand:linear-gradient(135deg,#b98a52,#a97a45);
+  --grad-hero:linear-gradient(135deg,#d8c7a2 0%,#c0a679 100%);
+  --hero-text:#3e3220; --hero-sub:rgba(62,50,32,.88);
+  --tile-1:#ece0c8; --tile-2:#e5e8d8; --tile-3:#f0e4d4; --tile-4:#e2dfe0;
+  --v4-grad-warm:linear-gradient(135deg,#faf3e5 0%,#efdfc2 100%);
+  --v4-grad-teal:var(--grad-hero);
+  --v4-grad-soft:linear-gradient(135deg,#f4eddd 0%,#f6f1e7 100%);
+  --v4-shadow-soft:var(--t-shadow); --v4-shadow-float:var(--t-shadow-float); --v4-radius:var(--t-radius);
+}
+
+/* ⑩ 轻量赛博:浅色网格 + 青品点缀 */
+body[data-theme="saibo"]{
+  --page-bg:#f4f7f9; --card:#ffffff; --text:#22303d; --muted:#687b8c;
+  --teal:#0d93b5; --teal-dark:#0b758f; --mint:#e5f5f9; --mint-border:#b9e2ec;
+  --line:#dfe8ed; --surface:#e9f0f4; --surface-soft:#eef4f7;
+  --warm:#f6f8fa; --warm-border:#e0e7ec;
+  --t-radius:6px;
+  --t-shadow:0 4px 14px rgba(13,147,181,.12); --t-shadow-float:0 12px 30px rgba(13,147,181,.20);
+  --grad-brand:linear-gradient(135deg,#0d93b5,#d61f69);
+  --grad-hero:linear-gradient(135deg,#e7eff3 0%,#d3e2ea 100%);
+  --hero-text:#12303f; --hero-sub:rgba(18,48,63,.85);
+  --tile-1:#d8eef4; --tile-2:#f5e3ec; --tile-3:#f2f0dd; --tile-4:#e3e8f4;
+  --v4-grad-warm:linear-gradient(135deg,#f6f8fa 0%,#e6edf2 100%);
+  --v4-grad-teal:var(--grad-hero);
+  --v4-grad-soft:linear-gradient(135deg,#edf3f6 0%,#f4f7f9 100%);
+  --v4-shadow-soft:var(--t-shadow); --v4-shadow-float:var(--t-shadow-float); --v4-radius:var(--t-radius);
+}
+body[data-theme="saibo"]{
+  background-image:linear-gradient(var(--grid-line) 1px,transparent 1px),linear-gradient(90deg,var(--grid-line) 1px,transparent 1px);
+  background-size:32px 32px;
+  --grid-line:rgba(13,147,181,.06);
+}
+
+/* ⑪ 马卡龙柔和:淡紫淡粉淡绿 */
+body[data-theme="makalong"]{
+  --page-bg:#fbf6fb; --card:#ffffff; --text:#4c4152; --muted:#9a8ba0;
+  --teal:#a084d9; --teal-dark:#8465bd; --mint:#f3ecfa; --mint-border:#ddd0f2;
+  --line:#eee5f1; --surface:#f4ecf5; --surface-soft:#f8f2f9;
+  --warm:#fdf3f8; --warm-border:#f2d5e4;
+  --t-radius:20px;
+  --t-shadow:0 6px 24px rgba(160,132,217,.14); --t-shadow-float:0 14px 40px rgba(160,132,217,.24);
+  --grad-brand:linear-gradient(135deg,#b99ae4,#a084d9);
+  --grad-hero:linear-gradient(135deg,#eedff7 0%,#ddc9f0 100%);
+  --hero-text:#41304f; --hero-sub:rgba(65,48,79,.85);
+  --tile-1:#eee3f8; --tile-2:#fbe3ef; --tile-3:#e3f2ef; --tile-4:#fdf3d8;
+  --v4-grad-warm:linear-gradient(135deg,#fdf3f8 0%,#f4e6f6 100%);
+  --v4-grad-teal:var(--grad-hero);
+  --v4-grad-soft:linear-gradient(135deg,#f7f0fa 0%,#fbf6fb 100%);
+  --v4-shadow-soft:var(--t-shadow); --v4-shadow-float:var(--t-shadow-float); --v4-radius:var(--t-radius);
+}
+
+/* ⑫ 极简黑白:利落克制 */
+body[data-theme="jijian"]{
+  --page-bg:#fafafa; --card:#ffffff; --text:#1b1c20; --muted:#74767e;
+  --teal:#1a1c22; --teal-dark:#000000; --mint:#f1f2f4; --mint-border:#d5d7dc;
+  --line:#e5e6ea; --surface:#f0f1f4; --surface-soft:#f5f6f8;
+  --warm:#f6f6f7; --warm-border:#e0e1e5;
+  --t-radius:8px;
+  --t-shadow:0 2px 10px rgba(20,22,28,.10); --t-shadow-float:0 10px 26px rgba(20,22,28,.18);
+  --grad-brand:linear-gradient(135deg,#2a2c33,#1a1c22);
+  --grad-hero:linear-gradient(135deg,#2e3038 0%,#141519 100%);
+  --hero-text:#ffffff; --hero-sub:rgba(255,255,255,.85);
+  --tile-1:#ececee; --tile-2:#f2f2f2; --tile-3:#e8e8ea; --tile-4:#f0f0f1;
+  --v4-grad-warm:linear-gradient(135deg,#f6f6f7 0%,#e9e9eb 100%);
+  --v4-grad-teal:var(--grad-hero);
+  --v4-grad-soft:linear-gradient(135deg,#f5f5f6 0%,#fafafa 100%);
+  --v4-shadow-soft:var(--t-shadow); --v4-shadow-float:var(--t-shadow-float); --v4-radius:var(--t-radius);
+}

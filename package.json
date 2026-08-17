@@ -1,0 +1,15 @@
+{
+  "name": "mindisle-v3",
+  "version": "3.0.0",
+  "description": "心屿 MindIsle v3.0 焕彩主题版 — 面向心理资源不足地区青少年的 AI 心理陪伴与支持平台(前端静态站 + 零依赖 Node 后端)",
+  "private": true,
+  "scripts": {
+    "start": "node server/index.js",
+    "smoke": "node server/scripts/smoke.js",
+    "seed": "node server/seed.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT"
+}

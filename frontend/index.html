@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>心屿 MindIsle · 心理健康资源普惠与智能分级支持平台 v3.0 焕彩主题版</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css?v=3.0.0">
+<link rel="stylesheet" href="themes.css?v=3.0.0">
+
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="logo" onclick="go('home')"><span class="mark">屿</span>心屿 MindIsle</div>
+    <nav class="nav" id="main-nav"></nav>
+    <div class="user-area" id="user-area"></div>
+  </div>
+</header>
+
+<main>
+
+<!-- ═══ 登录/注册 ═══ -->
+<div class="page" id="page-login">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <h2>心屿 MindIsle</h2>
+      <div class="auth-sub">登录后开始你的心理状态测评</div>
+      <div class="tabs">
+        <button id="tab-login" class="active" onclick="switchAuthTab('login')">登录</button>
+        <button id="tab-register" onclick="switchAuthTab('register')">注册</button>
+      </div>
+      <div id="auth-form"></div>
+      <div class="auth-tip">🔒 数据仅保存在你的浏览器本地，不上传任何服务器</div>
+      <div class="auth-tip" style="margin-top:14px;text-align:left;font-weight:700;">🎭 演示账号一键登录（密码 demo123456）</div>
+      <div class="auth-tip" style="text-align:left;">🎨 登录演示账号后，点右上角「🎨」按钮可切换 12 套全局风格（甜美风 / 甜酷风 / 简约清新 / 科技风 / 治愈校园 / 萌趣卡通 / 元气校园 / 静谧蓝调 / 轻复古胶片 / 轻量赛博 / 马卡龙柔和 / 极简黑白）</div>
+      <div class="demo-accounts" id="demo-accounts"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 角色选择（登录/注册后） ═══ -->
+<div class="page" id="page-role">
+  <div class="role-wrap">
+    <div class="panel" style="text-align:center;padding:30px 24px;">
+      <h2 style="font-size:22px;">选择你的身份</h2>
+      <p class="sub" style="margin-bottom:18px;">不同身份会进入不同的功能界面，身份信息可在个人中心随时修改</p>
+      <div class="role-grid">
+        <div class="role-card" onclick="chooseRole('student')">
+          <span class="r-tag">在校学生</span>
+          <div class="r-ico" style="background:#dbeafe;">🎓</div>
+          <h3>学生</h3>
+          <p>填写学校信息后进入平台，参与测评、AI 疏导、自助训练与心屿 树洞；你的测评数据会同步给本校管理员（信息管理）。</p>
+        </div>
+        <div class="role-card" onclick="chooseRole('normal')">
+          <span class="r-tag">一般用户</span>
+          <div class="r-ico" style="background:#ccfbf1;">👤</div>
+          <h3>普通用户</h3>
+          <p>直接进入平台，界面与现在完全一致；也可选填学校/社区/街道归属，让数据进入对应管理员的台账。</p>
+        </div>
+        <div class="role-card" onclick="chooseRole('school_admin')">
+          <span class="r-tag">教职工</span>
+          <div class="r-ico" style="background:#fef3c7;">🏫</div>
+          <h3>学校管理员</h3>
+          <p>填写学校信息后进入平台，额外拥有「信息管理」模块：查看本校学生的心理状态、测评结果与训练情况。</p>
+        </div>
+        <div class="role-card" onclick="chooseRole('parent')">
+          <span class="r-tag">家庭端</span>
+          <div class="r-ico" style="background:#fce7f3;">👨‍👩‍👧</div>
+          <h3>家长</h3>
+          <p>绑定孩子后可查看孩子的心理状态变化、学习科学沟通方式、获取家庭互动建议，共同守护孩子心理健康。</p>
+        </div>
+        <div class="role-card" onclick="chooseRole('community_admin')">
+          <span class="r-tag">基层工作人员</span>
+          <div class="r-ico" style="background:#ede9fe;">🏘️</div>
+          <h3>社区或街道管理员</h3>
+          <p>填写社区/街道信息后进入平台，额外拥有「信息管理」模块：查看该区域居民的心理状态、测评结果与训练情况。</p>
+        </div>
+      </div>
+      <p class="auth-tip" style="margin-top:18px;">🔒 身份信息仅保存在你的浏览器本地，用于演示数据归属</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 身份信息表单（按角色动态渲染） ═══ -->
+<div class="page" id="page-roleform">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="role-step" id="rf-step"></div>
+      <h2 id="rf-title">—</h2>
+      <div class="auth-sub" id="rf-sub">—</div>
+      <div id="rf-form"></div>
+      <div style="margin-top:10px;display:flex;gap:10px;">
+        <button class="btn btn-soft" style="flex:1;" onclick="backToRole()">返回角色选择</button>
+        <button class="btn btn-teal" style="flex:2;" id="rf-submit" onclick="submitRoleForm()">确认并进入平台</button>
+      </div>
+      <div class="auth-tip">🔒 身份信息仅保存在本浏览器，用于演示数据归属与管理员台账匹配</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 首页 ═══ -->
+<div class="page" id="page-home">
+  <div id="primary-home" class="primary-home" aria-label="小学端心灵岛屿首页"></div>
+  <div id="standard-home">
+  <div id="home-status-card"></div>
+  <div id="flip-nav" style="display:none;"></div>
+  <div class="hero">
+    <h1 id="home-greet">你好，欢迎来到心屿</h1>
+    <p>面向高校学生的 AI 心理健康分级干预平台。用国际标准量表测一测 → 让 AI 陪你聊聊 → 领取专属自助训练 → 在心屿 树洞找到同行的伙伴。</p>
+    <div class="cta-row">
+      <button class="btn btn-primary" onclick="go('scales')">开始心理测评</button>
+      <button class="btn btn-ghost" onclick="go('chat')">找 AI 聊聊</button>
+    </div>
+  </div>
+  <div class="grid4">
+    <div class="feat-card" onclick="go('scales')">
+      <div class="ico i-test">📋</div><h3>测评中心</h3>
+      <p>5 套国际标准量表：抑郁、焦虑、压力、睡眠、自尊。</p>
+    </div>
+    <div class="feat-card" onclick="go('chat')">
+      <div class="ico i-chat">💬</div><h3>AI 疏导</h3>
+      <p>接入大模型的倾听与引导，可配置你的专属 API。</p>
+    </div>
+    <div class="feat-card" onclick="go('train')">
+      <div class="ico i-train">🧠</div><h3>自助训练</h3>
+      <p>认知重构、呼吸练习、情绪日记、睡前引导等 6 个模块。</p>
+    </div>
+    <div class="feat-card" onclick="go('community')">
+      <div class="ico i-comm">🤝</div><h3>心屿 树洞</h3>
+      <p>匿名表达空间，你的倾诉只留在本地。</p>
+    </div>
+  </div>
+  <div class="panel" id="home-status" style="display:none;">
+    <div class="panel-title">📈 最近测评概览</div>
+    <div id="home-status-body"></div>
+  </div>
+  <div class="panel" id="home-family" style="display:none;"></div>
+    <div class="panel" id="home-knowledge">
+      <div class="panel-title">📚 心理知识科普</div>
+      <div class="know-grid" id="know-grid"></div>
+    </div>
+    <div class="panel" id="home-story">
+      <div class="panel-title">💙 心屿的故事 · 理念与未来规划</div>
+      <p style="font-size:13.5px;color:var(--muted);margin-bottom:8px;"><b style="color:var(--teal-dark);">核心理念：</b>让心理健康支持触手可及，让每一个人都拥有被倾听的机会。</p>
+      <p style="font-size:13.5px;color:var(--muted);margin-bottom:8px;"><b style="color:var(--teal-dark);">红旅定位：</b>面向心理资源薄弱地区，构建「学生—学校—家庭—专业资源」四方协同体系，推动心理资源下沉、弥合城乡差距。</p>
+      <p style="font-size:13.5px;color:var(--muted);margin-bottom:8px;"><b style="color:var(--teal-dark);">商业模式：</b>① 创意验证期免费测试 → ② 高校采购（平台 + 心理教育 + 数据分析）→ ③ 公益与政府合作（乡村学校 / 青少年项目）。</p>
+      <p style="font-size:13.5px;color:var(--muted);margin-bottom:8px;"><b style="color:var(--teal-dark);">未来规划：</b>MVP 100-500 名真实用户 → 心理专业指导体系 → 1-3 所高校试点 → 覆盖高校 / 中小学 / 基层教育机构。</p>
+      <p style="font-size:13.5px;color:var(--muted);"><b style="color:var(--teal-dark);">特色方向：</b>心屿心理树洞终端（规划）——面向乡村 / 寄宿 / 基层学校的智能终端：匿名表达 → AI 分析 → 心理支持 → 连接专业资源，实现线上平台 + 线下场景融合。</p>
+    </div>
+    <div class="panel">
+      <div class="panel-title">🛡️ 为什么是「分级干预」而不是「又一个聊天机器人」</div>
+    <p style="font-size:14px;color:var(--muted);">
+      心屿遵循国际主流的分级干预模式（Stepped Care）：<b style="color:var(--teal);">测评 + AI 对话 → 分层</b>。轻度问题交给 AI 疏导与自助训练；中重度问题<b style="color:var(--teal);">建议转介</b>学校心理咨询中心或专业机构。AI 不替代专业咨询师，而是让有限的心理健康资源用在最需要的人身上。所有量表均采用国际通用的标准化工具，带参考文献与使用说明。
+    </p>
+  </div>
+  </div>
+</div>
+
+<!-- ═══ 测评中心 ═══ -->
+<div class="page" id="page-scales">
+  <div class="panel">
+    <h2>📋 测评中心</h2>
+    <div class="sub">8 套通用标准化量表（Standardized Instruments）：5 套国际经典量表 + 3 套青少年专项（孤独感/家庭关系/睡眠质量），均标注出处与分界标准。测评结果自动保存，并进入 AI 分级支持与心理成长档案。</div>
+    <div class="scale-grid" id="scale-grid"></div>
+  </div>
+</div>
+
+<!-- ═══ 量表作答 ═══ -->
+<div class="page" id="page-test">
+  <div class="panel">
+    <div class="panel-title" id="test-title"></div>
+    <div class="scale-info" id="test-info"></div>
+    <div class="quiz-progress"><i id="quiz-progress-bar" style="width:0%"></i></div>
+    <div id="quiz-area"></div>
+    <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="btn btn-teal" id="quiz-submit" onclick="submitQuiz()" disabled>查看结果</button>
+      <button class="btn btn-soft" onclick="resetQuiz()">重新作答</button>
+      <button class="btn btn-neutral" style="background:#f1f5f9;color:var(--muted);" onclick="go('scales')">返回量表列表</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 测评结果 ═══ -->
+<div class="page" id="page-result">
+  <div class="panel">
+    <div class="panel-title" id="result-title"></div>
+    <div class="result-hero" id="result-hero">
+      <div class="score-num" id="result-score">0</div>
+      <div class="score-info">
+        <div class="level" id="result-level">—</div>
+        <p id="result-desc">—</p>
+      </div>
+    </div>
+    <div class="scale-info ref" id="result-ref"></div>
+    <div class="rec-cards" id="result-recs"></div>
+    <div class="scale-info" id="result-attr" style="display:none;margin-top:12px;"></div>
+    <div class="warn-box" id="result-warn" style="display:none;"></div>
+    <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="btn btn-teal" onclick="go('chat')">带着结果去找 AI 聊聊 →</button>
+      <button class="btn btn-soft" onclick="go('train')">去做匹配的自助训练 →</button>
+      <button class="btn btn-neutral" style="background:#f1f5f9;color:var(--muted);" onclick="go('scales')">再测一个量表</button>
+    </div>
+  </div>
+  <div class="panel" id="report-panel" style="display:none;">
+    <div class="panel-title">🧭 综合心理健康报告</div>
+    <p class="sub">基于你已完成的所有量表，五维雷达展示当前心理状态画像。分数越高表示该维度困扰越明显。</p>
+    <div class="chart-box"><svg class="svg-chart" id="radar-chart" width="480" height="400" viewBox="0 0 480 400"></svg></div>
+    <div id="report-summary"></div>
+  </div>
+</div>
+
+<!-- ═══ AI 疏导 ═══ -->
+<div class="page" id="page-chat">
+  <div class="panel">
+    <div class="chat-pet-decor" aria-hidden="true"><img src="assets/pet-cat.png" alt=""><img src="assets/pet-dog.png" alt=""></div>
+    <h2>💬 AI 疏导</h2>
+    <div class="sub" id="chat-mode-tip">未配置 AI 接口：当前为内置演示对话模式。前往<a href="javascript:go('profile')" style="color:var(--teal);">个人中心</a>填入你的大模型 API Key，即可解锁真实 AI 对话。</div>
+    <div class="persona-row" id="persona-row"></div>
+    <div class="chat-wrap">
+      <div class="chat-head">
+        <div class="ava" id="chat-ava">屿</div>
+        <div class="who"><b>心屿 AI</b><span id="chat-mode-label">倾听者 · 演示模式</span></div>
+        <span class="hint">遇到危机信号会自动转介<br>⚠️ AI 不能替代专业咨询</span>
+      </div>
+      <div class="chat-body" id="chat-body"></div>
+      <div class="primary-mood-quick" id="primary-mood-quick" aria-label="记录此刻的基础情绪"></div>
+      <div class="chat-input">
+        <textarea id="chat-input" placeholder="说说你的感受吧，我在这里听着……" rows="1"></textarea>
+        <button class="btn btn-teal" onclick="sendChat()" style="padding:0 22px;">发送</button>
+      </div>
+      <div class="voice-bar" style="padding:8px 14px;border-top:1px dashed var(--line);margin:0;">
+        <button class="vb-btn" id="voice-input-btn" onclick="startVoiceInput()">🎤 语音输入</button>
+        <button class="vb-btn" id="voice-reply-btn" onclick="toggleVoiceReply()">🔊 AI 语音回复</button>
+        <button class="vb-btn" onclick="openVoicePackModal()">🎙️ 语音包设置</button>
+        <span class="vb-state" id="voice-state">语音包：<b id="vp-name">💙 心屿本音</b></span>
+      </div>
+    </div>
+    <button class="mood-diary-entry" id="mood-diary-entry" onclick="go('mood-diary')">
+      <span class="diary-art" aria-hidden="true"><i></i><em></em></span>
+      <span><b>我的心情日记</b><small>把每天的小心情收进本子里</small></span>
+      <strong>打开 ›</strong>
+    </button>
+    <div class="ai-notice">🤖 温馨提示：AI 不是医生，AI 仅为辅助心理支持，不替代专业诊断与治疗。如你正处于危机中，请拨打 12356 或联系学校心理中心。</div>
+    <div class="suggest-row" id="standard-chat-suggestions">
+      <button class="suggest" onclick="quickChat('最近总是失眠，脑子停不下来')">最近总是失眠</button>
+      <button class="suggest" onclick="quickChat('考试压力好大，感觉要撑不住了')">考试压力大</button>
+      <button class="suggest" onclick="quickChat('觉得自己很孤独，没有人理解我')">感到孤独</button>
+      <button class="suggest" onclick="quickChat('对未来很迷茫，不知道怎么办')">对未来迷茫</button>
+      <button class="suggest" onclick="quickChat('和室友闹矛盾了，心情很差')">人际关系烦恼</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 小学/初中心情日记 ═══ -->
+<div class="page" id="page-mood-diary">
+  <div class="mood-diary-shell">
+    <header class="mood-diary-head">
+      <div><button class="diary-back" onclick="go('chat')" aria-label="返回 AI 疏导">‹</button><span><b>我的心情日记</b><small>月度心情日历</small></span></div>
+      <p>你的每一份小心情，只在当前账号中保存。</p>
+    </header>
+    <section class="mood-calendar-panel">
+      <div class="month-switch"><button onclick="changeMoodMonth(-1)" aria-label="上个月">‹</button><h2 id="mood-month-title"></h2><button onclick="changeMoodMonth(1)" aria-label="下个月">›</button></div>
+      <div class="mood-weekdays"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
+      <div class="mood-calendar" id="mood-calendar"></div>
+      <div class="mood-legend" id="mood-legend"></div>
+    </section>
+    <section class="mood-summary-grid">
+      <div class="mood-stats"><h3>本月心情</h3><div id="mood-stats"></div></div>
+      <div class="mood-month-note"><h3>这个月的你</h3><p id="mood-month-note"></p></div>
+    </section>
+  </div>
+</div>
+
+<!-- ═══ 自助训练 ═══ -->
+<div class="page" id="page-train">
+  <div class="panel">
+    <h2 id="train-title">🧠 自助训练</h2>
+    <div class="sub" id="train-sub">基于积极心理学与 CBT/正念等循证方法设计的练习，训练记录保存在你的账号下。</div>
+    <div class="train-grid" id="train-grid"></div>
+  </div>
+</div>
+
+<!-- ═══ 心屿 树洞 ═══ -->
+<div class="page" id="page-community">
+  <div class="panel">
+    <h2 id="community-title">🫧 心屿 树洞</h2>
+    <div class="primary-community-intro" id="community-intro" hidden><b>把想说的话轻轻放在这里。</b><span>想公开分享，或只留给自己，都可以。</span></div>
+    <div class="sub" id="community-standard-sub">匿名表达空间 · 勇敢说出来，就有人接住你。帖子保存在你的本地，刷新不丢失；系统会自动过滤不当内容。<br><b style="color:#7c3aed;">✦ 标有「系统推荐」的内容由平台自动生成；树洞内容对学校、家长均不可见，保护你的隐私。</b></div>
+    <div class="rule-bar">🌱 树洞守则：<b>不评判</b> · <b>不攻击</b> · <b>不泄露身份</b> · 遇到危机请拨打 <b>12356</b> 或联系学校心理中心</div>
+    <div class="voice-vent">
+      <span style="font-size:20px;">🎤</span>
+      <div class="vv-hint"><b>语音树洞</b>：不想打字？直接开口说。系统会把你说的话转成文字并分析情绪，AI 立刻回应你（适合低龄儿童与不方便打字的时刻）。</div>
+      <button class="btn btn-teal" style="padding:9px 18px;font-size:13px;" id="voice-vent-btn" onclick="startVoiceVent()">🎤 语音倾诉（点我开始）</button>
+    </div>
+    <div class="empathy-bar" id="empathy-bar"></div>
+    <div class="compose">
+      <div class="primary-tree-scene" id="primary-tree-scene" aria-hidden="true">
+        <img class="tree-art" src="assets/aa619af488a42e3c92e8af6834df05b1.jpg" alt="">
+        <span class="tree-cloud cloud-one"></span><span class="tree-cloud cloud-two"></span>
+        <div class="tree-crown crown-one"></div><div class="tree-crown crown-two"></div><div class="tree-crown crown-three"></div>
+        <div class="tree-trunk"><span class="tree-hole" id="primary-tree-hole"></span></div>
+        <div class="tree-ground"><i></i><i></i><i></i></div>
+        <img id="tree-pet" class="tree-pet" alt="">
+        <div class="flight-trail" aria-hidden="true"><i></i><i></i><i></i></div>
+        <img class="flying-letter" id="flying-letter" src="assets/cbe6cb5be7a004c8904f7ef55cb0f3fa.jpg" alt="">
+        <div class="tree-sparkles" id="tree-sparkles"><i>✦</i><i>✦</i><i>✦</i></div>
+      </div>
+      <textarea id="post-input" placeholder="此刻你想说什么？情绪没有对错，说出来就会被接住……"></textarea>
+      <div class="row" style="margin-top:8px;">
+        <div class="mood-pick2" id="post-mood-pick"></div>
+      </div>
+      <div class="row" style="margin-top:8px;">
+        <div class="tag-pick" id="post-tag-pick">
+          <span data-tag="心情分享" class="sel">心情分享</span>
+          <span data-tag="求助">求助</span>
+          <span data-tag="经验分享">经验分享</span>
+          <span data-tag="鼓励">鼓励</span>
+        </div>
+        <div class="mode-switch" style="margin-left:auto;">
+          <span id="mode-public" class="sel" onclick="setVentMode('public')">🕶️ 匿名公开</span>
+          <span id="mode-private" onclick="setVentMode('private')">🔒 私密倾诉</span>
+        </div>
+        <button class="btn btn-teal" id="post-submit" style="padding:9px 20px;font-size:14px;" onclick="addPost()">发布</button>
+      </div>
+    </div>
+    <div class="vent-box" id="vent-box" style="display:none;">
+      <div class="panel-title">🔒 我的私密倾诉（仅自己可见）</div>
+      <div class="vent-list" id="vent-list"></div>
+    </div>
+    <div id="post-list"></div>
+  </div>
+</div>
+
+<!-- ═══ 个人中心 ═══ -->
+<div class="page" id="page-profile">
+  <div class="panel">
+    <h2>👤 个人中心</h2>
+    <div class="sub" id="pf-sub">账号信息、测评历史与 AI 配置</div>
+    <div class="profile-grid">
+      <div class="profile-side">
+        <div class="avatar" id="pf-avatar">屿</div>
+        <h3 id="pf-name">—</h3>
+        <div class="p-uid" id="pf-uid">—</div>
+        <div class="p-stat">
+          <div><b id="pf-count">0</b><span id="pf-count-label">测评次数</span></div>
+          <div><b id="pf-days">0</b><span id="pf-days-label">使用天数</span></div>
+        </div>
+        <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px;">
+          <button class="btn btn-soft" onclick="openAvatarModal()" style="font-size:13px;padding:9px;">🖼️ 设置头像</button>
+          <button class="btn btn-soft" onclick="openIdentityModal()" style="font-size:13px;padding:9px;">🎭 身份 / 归属信息</button>
+          <button class="btn btn-soft" id="pf-contacts-btn" onclick="openContactsModal()" style="font-size:13px;padding:9px;">🆘 紧急联系人</button>
+          <button class="btn btn-soft" onclick="exportData()" style="font-size:13px;padding:9px;">导出我的数据</button>
+          <button class="btn" style="background:var(--danger-bg);color:var(--danger);border:1px solid #fecaca;font-size:13px;padding:9px;" onclick="clearAllData()">清除全部本地数据</button>
+        </div>
+      </div>
+      <div>
+        <div class="panel-title" style="margin-top:20px;" id="pf-history-title">📊 测评历史与趋势</div>
+        <div class="chart-box" id="trend-chart-box"></div>
+        <div id="history-list"></div>
+
+        <div class="panel-title" style="margin-top:20px;">🧭 使用轨迹（行为维度）</div>
+        <div id="pf-trail"></div>
+
+        <div class="panel-title" style="margin-top:20px;">🪪 我的身份与归属</div>
+        <div id="pf-identity"></div>
+
+        <div id="pf-familycode" style="margin-top:20px;"></div>
+
+        <div class="panel-title" style="margin-top:20px;" id="pf-api-title">🔧 AI 模型配置</div>
+        <div class="api-form" id="pf-api-form">
+          <p style="font-size:13px;color:var(--muted);margin-bottom:10px;">
+            填入任意一个国内大模型的 API Key，AI 疏导即可从"演示模式"切换为"真实大模型对话"。Key 只保存在你的浏览器本地，不会上传。<br>
+            <b>推荐：</b>智谱开放平台（open.bigmodel.cn）的 GLM-4.7-Flash 完全免费，注册后到「API Keys」页面创建即可。
+          </p>
+          <div class="api-row">
+            <select id="api-provider">
+              <option value="zhipu">智谱 GLM（免费）</option>
+              <option value="deepseek">DeepSeek</option>
+              <option value="qwen">通义千问</option>
+              <option value="kimi">Kimi Moonshot</option>
+            </select>
+            <input id="api-key" type="password" placeholder="粘贴你的 API Key（sk-…）">
+            <button class="btn btn-teal" style="padding:9px 18px;font-size:13.5px;" onclick="saveApiKey()">保存</button>
+            <button class="btn btn-neutral" style="background:#f1f5f9;color:var(--muted);padding:9px 14px;font-size:13.5px;" onclick="clearApiKey()">清除</button>
+          </div>
+          <div class="api-status" id="api-status"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 信息管理（管理员） ═══ -->
+<div class="page" id="page-manage">
+  <div class="panel">
+    <h2 id="mg-title">📊 心理健康趋势分析</h2>
+    <div class="sub" id="mg-sub">—</div>
+    <div id="mg-view"></div>
+  </div>
+</div>
+
+<!-- ═══ 家长：孩子心理变化 ═══ -->
+<div class="page" id="page-child">
+  <div class="panel">
+    <h2>📈 孩子心理变化</h2>
+    <div class="sub" id="child-sub">—</div>
+    <div id="child-view"></div>
+  </div>
+</div>
+
+<!-- ═══ 家长：沟通课堂 ═══ -->
+<div class="page" id="page-edu">
+  <div class="panel">
+    <h2>📚 沟通课堂</h2>
+    <div class="sub">学习科学沟通方式，改善与孩子的每一次对话（内容来自心理健康教育知识库，点击卡片可打开大图详情）</div>
+    <div class="edu-grid" id="edu-grid"></div>
+    <div id="parent-chat" style="margin-top:18px;"></div>
+  </div>
+</div>
+
+<!-- ═══ 家长：家庭互动 ═══ -->
+<div class="page" id="page-family">
+  <div class="panel">
+    <h2>🏡 家庭互动</h2>
+    <div class="sub">每天一个小行动，让家成为情绪的避风港。打卡记录保存在你的本地。</div>
+    <div id="family-view"></div>
+  </div>
+</div>
+
+<!-- ═══ 社区：资源连接 ═══ -->
+<div class="page" id="page-resources">
+  <div class="panel">
+    <h2>🤝 资源连接</h2>
+    <div class="sub">连接心理老师、专业机构与公益心理服务，让心理资源下沉到最需要的地方。</div>
+    <div id="res-view"></div>
+  </div>
+</div>
+
+<!-- ═══ 社区：转介记录 ═══ -->
+<div class="page" id="page-referrals">
+  <div class="panel">
+    <h2>📋 转介记录</h2>
+    <div class="sub">从发现到转介再到跟进，形成完整闭环。</div>
+    <div id="ref-view"></div>
+  </div>
+</div>
+
+<!-- ═══ v4：心理成长档案（学生/普通用户） ═══ -->
+<div class="page" id="page-portrait">
+  <div class="panel">
+    <h2>🌱 我的心理成长档案</h2>
+    <div class="sub">把每一次测评、每一段倾诉，变成看得见的成长。档案随你的测评数据自动更新。</div>
+    <div id="portrait-view"></div>
+  </div>
+</div>
+
+<!-- ═══ v4：学校端 · 趋势分析 ═══ -->
+<div class="page" id="page-school-trend">
+  <div class="panel">
+    <h2>📈 学校心理健康趋势分析</h2>
+    <div class="sub" id="st-sub">—</div>
+    <div id="st-view"></div>
+  </div>
+</div>
+
+<!-- ═══ v4：学校端 · 年级分析 ═══ -->
+<div class="page" id="page-school-grade">
+  <div class="panel">
+    <h2>🎓 年级维度分析</h2>
+    <div class="sub" id="sg-sub">—</div>
+    <div id="sg-view"></div>
+  </div>
+</div>
+
+<!-- ═══ v4：学校端 · 重点关注与转介 ═══ -->
+<div class="page" id="page-school-focus">
+  <div class="panel">
+    <h2>🧭 重点关注与转介</h2>
+    <div class="sub" id="sf-sub">—</div>
+    <div id="sf-view"></div>
+  </div>
+</div>
+
+<!-- ═══ v4：学校端 · 隐私说明 ═══ -->
+<div class="page" id="page-school-privacy">
+  <div class="panel">
+    <h2>🔒 隐私与数据口径</h2>
+    <div class="sub" id="sp-sub">—</div>
+    <div id="sp-view"></div>
+  </div>
+</div>
+
+<!-- ═══ v4：心理课程资源库 ═══ -->
+<div class="page" id="page-courses">
+  <div class="panel">
+    <h2 id="courses-title">📚 心理课程资源库</h2>
+    <div class="sub" id="courses-sub">精选来自互联网的公开心理健康教育资源，按学段与方向分类，全部免费可访问，按年级智能匹配。</div>
+    <div id="course-view"></div>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <p>⚠️ 如果你正处于危机中，请立即拨打 <span class="hotline">全国心理援助热线 12356</span> 或联系学校心理咨询中心，或前往最近的精神卫生机构。</p>
+  <p style="margin-top:6px;">心屿 MindIsle · 心理健康资源普惠与智能分级支持平台 v3.0 焕彩主题版 · 中国国际大学生创新大赛参赛项目</p>
+  <p style="margin-top:4px;font-size:12px;">v3.0.0 资源版本 · 已修复缓存(资源带版本号,修改无需手动刷新)· 12 套全局风格仅对初中/高中学生与演示账号生效,小学端保持原样</p>
+  <p style="margin-top:4px;">💙 让每一颗心，都有一个可以抵达的地方。</p>
+  <p style="margin-top:4px;">量表版权：PHQ-9（Spitzer et al., JAMA 1999）、GAD-7（Spitzer et al., 2006）、PSS-10（Cohen et al., 1983）、ISI（Morin, 1993）、RSES（Rosenberg, 1965）均允许免费用于研究与教育用途，使用时需注明出处。本平台测评结果仅供自我筛查参考，不能替代专业诊断。</p>
+</footer>
+
+<div class="modal-mask" id="modal-mask" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modal-body"></div>
+</div>
+
+<!-- v4：温馨欢迎弹窗 -->
+<div class="welcome-mask" id="welcome-mask" onclick="if(event.target===this)closeWelcome()">
+  <div class="welcome-card" id="welcome-card"></div>
+</div>
+
+<!-- v4：底部导航（学校端上下可达） -->
+<nav class="bottom-nav" id="bottom-nav" style="display:none;"></nav>
+
+<div class="toast" id="toast"></div>
+
+
+<script src="app.js?v=3.0.0"></script>
+</body>
+</html>

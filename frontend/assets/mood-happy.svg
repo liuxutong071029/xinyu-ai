@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title">
+  <title id="title">开心</title>
+  <circle cx="48" cy="48" r="42" fill="#FFE58F" stroke="#947347" stroke-width="3.5"/>
+  <circle cx="29" cy="55" r="6" fill="#F49AA8" opacity=".7"/><circle cx="67" cy="55" r="6" fill="#F49AA8" opacity=".7"/>
+  <path d="M32 36v10M64 36v10" fill="none" stroke="#5B4328" stroke-width="6" stroke-linecap="round"/>
+  <path d="M29 57c5 13 14 19 19 19s14-6 19-19c-10 6-28 6-38 0Z" fill="#6A4538" stroke="#5B4328" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M38 68c6 4 14 4 20 0" fill="none" stroke="#F7A6AC" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="33" cy="23" r="5" fill="#FFF7D6" opacity=".8"/>
+</svg>

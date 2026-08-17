@@ -1,0 +1,545 @@
+{
+  "users": [
+    {
+      "username": "demo-stu1",
+      "password": "d2b000ce0875cad8615dd8cf34f788635c959a0ce2b8a977e22caab745380b06",
+      "nickname": "小雨同学",
+      "role": "student",
+      "age": 19,
+      "gender": "女",
+      "region": "北京市海淀区",
+      "school_id": 1,
+      "avatar": "",
+      "created_time": "2026-07-17T14:07:07.436Z",
+      "id": 1
+    },
+    {
+      "username": "demo-stu2",
+      "password": "d2b000ce0875cad8615dd8cf34f788635c959a0ce2b8a977e22caab745380b06",
+      "nickname": "晨光同学",
+      "role": "student",
+      "age": 13,
+      "gender": "男",
+      "region": "北京市海淀区",
+      "school_id": 1,
+      "avatar": "",
+      "created_time": "2026-07-17T14:07:07.436Z",
+      "id": 2
+    },
+    {
+      "username": "demo-stu3",
+      "password": "d2b000ce0875cad8615dd8cf34f788635c959a0ce2b8a977e22caab745380b06",
+      "nickname": "晚风同学",
+      "role": "student",
+      "age": 19,
+      "gender": "女",
+      "region": "北京市海淀区",
+      "school_id": 1,
+      "avatar": "",
+      "created_time": "2026-07-17T14:07:07.436Z",
+      "id": 3
+    },
+    {
+      "username": "demo-user1",
+      "password": "d2b000ce0875cad8615dd8cf34f788635c959a0ce2b8a977e22caab745380b06",
+      "nickname": "林间用户",
+      "role": "student",
+      "age": 20,
+      "gender": "女",
+      "region": "",
+      "school_id": null,
+      "avatar": "",
+      "created_time": "2026-07-17T14:07:07.436Z",
+      "id": 4
+    },
+    {
+      "username": "demo-admin1",
+      "password": "d2b000ce0875cad8615dd8cf34f788635c959a0ce2b8a977e22caab745380b06",
+      "nickname": "张老师",
+      "role": "school",
+      "age": 32,
+      "gender": "女",
+      "region": "北京市海淀区",
+      "school_id": 1,
+      "avatar": "",
+      "created_time": "2026-07-17T14:07:07.436Z",
+      "id": 5
+    },
+    {
+      "username": "demo-parent1",
+      "password": "d2b000ce0875cad8615dd8cf34f788635c959a0ce2b8a977e22caab745380b06",
+      "nickname": "李妈妈",
+      "role": "parent",
+      "age": 40,
+      "gender": "女",
+      "region": "北京市海淀区",
+      "school_id": null,
+      "avatar": "",
+      "created_time": "2026-07-17T14:07:07.436Z",
+      "id": 6
+    },
+    {
+      "username": "demo-com1",
+      "password": "d2b000ce0875cad8615dd8cf34f788635c959a0ce2b8a977e22caab745380b06",
+      "nickname": "王主任",
+      "role": "community",
+      "age": 45,
+      "gender": "女",
+      "region": "上海市徐汇区",
+      "school_id": null,
+      "avatar": "",
+      "created_time": "2026-07-17T14:07:07.436Z",
+      "id": 7
+    },
+    {
+      "username": "seed-stu1",
+      "password": "d2b000ce0875cad8615dd8cf34f788635c959a0ce2b8a977e22caab745380b06",
+      "nickname": "小文同学",
+      "role": "student",
+      "age": 12,
+      "gender": "男",
+      "region": "上海市徐汇区",
+      "school_id": 2,
+      "avatar": "",
+      "created_time": "2026-07-17T14:07:07.436Z",
+      "id": 8
+    },
+    {
+      "username": "seed-stu2",
+      "password": "d2b000ce0875cad8615dd8cf34f788635c959a0ce2b8a977e22caab745380b06",
+      "nickname": "小欣同学",
+      "role": "student",
+      "age": 12,
+      "gender": "女",
+      "region": "上海市徐汇区",
+      "school_id": 2,
+      "avatar": "",
+      "created_time": "2026-07-17T14:07:07.436Z",
+      "id": 9
+    }
+  ],
+  "schools": [
+    {
+      "school_name": "示范大学",
+      "region": "北京市海淀区",
+      "student_count": 4,
+      "created_time": "2026-06-17T14:07:07.435Z",
+      "id": 1
+    },
+    {
+      "school_name": "阳光社区附小",
+      "region": "上海市徐汇区",
+      "student_count": 2,
+      "created_time": "2026-06-27T14:07:07.436Z",
+      "id": 2
+    }
+  ],
+  "ai_personality": [
+    {
+      "user_id": 1,
+      "personality_type": "温柔倾听型",
+      "created_time": "2026-07-27T14:07:07.436Z",
+      "id": 1
+    },
+    {
+      "user_id": 9,
+      "personality_type": "理性分析型",
+      "created_time": "2026-08-01T14:07:07.436Z",
+      "id": 2
+    }
+  ],
+  "chat_records": [
+    {
+      "user_id": 1,
+      "message": "最近考试压力很大，每天都睡不好",
+      "response": "我听到你最近承受着不小的考试压力，还影响了睡眠，这很辛苦。可以试着把复习任务拆小，每天只完成一小块；睡前一小时放下手机，做一组 4-7-8 呼吸。你愿意说说最担心哪一科吗？",
+      "emotion": "压力",
+      "risk_level": "normal",
+      "created_time": "2026-08-15T01:07:07.436Z",
+      "id": 1
+    },
+    {
+      "user_id": 1,
+      "message": "和同桌闹矛盾了，不知道怎么办",
+      "response": "人际摩擦是成长里常遇到的事。可以试试「我信息」表达：描述事实+说出感受+提出请求。需要我陪你模拟一下怎么说吗？",
+      "emotion": "低落",
+      "risk_level": "normal",
+      "created_time": "2026-08-16T00:07:07.436Z",
+      "id": 2
+    },
+    {
+      "user_id": 8,
+      "message": "最近好焦虑，感觉什么都做不好",
+      "response": "焦虑常常是对「不确定」的过度预警。试试把担心的事分成能控制的和不能控制的，把精力放在前者。你已经愿意说出来，这就是很好的第一步。",
+      "emotion": "焦虑",
+      "risk_level": "attention",
+      "created_time": "2026-08-16T02:07:07.436Z",
+      "id": 3
+    },
+    {
+      "user_id": 3,
+      "message": "今天社团活动挺顺利，开心",
+      "response": "真为你开心！这种好的感觉值得被记住——要不要把它写进今天的情绪打卡？",
+      "emotion": "开心",
+      "risk_level": "normal",
+      "created_time": "2026-08-15T20:07:07.436Z",
+      "id": 4
+    }
+  ],
+  "assessments": [
+    {
+      "user_id": 1,
+      "type": "PHQ-9",
+      "score": 8,
+      "level": "轻度",
+      "result": "轻度情绪困扰",
+      "created_time": "2026-07-26T14:07:07.436Z",
+      "id": 1
+    },
+    {
+      "user_id": 1,
+      "type": "GAD-7",
+      "score": 10,
+      "level": "中度",
+      "result": "中度焦虑",
+      "created_time": "2026-07-29T14:07:07.436Z",
+      "id": 2
+    },
+    {
+      "user_id": 1,
+      "type": "压力测试",
+      "score": 22,
+      "level": "中等压力",
+      "result": "压力水平中等",
+      "created_time": "2026-08-02T14:07:07.436Z",
+      "id": 3
+    },
+    {
+      "user_id": 1,
+      "type": "孤独感测试",
+      "score": 24,
+      "level": "中度孤独感",
+      "result": "需要关注情感陪伴",
+      "created_time": "2026-08-09T14:07:07.436Z",
+      "id": 4
+    },
+    {
+      "user_id": 1,
+      "type": "睡眠测试",
+      "score": 9,
+      "level": "轻度问题",
+      "result": "轻度睡眠困扰",
+      "created_time": "2026-08-13T14:07:07.436Z",
+      "id": 5
+    },
+    {
+      "user_id": 1,
+      "type": "PHQ-9",
+      "score": 6,
+      "level": "轻度",
+      "result": "轻度情绪困扰",
+      "created_time": "2026-08-15T14:07:07.436Z",
+      "id": 6
+    },
+    {
+      "user_id": 2,
+      "type": "PHQ-9",
+      "score": 3,
+      "level": "正常",
+      "result": "状态良好",
+      "created_time": "2026-08-06T14:07:07.436Z",
+      "id": 7
+    },
+    {
+      "user_id": 2,
+      "type": "压力测试",
+      "score": 12,
+      "level": "较低压力",
+      "result": "压力水平较低",
+      "created_time": "2026-08-07T14:07:07.436Z",
+      "id": 8
+    },
+    {
+      "user_id": 3,
+      "type": "GAD-7",
+      "score": 14,
+      "level": "中度",
+      "result": "中度焦虑",
+      "created_time": "2026-08-10T14:07:07.436Z",
+      "id": 9
+    },
+    {
+      "user_id": 8,
+      "type": "PHQ-9",
+      "score": 11,
+      "level": "中度",
+      "result": "中度情绪困扰",
+      "created_time": "2026-08-08T14:07:07.436Z",
+      "id": 10
+    },
+    {
+      "user_id": 8,
+      "type": "孤独感测试",
+      "score": 18,
+      "level": "中度孤独感",
+      "result": "需要关注情感陪伴",
+      "created_time": "2026-08-12T14:07:07.436Z",
+      "id": 11
+    },
+    {
+      "user_id": 9,
+      "type": "压力测试",
+      "score": 15,
+      "level": "中等压力",
+      "result": "压力水平中等",
+      "created_time": "2026-08-11T14:07:07.436Z",
+      "id": 12
+    }
+  ],
+  "emotion_records": [
+    {
+      "user_id": 1,
+      "emotion": "焦虑",
+      "pressure": "高",
+      "source": "每日打卡",
+      "created_time": "2026-08-03T23:07:07.436Z",
+      "id": 1
+    },
+    {
+      "user_id": 1,
+      "emotion": "低落",
+      "pressure": "中",
+      "source": "每日打卡",
+      "created_time": "2026-08-04T23:07:07.436Z",
+      "id": 2
+    },
+    {
+      "user_id": 1,
+      "emotion": "平静",
+      "pressure": "低",
+      "source": "每日打卡",
+      "created_time": "2026-08-05T23:07:07.436Z",
+      "id": 3
+    },
+    {
+      "user_id": 1,
+      "emotion": "疲惫",
+      "pressure": "高",
+      "source": "每日打卡",
+      "created_time": "2026-08-06T23:07:07.436Z",
+      "id": 4
+    },
+    {
+      "user_id": 1,
+      "emotion": "开心",
+      "pressure": "低",
+      "source": "每日打卡",
+      "created_time": "2026-08-07T23:07:07.436Z",
+      "id": 5
+    },
+    {
+      "user_id": 1,
+      "emotion": "焦虑",
+      "pressure": "中",
+      "source": "每日打卡",
+      "created_time": "2026-08-08T23:07:07.436Z",
+      "id": 6
+    },
+    {
+      "user_id": 1,
+      "emotion": "平静",
+      "pressure": "低",
+      "source": "每日打卡",
+      "created_time": "2026-08-09T23:07:07.436Z",
+      "id": 7
+    },
+    {
+      "user_id": 1,
+      "emotion": "低落",
+      "pressure": "中",
+      "source": "每日打卡",
+      "created_time": "2026-08-10T23:07:07.436Z",
+      "id": 8
+    },
+    {
+      "user_id": 1,
+      "emotion": "疲惫",
+      "pressure": "中",
+      "source": "每日打卡",
+      "created_time": "2026-08-11T23:07:07.436Z",
+      "id": 9
+    },
+    {
+      "user_id": 1,
+      "emotion": "焦虑",
+      "pressure": "高",
+      "source": "每日打卡",
+      "created_time": "2026-08-12T23:07:07.436Z",
+      "id": 10
+    },
+    {
+      "user_id": 1,
+      "emotion": "开心",
+      "pressure": "中",
+      "source": "每日打卡",
+      "created_time": "2026-08-13T23:07:07.436Z",
+      "id": 11
+    },
+    {
+      "user_id": 1,
+      "emotion": "平静",
+      "pressure": "低",
+      "source": "每日打卡",
+      "created_time": "2026-08-14T23:07:07.436Z",
+      "id": 12
+    },
+    {
+      "user_id": 1,
+      "emotion": "低落",
+      "pressure": "高",
+      "source": "每日打卡",
+      "created_time": "2026-08-15T23:07:07.436Z",
+      "id": 13
+    },
+    {
+      "user_id": 1,
+      "emotion": "平静",
+      "pressure": "中",
+      "source": "每日打卡",
+      "created_time": "2026-08-16T23:07:07.436Z",
+      "id": 14
+    },
+    {
+      "user_id": 2,
+      "emotion": "开心",
+      "pressure": "低",
+      "source": "每日打卡",
+      "created_time": "2026-08-14T22:07:07.436Z",
+      "id": 15
+    },
+    {
+      "user_id": 3,
+      "emotion": "焦虑",
+      "pressure": "中",
+      "source": "每日打卡",
+      "created_time": "2026-08-16T00:07:07.436Z",
+      "id": 16
+    },
+    {
+      "user_id": 8,
+      "emotion": "低落",
+      "pressure": "中",
+      "source": "每日打卡",
+      "created_time": "2026-08-13T21:07:07.436Z",
+      "id": 17
+    },
+    {
+      "user_id": 9,
+      "emotion": "平静",
+      "pressure": "低",
+      "source": "每日打卡",
+      "created_time": "2026-08-15T22:07:07.436Z",
+      "id": 18
+    },
+    {
+      "user_id": 1,
+      "emotion": "焦虑",
+      "pressure": "高",
+      "source": "AI聊天",
+      "created_time": "2026-08-15T01:07:07.436Z",
+      "id": 19
+    }
+  ],
+  "family_bindings": [
+    {
+      "student_id": 1,
+      "parent_id": 6,
+      "invite_code": "XY20260815",
+      "status": "active",
+      "created_time": "2026-08-11T14:07:07.436Z",
+      "id": 1
+    },
+    {
+      "student_id": 8,
+      "parent_id": null,
+      "invite_code": "XH20260001",
+      "status": "active",
+      "created_time": "2026-08-14T14:07:07.436Z",
+      "id": 2
+    }
+  ],
+  "tree_hole": [
+    {
+      "user_id": 1,
+      "content": "期中考试要来了，越想越睡不着，有没有同学也是这样？",
+      "emotion": "焦虑",
+      "risk_level": "normal",
+      "created_time": "2026-08-15T02:07:07.436Z",
+      "id": 1
+    },
+    {
+      "user_id": 9,
+      "content": "今天帮同学讲了一道题，他说谢谢，还挺开心的",
+      "emotion": "开心",
+      "risk_level": "normal",
+      "created_time": "2026-08-15T22:07:07.436Z",
+      "id": 2
+    }
+  ],
+  "user_behavior": [
+    {
+      "user_id": 1,
+      "action": "注册",
+      "created_time": "2026-07-26T14:07:07.436Z",
+      "id": 1
+    },
+    {
+      "user_id": 1,
+      "action": "登录",
+      "created_time": "2026-08-15T12:07:07.436Z",
+      "id": 2
+    },
+    {
+      "user_id": 1,
+      "action": "聊天",
+      "created_time": "2026-08-16T00:07:07.436Z",
+      "id": 3
+    },
+    {
+      "user_id": 1,
+      "action": "测评",
+      "created_time": "2026-08-16T01:07:07.436Z",
+      "id": 4
+    },
+    {
+      "user_id": 1,
+      "action": "情绪打卡",
+      "created_time": "2026-08-16T12:07:07.436Z",
+      "id": 5
+    },
+    {
+      "user_id": 1,
+      "action": "训练",
+      "created_time": "2026-08-14T14:07:07.436Z",
+      "id": 6
+    },
+    {
+      "user_id": 6,
+      "action": "注册",
+      "created_time": "2026-08-12T14:07:07.436Z",
+      "id": 7
+    },
+    {
+      "user_id": 5,
+      "action": "注册",
+      "created_time": "2026-08-12T14:07:07.436Z",
+      "id": 8
+    },
+    {
+      "user_id": 9,
+      "action": "发布树洞",
+      "created_time": "2026-08-15T22:07:07.436Z",
+      "id": 9
+    }
+  ]
+}
