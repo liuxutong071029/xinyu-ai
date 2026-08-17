@@ -1,0 +1,50 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# 环境变量与密钥(严禁上传)
+.env
+.env.local
+.env.*.local
+server/data/
+!server/data/.gitkeep
+
+# 构建产物
+dist/
+build/
+out/
+*.min.js
+
+# 日志
+*.log
+logs/
+*.out
+
+# 缓存
+.cache/
+.temp/
+tmp/
+temp/
+.vite/
+.eslintcache
+
+# 编辑器与系统文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 压缩包与本地备份(避免仓库膨胀)
+*.zip
+*.7z
+*.rar
+
+# 系统生成的截图缓存(本地验证用)
+docs/截图证据/
